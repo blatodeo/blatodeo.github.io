@@ -19,7 +19,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <form action="../includes/_functions.php" method="POST">
+            <form action="_functions.php" method="POST">
                 <input type="hidden" name="accion" value="eliminar_mp">
                 <input type="hidden" name="codigo" value="<?php echo $_GET['codigo']; ?>">
                 <input type="submit" name="" value="Eliminar" class= " btn btn-danger">

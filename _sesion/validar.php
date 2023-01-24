@@ -1,7 +1,7 @@
 <?php
 $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
-if(isset($_POST['registrar_mp'])){
+if(isset($_POST['registrar'])){
 
     if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
 

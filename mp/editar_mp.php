@@ -26,7 +26,7 @@ $usuario = mysqli_fetch_assoc($resultado);
 <body id="page-top">
 
 
-    <form action="../includes/_functions.php" method="POST">
+    <form action="_functions.php" method="POST">
         <div id="login">
             <div class="container">
                 <div id="login-row" class="row justify-content-center align-items-center">

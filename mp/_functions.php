@@ -22,7 +22,7 @@
     }
 
    
-require_once ("_db.php");
+require_once ("../conexion/_db.php");
 
 
 
