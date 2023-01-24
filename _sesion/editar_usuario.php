@@ -1,4 +1,17 @@
 <?php
+session_start();
+error_reporting(0);
+
+$validar = $_SESSION['nombre'];
+
+if( $validar == null || $validar = ''){
+
+    header("Location: ../includes/login.php");
+    die();
+    
+
+}
+
 
 $id = $_GET['id'];
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
