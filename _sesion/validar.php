@@ -3,21 +3,20 @@ $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
 if(isset($_POST['registrar'])){
 
-    if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
+    if(strlen($_POST['id']) >=1 && strlen($_POST['nombre'])  >=1 && strlen($_POST['password'])  >=1){
+    $id = trim($_POST['id']);
+    $nombre = trim($_POST['nombre']);
+    $correo = trim($_POST['correo']);
+    $password = trim($_POST['password']);
 
-    $codigo = trim($_POST['codigo']);
-    $linea = trim($_POST['linea']);
-    $descripcion = trim($_POST['descripcion']);
-    $coste_kg = trim($_POST['coste_kg']);
 
-
-    $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion, coste_kg)
-    VALUES ('$codigo', '$linea','$descripcion','$coste_kg')";
+    $consulta= "INSERT INTO usuario (id, nombre, correo, password)
+    VALUES ('$id', '$nombre', '$correo', '$password')";
 
     mysqli_query($conexion, $consulta);
     mysqli_close($conexion);
 
-    header('Location: ../mp/mp.php');
+    header('Location: usuarios.php');
   }
 }
 
