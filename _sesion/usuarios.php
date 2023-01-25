@@ -53,7 +53,7 @@ if ($validar == null || $validar = '') {
       <a class="btn btn-success" href="registro.php">Nuevo Usuario <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
       <a class="btn btn-warning" href="cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
-      <a class="btn btn-primary" href="/mp/mp.php">Materia Prima <i class="fa fa-box" aria-hidden="true"></i> </a>
+      <a class="btn btn-primary" href="../mp/mp.php">Materia Prima <i class="fa fa-box" aria-hidden="true"></i> </a>
 
     </div>
     

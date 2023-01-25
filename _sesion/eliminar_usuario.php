@@ -6,7 +6,7 @@ error_reporting(0);
 $validar = $_SESSION['nombre'];
 
 if( $validar == null || $validar = ''){
-    header("Location: ../includes/login.php");
+    header("Location: login.php");
     die();
 
 }

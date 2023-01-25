@@ -1,3 +1,23 @@
+<?php
+
+session_start();
+error_reporting(0);
+
+$validar = $_SESSION['nombre'];
+
+if ($validar == null || $validar = '') {
+
+    header("Location: ../_sesion/login.php");
+    die();
+}
+
+
+?>
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">

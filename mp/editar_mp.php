@@ -1,5 +1,21 @@
 <?php
 
+session_start();
+error_reporting(0);
+
+$validar = $_SESSION['nombre'];
+
+if ($validar == null || $validar = '') {
+
+    header("Location: ../_sesion/login.php");
+    die();
+}
+
+
+
+
+
+
 $codigo = $_GET['codigo'];
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
 $consulta = "SELECT * FROM materia_prima WHERE codigo = $codigo";
