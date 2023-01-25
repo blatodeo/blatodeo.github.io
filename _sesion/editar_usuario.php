@@ -48,7 +48,7 @@ $usuario = mysqli_fetch_assoc($resultado);
 
                             <br>
                             <br>
-                            <h3 class="text-center">Editar materia prima</h3>
+                            <h3 class="text-center">Editar usuario</h3>
                             <div class="form-group">
                                 <label for="nombre" class="form-label">Nombre *</label>
                                 <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $usuario['nombre']; ?>" required>
@@ -63,6 +63,11 @@ $usuario = mysqli_fetch_assoc($resultado);
                                 <input type="hidden" name="accion" value="editar_usuario">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                             </div>
+                            <div class="form-group">
+                                <label for="rol">Rol:</label><br>
+                                <input type="number" name="rol" id="rol" class="form-control" placeholder="Elige el rol: 1 Admin, 2 Lector" value="<?php echo $usuario['rol']; ?>">
+                            </div>
+
 
 
                             <br>

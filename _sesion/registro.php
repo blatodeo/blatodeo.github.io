@@ -62,6 +62,12 @@ if( $validar == null || $validar = ''){
                                 <label for="password">Contraseña:</label><br>
                                 <input type="password" name="password" id="password" class="form-control" placeholder="">
                             </div>
+                            <div class="form-group">
+                                  <label for="rol" class="form-label">Rol de usuario *</label>
+                                <input type="number"  id="rol" name="rol" class="form-control" placeholder="Escribe el rol, 1 admin, 2 lector..">
+                             
+                            </div>
+
 
 
 

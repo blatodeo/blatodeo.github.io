@@ -17,7 +17,6 @@ if ($validar == null || $validar = '') {
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +43,7 @@ if ($validar == null || $validar = '') {
 
   <br>
   <div class="col-xs-12">
-    <h1>Bienvenido Administrador <?php echo $_SESSION['nombre']; ?></h1>
+    <h1>Bienvenido Lector <?php echo $_SESSION['nombre']; ?></h1>
     <br>
 
     <h1>Lista de usuarios</h1>
@@ -53,7 +52,7 @@ if ($validar == null || $validar = '') {
       <a class="btn btn-success" href="registro.php">Nuevo Usuario <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
       <a class="btn btn-warning" href="cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
-      <a class="btn btn-primary" href="../mp/mp.php">Materia Prima <i class="fa fa-box" aria-hidden="true"></i> </a>
+      <a class="btn btn-primary" href="../mp/lector_mp.php">Materia Prima <i class="fa fa-box" aria-hidden="true"></i> </a>
 
     </div>
     
@@ -80,8 +79,6 @@ if ($validar == null || $validar = '') {
           <th>Correo</th>
           <th>Fecha</th>
           <th>Rol</th>
-          <th>Acciones</th>
-
 
         </tr>
       </thead>
@@ -110,14 +107,6 @@ if ($validar == null || $validar = '') {
 
 
 
-              <td>
-                <a class="btn btn-warning" href="editar_usuario.php?id=<?php echo $fila['id'] ?> ">
-                  <i class="fa fa-edit"></i></a>
-
-                <a class="btn btn-danger" href="eliminar_usuario.php?id=<?php echo $fila['id'] ?>">
-                  <i class="fa fa-trash"></i></a>
-
-              </td>
             </tr>
 
 
