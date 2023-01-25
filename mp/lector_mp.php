@@ -42,10 +42,13 @@ if ($validar == null || $validar = '') {
     <h1>Lista de materia prima</h1>
     <br>
     <div>
-      <a class="btn btn-success" href="agregar_mp.php">Nueva materia prima<i class="fa fa-plus" aria-hidden="true"></i>
-      </a>
+      <a class="btn btn-success" href="agregar_mp.php">Nueva materia prima<i class="fa fa-plus" aria-hidden="true"></i></a>
       <a class="btn btn-warning" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
       <a class="btn btn-primary" href="../_sesion/lector_usuario.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
+      <a class="btn btn-primary" href="lector_excel.php">Excel
+       <i class="fa fa-table" aria-hidden="true"></i>
+       </a>
+
 
     </div>
     <br>

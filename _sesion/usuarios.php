@@ -78,6 +78,7 @@ if ($validar == null || $validar = '') {
           <th>ID</th>
           <th>Nombre</th>
           <th>Correo</th>
+          <th>Contraseña</th>
           <th>Fecha</th>
           <th>Rol</th>
           <th>Acciones</th>
@@ -103,6 +104,7 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['id']; ?></td>
               <td><?php echo $fila['nombre']; ?></td>
               <td><?php echo $fila['correo']; ?></td>
+              <td><?php echo $fila['password']; ?></td>
               <td><?php echo $fila['fecha']; ?></td>
               <td><?php echo $fila['rol']; ?></td>
 
