@@ -42,16 +42,23 @@ if ($validar == null || $validar = '') {
     <h1>Lista de materia prima</h1>
     <br>
     <div>
-      <a class="btn btn-success" href="agregar_mp.php">Nueva materia prima<i class="fa fa-plus" aria-hidden="true"></i></a>
       <a class="btn btn-warning" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
-      <a class="btn btn-primary" href="../_sesion/lector_usuario.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
-      <a class="btn btn-primary" href="lector_excel.php">Excel
+      <a class="btn btn-dark" href="../_sesion/lector_usuario.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
+      <a class="btn btn-success" href="lector_excel.php">Excel
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
 
 
     </div>
     <br>
+
+
+    <div class="container-fluid">
+      <form class="d-flex">
+        <input class="form-control me-2 light-table-filter" data-table="table_id" type="text"
+         placeholder="Buscar con JS">
+         <hr>
+      </form>
 
 
 
@@ -63,7 +70,7 @@ if ($validar == null || $validar = '') {
 
 
 
-    <table class="table table-striped table-dark " id="table_id">
+    <table class="table table-striped table-dark table_id">
 
 
       <thead>
@@ -120,6 +127,7 @@ if ($validar == null || $validar = '') {
     </table>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="../js/buscador.js"></script>
 
 
 </html>
