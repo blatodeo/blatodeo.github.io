@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-01-2023 a las 17:13:07
+-- Tiempo de generación: 27-01-2023 a las 13:49:52
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.0.25
 
@@ -1731,7 +1731,7 @@ CREATE TABLE `materia_prima` (
 
 INSERT INTO `materia_prima` (`codigo`, `linea`, `descripcion`, `coste_kg`) VALUES
 ('0', 'Minerales', 'CARBON', '15000'),
-('1', 'COSTOS DE FABRICACIO', 'MANO DE OBRA DIRECTA HARINA', '0'),
+('1', 'COSTOS DE FABRICACIO', 'MANO DE OBRA DIRECTA HARINA', '10000'),
 ('10', 'COSTOS DE FABRICACIO', 'CIF DIVERSOS PELLET', '0'),
 ('100000', 'Solidos', 'MAIZ PARA LA VENTA', '0'),
 ('100001', 'Solidos', 'TORTA DE SOYA PARA LA VENTA', '0'),
@@ -2726,6 +2726,25 @@ INSERT INTO `materia_prima` (`codigo`, `linea`, `descripcion`, `coste_kg`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permisos`
+--
+
+CREATE TABLE `permisos` (
+  `id` int(10) NOT NULL,
+  `rol` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `rol`) VALUES
+(1, 'Administrador'),
+(2, 'Lector');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `precio_mp`
 --
 
@@ -3143,8 +3162,23 @@ CREATE TABLE `producto` (
 CREATE TABLE `usuario` (
   `id` int(10) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `password` varchar(20) NOT NULL
+  `correo` varchar(50) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `rol` int(10) NOT NULL,
+  `fecha` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nombre`, `correo`, `password`, `rol`, `fecha`) VALUES
+(1, 'Eliana', 'nijamael@gmail.com', 'eliana', 1, '2023-01-25 16:30:26.121014'),
+(4444, 'prueba5', 'prueba4@gmail.com', 'prueba2', 2, '2023-01-26 15:14:39.681832'),
+(1233311, 'test', 'test@gmail.com', 'test', 2, '2023-01-25 14:31:24.564358'),
+(14898838, 'Mario', 'onred.valle@gmail.com', 'Nicolitos00', 1, '2023-01-25 14:31:24.576470'),
+(1115094321, 'Nicolas ', 'nicojaviguato@gmail.com', 'nico', 1, '2023-01-25 20:08:08.742286'),
+(2147483647, 'El diablo', 'eldiablo@gmail.com', 'eldiablo', 2, '2023-01-26 12:32:07.106263');
 
 --
 -- Índices para tablas volcadas
@@ -3161,6 +3195,12 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `materia_prima`
   ADD PRIMARY KEY (`codigo`);
+
+--
+-- Indices de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `precio_mp`
@@ -3184,17 +3224,18 @@ ALTER TABLE `producto`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_rol` (`rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT de la tabla `permisos`
 --
-ALTER TABLE `usuario`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `permisos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -3211,6 +3252,12 @@ ALTER TABLE `precio_mp`
 --
 ALTER TABLE `precio_producto`
   ADD CONSTRAINT `precio_producto_ibfk_1` FOREIGN KEY (`codigo_producto`) REFERENCES `producto` (`codigo`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_rol` FOREIGN KEY (`rol`) REFERENCES `permisos` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
