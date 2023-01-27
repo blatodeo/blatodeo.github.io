@@ -41,7 +41,7 @@ if ($validar == null || $validar = '') {
   <link rel="stylesheet" href="../css/styles.css">
   <style type="text/css">
 
-    
+
     .pag_btn {
 
 
@@ -138,7 +138,7 @@ if ($validar == null || $validar = '') {
     <!-- Data Table -->
 
 
-    <table class="table table-striped table-dark table_id">
+    <table class="table table-striped table-dark table_id" id="tblDatos">
 
 
       <thead>
