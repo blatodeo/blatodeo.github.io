@@ -96,12 +96,12 @@ if ($validar == null || $validar = '') {
     </div>
     <br>
 
-    <div class="container-fluid">
+    <!--<div class="container-fluid">
       <form class="d-flex">
         <input class="form-control me-2 light-table-filter" data-table="table_id" type="text"
          placeholder="Buscar con JS">
          <hr>
-      </form>
+      </form>-->
 
 
 
@@ -112,7 +112,7 @@ if ($validar == null || $validar = '') {
 
 
 
-    <table class="table table-striped table-dark table_id" id="tblDatos">
+    <table class="table table-striped table-dark table_id" id="table_id">
 
 
       <thead>
@@ -176,12 +176,12 @@ if ($validar == null || $validar = '') {
 
         </body>
     </table>
-    <div id="paginador" class=""></div>
+    <!--<div id="paginador" class=""></div> -->
 
   
 <script src="../js/page.js"></script>
 <script src="../js/buscador.js"></script>
-
+<script src="../js/user.js"></script>
 <script src="../js/acciones.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

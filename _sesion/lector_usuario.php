@@ -33,6 +33,43 @@ if ($validar == null || $validar = '') {
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
   <link rel="stylesheet" href="../css/fontawesome-all.min.css">
   <link rel="stylesheet" href="../css/styles.css">
+  <style type="text/css">
+
+
+.pag_btn {
+
+
+  border-radius: 4px;
+  margin: 4px;
+  padding: 5px;
+
+  cursor: pointer;
+  border: none;
+}
+
+.pag_btn_des {
+
+  border-radius: 4px;
+  margin: 4px;
+  padding: 5px;
+  font-size: 14pt;
+  cursor: pointer;
+  border: none;
+}
+
+.pag_num {
+
+
+  border-radius: 4px;
+  margin: 4px;
+  padding: 5px;
+
+  cursor: pointer;
+  border: none;
+
+}
+</style>
+
   <title></title>
 </head>
 
@@ -68,13 +105,13 @@ if ($validar == null || $validar = '') {
 
     <br>
 
-    <div class="container-fluid">
+    <!--<div class="container-fluid">
       <form class="d-flex">
         <input class="form-control me-2 light-table-filter" data-table="table_id" type="text"
          placeholder="Buscar con JS">
          <hr>
       </form>
-    </div>
+    </div> -->
 
 
 
@@ -82,7 +119,7 @@ if ($validar == null || $validar = '') {
       <br>
 
 
-    <table class="table table-striped table-dark table_id">
+    <table class="table table-striped table-dark table_id" id="table_id">
 
 
       <thead>
@@ -142,9 +179,16 @@ if ($validar == null || $validar = '') {
 
         </body>
     </table>
+    <!--<div id="paginador" class=""></div> -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script src="../js/buscador.js"></script>
+    <script src="../js/page.js"></script>
+    <script src="../js/acciones.js"></script>
+    <script src="../js/user.js"></script>
+
+
 
 
 </html>
