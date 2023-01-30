@@ -78,7 +78,7 @@ if ($validar == null || $validar = '') {
 
   <br>
   <div class="col-xs-12">
-    <h1>Lista de materia prima ok</h1>
+    <h1>Lista de materia prima </h1>
     <br>
     <div>
       <a class="btn btn-primary" href="agregar_mp.php">Nueva materia prima<i class="fa fa-plus" aria-hidden="true"></i></a>
