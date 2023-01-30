@@ -12,7 +12,7 @@ if ($validar == null || $validar = '') {
 }
 ?>
 
-
+s
 
 
 <!DOCTYPE html>
