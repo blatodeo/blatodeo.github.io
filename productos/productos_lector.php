@@ -78,17 +78,16 @@ if ($validar == null || $validar = '') {
 
   <br>
   <div class="col-xs-12">
-    <h1>Lista de materia prima</h1>
+    <h1>Lista de Productos</h1>
     <br>
     <div>
-      <a class="btn btn-primary" href="agregar_mp.php">Nueva materia prima<i class="fa fa-plus" aria-hidden="true"></i></a>
       <a class="btn btn-warning" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
-      <a class="btn btn-dark" href="../productos/productos.php">Productos <i class="fa fa-user" aria-hidden="true"></i> </a>
-      <a class="btn btn-dark" href="../_sesion/usuarios.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
-      <a class="btn btn-success" href="excel.php">Excel
+      <a class="btn btn-dark" href="../mp/lector_mp.php">Materia Prima <i class="fa fa-user" aria-hidden="true"></i> </a>
+      <a class="btn btn-dark" href="../_sesion/lector_usuario.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
+      <a class="btn btn-success" href="excel_producto.php">Excel
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
-       <a class="btn btn-success" href="pdf_mp.php">PDF
+       <a class="btn btn-success" href="pdf_producto.php">PDF
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
 
@@ -118,11 +117,10 @@ if ($validar == null || $validar = '') {
 
       <thead>
         <tr>
-          <th>Codigo</th>
-          <th>Linea</th>
-          <th>Descripcion</th>
-          <th>Coste/Kg</th>
-          <th>Acciones</th>
+        <th>Codigo</th>
+        <th>Linea</th>
+        <th>Descripcion</th>
+        <th>Coste/Tonelada</th>
 
         </tr>
       </thead>
@@ -131,7 +129,7 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT * FROM materia_prima ";
+        $SQL = "SELECT * FROM producto ";
         $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
@@ -139,22 +137,14 @@ if ($validar == null || $validar = '') {
 
         ?>
             <tr>
-              <td><?php echo $fila['codigo']; ?></td>
+              <td><?php echo $fila['codigo_producto']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo $fila['coste_kg']; ?></td>
+              <td><?php echo $fila['coste_ton']; ?></td>
 
 
 
 
-              <td>
-                <a class="btn btn-warning" href="editar_mp.php?codigo=<?php echo $fila['codigo'] ?> ">
-                  <i class="fa fa-edit"></i> </a>
-
-                <a class="btn btn-danger" href="eliminar_mp.php?codigo=<?php echo $fila['codigo'] ?>">
-                  <i class="fa fa-trash"></i></a>
-
-              </td>
             </tr>
 
 
