@@ -9,7 +9,8 @@ if ($validar == null || $validar = '') {
 
   header("Location: ../_sesion/login.php");
   die();
-}
+} 
+
 ?>
 
 
