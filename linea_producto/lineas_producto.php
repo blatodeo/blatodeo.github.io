@@ -29,8 +29,9 @@ if ($validar == null || $validar = '') {
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="../css/fontawesome-all.min.css">
   <link rel="stylesheet" href="../css/styles.css">
@@ -71,7 +72,7 @@ if ($validar == null || $validar = '') {
  }
 </style>
 
-  <title>Materia Prima</title>
+  <title>Lineas</title>
 </head>
 
 
@@ -82,18 +83,18 @@ if ($validar == null || $validar = '') {
 
   <br>
   <div class="col-xs-12">
-    <h1>Lista de materia prima</h1>
+    <h1>Lista de Lineas de Producto</h1>
       <a class="btn btn-success" href="excel.php">Excel
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
        <a class="btn btn-success" href="pdf_mp.php">PDF
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
-       <a class="btn btn-primary" href="agregar_mp.php"> Nueva Materia Prima 
+       <a class="btn btn-primary" href="agregar_linea_producto.php"> Nueva Linea
         <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
-      <a class="btn btn-primary" href="../linea/lineas.php"> Ver Lineas
-      <i class="fa-solid fa-grip-lines"></i>
+      <a class="btn btn-primary" href="../producto/productos.php"> Regresar a productos
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
       </a>
 
 
@@ -123,10 +124,8 @@ if ($validar == null || $validar = '') {
 
       <thead>
         <tr>
-          <th>Codigo</th>
+          <th>ID</th>
           <th>Linea</th>
-          <th>Descripcion</th>
-          <th>Precio/Kg</th>
           <th>Acciones</th>
 
         </tr>
@@ -136,28 +135,25 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, precio_mp.precio FROM materia_prima
-        LEFT JOIN linea ON materia_prima.linea = linea.id  LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id " ;
+        $SQL = "SELECT * FROM linea_producto ";
         $dato = mysqli_query($conexion, $SQL);
-        
+
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
 
         ?>
             <tr>
-              <td><?php echo $fila['codigo']; ?></td>
+              <td><?php echo $fila['id']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
-              <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo $fila['precio']; ?></td>
 
 
 
 
               <td>
-                <a class="btn btn-warning" href="editar_mp.php?codigo=<?php echo $fila['codigo'] ?> ">
+                <a class="btn btn-warning" href="editar_linea_producto.php?id=<?php echo $fila['id'] ?> ">
                   <i class="fa fa-edit"></i> </a>
 
-                <a class="btn btn-danger" href="eliminar_mp.php?codigo=<?php echo $fila['codigo'] ?>">
+                <a class="btn btn-danger" href="eliminar_linea_producto.php?id=<?php echo $fila['id'] ?>">
                   <i class="fa fa-trash"></i></a>
 
               </td>

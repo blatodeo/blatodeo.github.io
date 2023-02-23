@@ -18,7 +18,7 @@ if ($validar == null || $validar = '') {
 
 $codigo = $_GET['codigo'];
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$consulta = "SELECT * FROM materia_prima WHERE codigo = $codigo";
+$consulta = "SELECT * FROM producto WHERE codigo = $codigo";
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
 
@@ -32,7 +32,7 @@ $usuario = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Materia Prima</title>
+    <title>Editar Producto</title>
 
 
     <link rel="stylesheet" href="../css/fontawesome-all.min.css">
@@ -68,7 +68,6 @@ $usuario = mysqli_fetch_assoc($resultado);
 			});
 		</script>
 
-
 </head>
 
 <body id="page-top">
@@ -81,7 +80,7 @@ $usuario = mysqli_fetch_assoc($resultado);
     ?>
 
 
-    <form action="_functions.php" method="POST">
+    <form action="product_functions.php" method="POST">
         <div id="login">
             <div class="container">
                 <div id="login-row" class="row justify-content-center align-items-center">
@@ -90,36 +89,26 @@ $usuario = mysqli_fetch_assoc($resultado);
 
                             <br>
                             <br>
-                            <h3 class="text-center">Editar materia prima</h3>
+                            <h3 class="text-center">Editar producto</h3>
+
                             <div class="form-group">
                                 <label for="linea" class="form-label">Linea *</label>
                                 <select class="country" name="linea" value="<?php echo $usuario['linea']; ?>" required 
 					style="width: 200px;">
             <?php
-        $v = mysqli_query($link, "SELECT * FROM linea");
+        $v = mysqli_query($link, "SELECT * FROM linea_producto");
         while($linea = mysqli_fetch_row($v)){
     ?>
             <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
         <?php   } ?></select>
 
-
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripcion:</label><br>
                                 <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="" value="<?php echo $usuario['descripcion']; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="coste_kg">Coste/Kg:</label><br>
-                                <input type="hidden" name="accion" value="editar_mp">
+                                <input type="hidden" name="accion" value="editar_producto">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                                <select  class="country" name="precio_mp" value="<?php echo $usuario['precio_mp']; ?>" required 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
-        <?php   } ?></select>
+
                             </div>
 
 
@@ -128,7 +117,7 @@ $usuario = mysqli_fetch_assoc($resultado);
                             <div class="mb-3">
 
                                 <button type="submit" class="btn btn-success">Editar</button>
-                                <a href="mp.php" class="btn btn-danger">Cancelar</a>
+                                <a href="productos.php" class="btn btn-danger">Cancelar</a>
 
                             </div>
                         </div>

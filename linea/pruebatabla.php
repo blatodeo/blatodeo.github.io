@@ -17,7 +17,6 @@ if ($validar == null || $validar = '') {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../navbar/html.php" ?>
 
 <head>
   <meta charset="UTF-8">
@@ -29,8 +28,8 @@ if ($validar == null || $validar = '') {
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="../css/fontawesome-all.min.css">
   <link rel="stylesheet" href="../css/styles.css">
@@ -74,6 +73,28 @@ if ($validar == null || $validar = '') {
   <title>Materia Prima</title>
 </head>
 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+    <img class="alcon-logo" src="../img/alcon-logo.png"></img>
+    <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="../producto/productos.php">Productos <i class="fa fa-boxes"></i> </a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="../_sesion/usuarios.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
+            </li>
+            <li class="nav-item active">
+            <a class="btn btn-danger" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
 
 
 <div class="container is-fluid">
@@ -126,7 +147,7 @@ if ($validar == null || $validar = '') {
           <th>Codigo</th>
           <th>Linea</th>
           <th>Descripcion</th>
-          <th>Precio/Kg</th>
+          <th>Coste/Kg</th>
           <th>Acciones</th>
 
         </tr>
@@ -136,10 +157,9 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, precio_mp.precio FROM materia_prima
-        LEFT JOIN linea ON materia_prima.linea = linea.id  LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id " ;
+        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, materia_prima.coste_kg FROM materia_prima LEFT JOIN linea ON materia_prima.linea = linea.id";
         $dato = mysqli_query($conexion, $SQL);
-        
+
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
 
@@ -148,7 +168,7 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo $fila['precio']; ?></td>
+              <td><?php echo $fila['coste_kg']; ?></td>
 
 
 

@@ -7,7 +7,7 @@ $validar = $_SESSION['nombre'];
 
 if ($validar == null || $validar = '') {
 
-  header("Location: ../_sesion/login.php");
+  header("Location: ../_sesion/index.php");
   die();
 }
 ?>
@@ -17,6 +17,7 @@ if ($validar == null || $validar = '') {
 
 <!DOCTYPE html>
 <html lang="en">
+<?php include "../navbar/html.php" ?>
 
 <head>
   <meta charset="UTF-8">
@@ -25,8 +26,11 @@ if ($validar == null || $validar = '') {
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
+
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
@@ -69,28 +73,40 @@ if ($validar == null || $validar = '') {
  }
 </style>
 
-  <title></title>
+  <title>Productos</title>
 </head>
+
+
+
+
+<br>
+
+
 
 <div class="container is-fluid">
 
 
 
-  <br>
   <div class="col-xs-12">
     <h1>Lista de Productos</h1>
     <br>
     <div>
-      <a class="btn btn-primary" href="agregar_mp.php">Nuevo Producto<i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn btn-warning" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
-      <a class="btn btn-dark" href="../mp/mp.php">Materia Prima <i class="fa fa-user" aria-hidden="true"></i> </a>
-      <a class="btn btn-dark" href="../_sesion/usuarios.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
       <a class="btn btn-success" href="excel.php">Excel
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
        <a class="btn btn-success" href="pdf_mp.php">PDF
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
+       <a class="btn btn-primary" href="agregar_producto.php"> Nuevo Producto 
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+      <a class="btn btn-primary" href="../linea_producto/lineas_producto.php"> Ver Lineas 
+        <i class="fa-solid fa-grip-lines" aria-hidden="true"></i>
+      </a>
+      <a class="btn btn-primary" href="../formula/formula.php">
+                  Ver Formulas</a>
+
+
 
 
 
@@ -121,9 +137,6 @@ if ($validar == null || $validar = '') {
         <th>Codigo</th>
         <th>Linea</th>
         <th>Descripcion</th>
-        <th>Formulacion</th>
-        <th>Coste/Unidad</th>
-        <th>Coste/Total</th>
         <th>Acciones</th>
 
         </tr>
@@ -133,7 +146,7 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT * FROM materia_prima ";
+        $SQL = "SELECT  producto.codigo, linea_producto.linea, producto.descripcion_producto FROM producto LEFT JOIN linea_producto ON producto.linea = linea_producto.id";
         $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
@@ -143,23 +156,18 @@ if ($validar == null || $validar = '') {
             <tr>
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
-              <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo $fila['formulacion']; ?></td>
-              <td><?php echo $fila['coste_unidad']; ?></td>
-              <td><?php echo $fila['coste_tonelada']; ?></td>
+              <td><?php echo $fila['descripcion_producto']; ?></td>
 
 
 
 
               <td>
-                <a class="btn btn-warning" href="editar_mp.php?codigo=<?php echo $fila['codigo'] ?> ">
+                <a class="btn btn-warning" href="editar_producto.php?codigo=<?php echo $fila['codigo'] ?> ">
                   <i class="fa fa-edit"></i> </a>
 
-                <a class="btn btn-danger" href="eliminar_mp.php?codigo=<?php echo $fila['codigo'] ?>">
+                <a class="btn btn-danger" href="eliminar_producto.php?codigo=<?php echo $fila['codigo'] ?>">
                   <i class="fa fa-trash"></i></a>
 
-                  <a class="btn btn-danger" href="eliminar_mp.php?codigo=<?php echo $fila['codigo'] ?>">
-                  Calcular precio total</a>
 
 
               </td>
@@ -195,6 +203,10 @@ if ($validar == null || $validar = '') {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>  </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 
 </html>

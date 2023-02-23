@@ -30,7 +30,9 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Materia Prima</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <title>Agregar Materia Prima a Formula</title>
 
 	<link rel="stylesheet" href="../css/es.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -62,15 +64,18 @@ error_reporting(E_ALL);
 					maximumSelectionLength: 2,
 				});
 				//Chosen
+				$(".country1").chosen({
+					max_selected_options: 2,
+				});
 			});
 		</script>
-
 
 </head>
 
 <body id="page-top">
 
 <br>
+
 <?php
     $link = mysqli_connect("localhost", "root", "");
     if($link){
@@ -80,9 +85,8 @@ error_reporting(E_ALL);
     ?>
 
 
-
-<form  action="_functions.php" method="POST">
-<div id="login" >
+<form  action="functions_formula.php" method="POST">
+<div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
@@ -90,41 +94,41 @@ error_reporting(E_ALL);
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Registro de nueva materia prima</h3>
+                            <h3 class="text-center">Selecciona una materia prima para agregarla a la formula</h3>
                             <div class="form-group">
-                            <label for="codigo" class="form-label">Codigo *</label>
-                            <input type="text"  id="codigo" name="codigo" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="linea">Linea:</label><br>
-                                <select class="country" name="linea" 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM linea");
-        while($linea = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
-        <?php   } ?></select>
+                            <label for="codigo_producto" class="form-label">Selecciona a que producto va dirigido *</label>
+                            <script>$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});</script>
+                <input type="hidden" name="accion" value="agregar_mp_formula">
 
-                            </div>
-                            <div class="form-group">
-                                  <label for="descripcion" class="form-label">Descripcion *</label>
-                                <input type="text"  id="descripcion" name="descripcion" class="form-control" required>
-                                
-                            </div>
-                            <div class="form-group">
-                                  <label for="precio" class="form-label">Coste/Kg *</label>
-                                  <select class="country" name="precio_mp" 
+                            <select name="codigo_producto" class="country"
 					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
+                    <?php
+        $v = mysqli_query($link, "SELECT * FROM producto");
+        while($codigo = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
-        <?php   } ?></select>
-                                
-                            </div>
+            <option value="<?php echo $codigo[0] ?>"><?php echo $codigo[1] ?></option>
+        <?php   } ?>
+			</select>
 
+                            <label for="codigo_mp" class="form-label">Selecciona Materia Prima *</label>
+                            <script>$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});</script>
+                            <select name="codigo_mp" class="country"
+					style="width: 200px;">
+                    <?php
+        $v = mysqli_query($link, "SELECT * FROM materia_prima");
+        while($descripcion = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $descripcion[0] ?>"><?php echo $descripcion[1] ?></option>
+        <?php   } ?>
+			</select>
+
+
+                             
+                            </div>
                       
                         
                            <br>
@@ -132,10 +136,9 @@ error_reporting(E_ALL);
                                 <div class="mb-3">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_mp">
-                               <a href="mp.php" class="btn btn-danger">Cancelar</a>
-                               
-                            </div>
+                               name="agregar_mp_formula"> 
+                               <a href="formula.php" class="btn btn-danger">Cancelar</a> 
+</div>
                             </div>
                             </div>
 

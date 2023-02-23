@@ -4,27 +4,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-    $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
-    if(isset($_POST['agregar_mp'])){
+    
+      
 
-        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
-    
-        $codigo = trim($_POST['codigo']);
-        $linea = trim($_POST['linea']);
-        $descripcion = trim($_POST['descripcion']);
-        $precio_mp = trim($_POST['precio_mp']);
-    
-    
-        $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion, precio_mp)
-        VALUES ('$codigo', '$linea','$descripcion','$precio_mp')";
-    
-        mysqli_query($conexion, $consulta);
-        mysqli_close($conexion);
-    
-        header('Location: ../mp/mp.php');
-      }
-    }
 
    
 require_once ("../conexion/_db.php");
@@ -35,16 +18,16 @@ require_once ("../conexion/_db.php");
 if (isset($_POST['accion'])){ 
     switch ($_POST['accion']){
         //casos de registros
-        case 'agregar_mp':
-            agregar_mp();
+        case 'agregar_mp_formula':
+            agregar_mp_formula();
             break; 
 
         case 'editar_mp':
             editar_mp();
             break; 
 
-            case 'eliminar_mp';
-            eliminar_mp();
+            case 'eliminar_formula';
+            eliminar_formula();
     
             break;
 
@@ -73,7 +56,7 @@ if (isset($_POST['accion'])){
 
     }else{
 
-        header('Location: login.php');
+        header('Location: index.php');
         session_destroy();
 
     }
@@ -81,7 +64,22 @@ if (isset($_POST['accion'])){
   
 }
 
-function agregar_mp() {
+function agregar_mp_formula() {
+    $link = mysqli_connect("localhost", "root", "");
+    if($link){
+        mysqli_select_db($link, "alcon");
+        mysqli_query($link, "SET NAMES 'utf8'");
+    }
+    
+
+    $codigo_mp = $_POST['codigo_mp'];
+    $codigo_producto= $_POST['codigo_producto'];
+    $ficha22 = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo_producto'  ";
+    mysqli_query($link, $ficha22);
+    
+    header('Location: ../producto/productos.php');
+
+
 }
 
     
@@ -90,23 +88,23 @@ function agregar_mp() {
     function editar_mp() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
+		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion' , coste_kg = '$coste_kg' WHERE codigo = '$codigo' ";
 
 		mysqli_query($conexion, $consulta);
 
 		header('Location: ../mp/mp.php');
     }
 
-        function eliminar_mp() {
+        function eliminar_formula() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
-            $codigo= $_POST['codigo'];
-            $consulta= "DELETE FROM materia_prima WHERE codigo= $codigo";
+            $id= $_POST['id'];
+            $consulta= "DELETE FROM formula WHERE id = '$id'";
         
             mysqli_query($conexion, $consulta);
         
         
-            header('Location: ../mp/mp.php');
+            header('Location: ../producto/productos.php');
         
         }
         

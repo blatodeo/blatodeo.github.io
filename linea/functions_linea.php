@@ -6,25 +6,20 @@ error_reporting(E_ALL);
 
     $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
-    if(isset($_POST['agregar_mp'])){
+    if(isset($_POST['agregar_linea'])){
 
-        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
     
-        $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
-        $descripcion = trim($_POST['descripcion']);
-        $precio_mp = trim($_POST['precio_mp']);
     
-    
-        $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion, precio_mp)
-        VALUES ('$codigo', '$linea','$descripcion','$precio_mp')";
+        $consulta= "INSERT INTO linea (linea)
+        VALUES ('$linea')";
     
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
     
-        header('Location: ../mp/mp.php');
+        header('Location: lineas.php');
       }
-    }
+    
 
    
 require_once ("../conexion/_db.php");
@@ -35,16 +30,16 @@ require_once ("../conexion/_db.php");
 if (isset($_POST['accion'])){ 
     switch ($_POST['accion']){
         //casos de registros
-        case 'agregar_mp':
-            agregar_mp();
+        case 'agregar_linea':
+            agregar_linea();
             break; 
 
-        case 'editar_mp':
-            editar_mp();
+        case 'editar_linea':
+            editar_linea();
             break; 
 
-            case 'eliminar_mp';
-            eliminar_mp();
+            case 'eliminar_linea';
+            eliminar_linea();
     
             break;
 
@@ -81,35 +76,33 @@ if (isset($_POST['accion'])){
   
 }
 
-function agregar_mp() {
+function agregar_linea() {
 }
 
     
 
 
-    function editar_mp() {
+    function editar_linea() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
+		$consulta="UPDATE linea SET linea = '$linea' WHERE id = '$id' ";
 
 		mysqli_query($conexion, $consulta);
 
-		header('Location: ../mp/mp.php');
+		header('Location: lineas.php');
     }
 
-        function eliminar_mp() {
+        function eliminar_linea() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
-            $codigo= $_POST['codigo'];
-            $consulta= "DELETE FROM materia_prima WHERE codigo= $codigo";
+            $id= $_POST['id'];
+            $consulta= "DELETE FROM linea WHERE id= $id";
         
             mysqli_query($conexion, $consulta);
         
         
-            header('Location: ../mp/mp.php');
+            header('Location: lineas.php');
         
         }
         
-
-
 

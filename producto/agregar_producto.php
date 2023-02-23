@@ -12,11 +12,6 @@ if ($validar == null || $validar = '') {
 }
 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 ?>
 
 
@@ -30,7 +25,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Materia Prima</title>
+    <title>Agregar Producto</title>
 
 	<link rel="stylesheet" href="../css/es.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -64,13 +59,10 @@ error_reporting(E_ALL);
 				//Chosen
 			});
 		</script>
-
-
 </head>
 
 <body id="page-top">
 
-<br>
 <?php
     $link = mysqli_connect("localhost", "root", "");
     if($link){
@@ -81,7 +73,7 @@ error_reporting(E_ALL);
 
 
 
-<form  action="_functions.php" method="POST">
+<form  action="product_functions.php" method="POST">
 <div id="login" >
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -90,7 +82,7 @@ error_reporting(E_ALL);
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Registro de nueva materia prima</h3>
+                            <h3 class="text-center">Registro de nuevo producto</h3>
                             <div class="form-group">
                             <label for="codigo" class="form-label">Codigo *</label>
                             <input type="text"  id="codigo" name="codigo" class="form-control" required>
@@ -100,28 +92,15 @@ error_reporting(E_ALL);
                                 <select class="country" name="linea" 
 					style="width: 200px;">
             <?php
-        $v = mysqli_query($link, "SELECT * FROM linea");
+        $v = mysqli_query($link, "SELECT * FROM linea_producto");
         while($linea = mysqli_fetch_row($v)){
     ?>
             <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
         <?php   } ?></select>
-
                             </div>
                             <div class="form-group">
                                   <label for="descripcion" class="form-label">Descripcion *</label>
                                 <input type="text"  id="descripcion" name="descripcion" class="form-control" required>
-                                
-                            </div>
-                            <div class="form-group">
-                                  <label for="precio" class="form-label">Coste/Kg *</label>
-                                  <select class="country" name="precio_mp" 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
-        <?php   } ?></select>
                                 
                             </div>
 
@@ -132,8 +111,8 @@ error_reporting(E_ALL);
                                 <div class="mb-3">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_mp">
-                               <a href="mp.php" class="btn btn-danger">Cancelar</a>
+                               name="agregar_producto">
+                               <a href="productos.php" class="btn btn-danger">Cancelar</a>
                                
                             </div>
                             </div>

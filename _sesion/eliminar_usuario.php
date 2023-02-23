@@ -6,7 +6,7 @@ error_reporting(0);
 $validar = $_SESSION['nombre'];
 
 if( $validar == null || $validar = ''){
-    header("Location: login.php");
+    header("Location: index.php");
     die();
 
 }
@@ -29,7 +29,12 @@ if( $validar == null || $validar = ''){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+
 </head>
+
+
 <body>
     
     <div class="container mt-5">

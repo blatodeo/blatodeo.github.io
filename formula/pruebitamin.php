@@ -20,20 +20,29 @@ if( $validar == null || $validar = ''){
 <?php include "../navbar/html.php" ?>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../css/page.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+    <title>Formulas</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+        integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+        crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-    <title>Usuarios</title>
+    <!--  Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css" />
+
+    <style>
+        .table thead,
+        .table tfoot {
+            background-color: #455a64;
+            color: azure;
+        }
+    </style>
 </head>
 
 <div class="container is-fluid">
@@ -113,77 +122,70 @@ if( $validar == null || $validar = ''){
 
 
       <table class="table table-striped table-dark table_id " id="table_id">
-
-                   
-
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Fecha</th>
-          <th>Rol</th>
-          <th>Acciones</th>
+  <tr>
+    <th>ID</th>
+    <th>Producto</th>
+    <th>Materia Prima</th>
+    <th>Coste/Kg</th>
+    <th>Acciones</th>
 
-
-        </tr>
-      </thead>
-      <tbody>
-
-        <?php
-
-        $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL="SELECT usuario.id, usuario.nombre, usuario.correo, usuario.password,
-        usuario.fecha, permisos.rol FROM usuario
-        LEFT JOIN permisos ON usuario.rol = permisos.id";
-                $dato = mysqli_query($conexion, $SQL);
-
-        if ($dato->num_rows > 0) {
-          while ($fila = mysqli_fetch_array($dato)) {
-
-        ?>
-            <tr>
-              <td><?php echo $fila['id']; ?></td>
-              <td><?php echo $fila['nombre']; ?></td>
-              <td><?php echo $fila['correo']; ?></td>
-              <td><?php echo $fila['fecha']; ?></td>
-              <td><?php echo $fila['rol']; ?></td>
-
-
-
-
-
-            <td>
-
-
-
-<a class="btn btn-warning" href="editar_usuario.php?id=<?php echo $fila['id']?> ">
-<i class="fa fa-edit"></i> </a>
-
-
-<a class="btn btn-danger" href="eliminar_usuario.php?id=<?php echo $fila['id']?> ">
-<i class="fa fa-trash"></i></a>
-</td>
-</tr>
-
+  </tr>
+</thead>
+<tbody>
 
 <?php
-}
-}else{
+
+$conexion = mysqli_connect("localhost", "root", "", "alcon");
+$SQL = "SELECT formula.id, formula.codigo_producto, producto.codigo, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.coste_kg FROM formula
+LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  LEFT JOIN producto ON formula.codigo_producto = producto.codigo " ;
+$dato = mysqli_query($conexion, $SQL);
+
+if ($dato->num_rows > 0) {
+  while ($fila = mysqli_fetch_array($dato)) {
+
+?>
+<tr>
+        <td><?php echo $fila['id']; ?></td>
+        <td><?php echo $fila['codigo_producto']. ' - ' .$fila['descripcion_producto']; ?></td>
+        <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
+        <td><?php echo $fila['coste_kg']; ?></td>
+
+
+
+
+        <td>
+
+          <a class="btn btn-danger" href="eliminar_formula.php?id=<?php echo $fila['id'] ?>">
+            <i class="fa fa-trash"></i></a>
+
+            <a class="btn btn-primary" href="agregar_mp_formula.php"> Agregar Materia Prima 
+                <i class="fa fa-plus" aria-hidden="true"></i></a>
+                <a class="btn btn-primary" href="../producto/productos.php">Productos</a>
+
+
+        </td>
+      </tr>
+
+
+    <?php
+    }
+  } else {
 
     ?>
     <tr class="text-center">
-    <td colspan="16">No existen registros</td>
+      <td colspan="16">No existen registros</td>
     </tr>
 
-    
-    <?php
-    
-}
 
-?>
+  <?php
 
-	</body>
+  }
+
+  ?>
+
+
+  </body>
   </table>
   <!-- <div id="paginador" class=""></div>-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
