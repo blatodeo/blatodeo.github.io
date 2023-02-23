@@ -9,10 +9,11 @@ if ($validar == null || $validar = '') {
 
     header("Location: ../_sesion/index.php");
     die();
+    
 }
 
 
-
+ 
 
 
 
