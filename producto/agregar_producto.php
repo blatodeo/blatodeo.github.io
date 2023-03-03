@@ -99,8 +99,8 @@ if ($validar == null || $validar = '') {
         <?php   } ?></select>
                             </div>
                             <div class="form-group">
-                                  <label for="descripcion" class="form-label">Descripcion *</label>
-                                <input type="text"  id="descripcion" name="descripcion" class="form-control" required>
+                                  <label for="descripcion_producto" class="form-label">Descripcion *</label>
+                                <input type="text"  id="descripcion_producto" name="descripcion_producto" class="form-control" required>
                                 
                             </div>
 

@@ -11,15 +11,15 @@ error_reporting(E_ALL);
 
     if(isset($_POST['agregar_producto'])){
 
-        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
+        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion_producto'])  >=1){
     
         $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
-        $descripcion = trim($_POST['descripcion']);
+        $descripcion_producto = trim($_POST['descripcion_producto']);
     
     
-        $consulta= "INSERT INTO producto (codigo, linea, descripcion)
-        VALUES ('$codigo', '$linea','$descripcion')";
+        $consulta= "INSERT INTO producto (codigo, linea, descripcion_producto)
+        VALUES ('$codigo', '$linea','$descripcion_producto')";
     
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
@@ -87,7 +87,7 @@ if (isset($_POST['accion'])){
     function editar_producto() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE producto SET linea = '$linea', descripcion = '$descripcion'  WHERE codigo = '$codigo' ";
+		$consulta="UPDATE producto SET linea = '$linea', descripcion_producto = '$descripcion_producto'  WHERE codigo = '$codigo' ";
 
 		mysqli_query($conexion, $consulta);
 
