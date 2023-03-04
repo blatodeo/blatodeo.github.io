@@ -6,7 +6,7 @@ header("Content-Disposition: attachment; filename=lector.xls");
 ?>
 
 
-<table class="table table-striped table-dark " id= "table_id">
+<table class="table table-striped table-dark" id= "table_id">
 
                    
 <thead>    

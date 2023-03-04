@@ -105,7 +105,7 @@ $usuario = mysqli_fetch_assoc($resultado);
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripcion:</label><br>
-                                <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="" value="<?php echo $usuario['descripcion']; ?>">
+                                <input type="text" name="descripcion_producto" id="descripcion_producto" class="form-control" placeholder="" value="<?php echo $usuario['descripcion_producto']; ?>">
                                 <input type="hidden" name="accion" value="editar_producto">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
 
