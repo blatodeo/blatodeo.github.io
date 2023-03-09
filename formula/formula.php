@@ -103,7 +103,7 @@ if ($validar == null || $validar = '') {
 <?php
 
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$SQL = "SELECT formula.id, formula.codigo_producto, producto.codigo, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.coste_kg FROM formula
+$SQL = "SELECT formula.id, formula.codigo_producto, producto.codigo, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.precio_mp FROM formula
 LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  LEFT JOIN producto ON formula.codigo_producto = producto.codigo " ;
 $dato = mysqli_query($conexion, $SQL);
 
@@ -115,7 +115,7 @@ if ($dato->num_rows > 0) {
         <td><?php echo $fila['id']; ?></td>
         <td><?php echo $fila['codigo_producto']. ' - ' .$fila['descripcion_producto']; ?></td>
         <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
-        <td><?php echo $fila['coste_kg']; ?></td>
+        <td><?php echo $fila['precio_mp']; ?></td>
 
 
 
