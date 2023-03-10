@@ -77,7 +77,7 @@ function agregar_mp_formula() {
     $ficha22 = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo_producto'  ";
     mysqli_query($link, $ficha22);
     
-    header('Location: ../producto/productos.php');
+    header('Location: formula.php');
 
 
 }
@@ -92,7 +92,7 @@ function agregar_mp_formula() {
 
 		mysqli_query($conexion, $consulta);
 
-		header('Location: ../mp/mp.php');
+		header('Location: formula.php');
     }
 
         function eliminar_formula() {
@@ -104,7 +104,7 @@ function agregar_mp_formula() {
             mysqli_query($conexion, $consulta);
         
         
-            header('Location: ../producto/productos.php');
+            header('Location: formula.php');
         
         }
         

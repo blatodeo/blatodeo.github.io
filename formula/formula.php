@@ -35,6 +35,7 @@ if ($validar == null || $validar = '') {
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
         integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
         crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -42,8 +43,9 @@ if ($validar == null || $validar = '') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+
     <!--  Datatables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css" />
+    <link rel="stylesheet" type=<link rel="stylesheet" href="https://kit.fontawesome.com/af4606bedd.css" crossorigin="anonymous" "text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css" />
 
     <style>
         .table thead,
@@ -76,6 +78,14 @@ if ($validar == null || $validar = '') {
 
   </div>
 
+  <div>
+  <a class="btn btn-warning" href="formula.php"> Regresa a Productos
+                <i class="fa-solid fa-delete-left"></i></a>
+
+  <a class="btn btn-primary" href="agregar_mp_formula.php"> Agregar Materia Prima 
+                <i class="fa fa-plus" aria-hidden="true"></i></a>
+
+    </div>
 
 
 
@@ -125,9 +135,6 @@ if ($dato->num_rows > 0) {
           <a class="btn btn-danger" href="eliminar_formula.php?id=<?php echo $fila['id'] ?>">
             <i class="fa fa-trash"></i></a>
 
-            <a class="btn btn-primary" href="agregar_mp_formula.php"> Agregar Materia Prima 
-                <i class="fa fa-plus" aria-hidden="true"></i></a>
-                <a class="btn btn-primary" href="../producto/productos.php">Productos</a>
 
 
         </td>
