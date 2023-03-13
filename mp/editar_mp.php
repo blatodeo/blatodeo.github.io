@@ -60,14 +60,17 @@ $usuario = mysqli_fetch_assoc($resultado);
 			href=
 "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
 		<script>
-			$(document).ready(function () {
-				//Select2
-				$(".country").select2({
-					maximumSelectionLength: 2,
-				});
-				//Chosen
-			});
-		</script>
+$(document).ready(function () {
+  //Select2
+  var select2_element = $(".country").select2({
+    maximumSelectionLength: 10,
+  });
+
+  // Establecer valor predefinido en select2
+  select2_element.val('<?php echo $usuario["linea"]; ?>');
+  select2_element.trigger('change');
+  //Chosen
+});		</script>
 
 
 </head>
@@ -94,7 +97,7 @@ $usuario = mysqli_fetch_assoc($resultado);
                             <h3 class="text-center">Editar materia prima</h3>
                             <div class="form-group">
                                 <label for="linea" class="form-label">Linea *</label>
-                                <select class="country" name="linea" value="<?php echo $usuario['linea']; ?>" required 
+                                <select class="country" name="linea" id="mi_select2" value="<?php echo $usuario['linea']; ?>" required 
 					style="width: 200px;">
             <?php
         $v = mysqli_query($link, "SELECT * FROM linea");
@@ -110,17 +113,16 @@ $usuario = mysqli_fetch_assoc($resultado);
                                 <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="" value="<?php echo $usuario['descripcion']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="coste_kg">Coste/Kg:</label><br>
                                 <input type="hidden" name="accion" value="editar_mp">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                                <select  class="country" name="precio_mp" value="<?php echo $usuario['precio_mp']; ?>" required 
-					style="width: 200px;">
+                                <label for="precio_mp" class="form-label">Precio/Kg *</label>
+                                  <input type="number"  id="precio_mp" name="precio_mp" class="form-control" value="<?php echo $usuario['precio_mp']; ?>" required>
             <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
+        //$v = mysqli_query($link, "SELECT * FROM precio_mp");
+        //while($precio = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
-        <?php   } ?></select>
+        <!--    <option value="<?php //echo $precio[0] ?>"><?php //echo $precio[1] ?></option> -->
+        <?php   //} ?></select>
                             </div>
 
 
