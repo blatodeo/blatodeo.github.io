@@ -71,6 +71,9 @@ if ($validar == null || $validar = '') {
  }
 </style>
 
+
+
+
   <title>Materia Prima</title>
 </head>
 
@@ -140,6 +143,8 @@ if ($validar == null || $validar = '') {
         $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, materia_prima.precio_mp FROM materia_prima
         LEFT JOIN linea ON materia_prima.linea = linea.id  ";
         $dato = mysqli_query($conexion, $SQL);
+
+
         
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
@@ -149,8 +154,8 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo $fila['precio_mp']; ?></td>
-
+              <td><?php echo '$' . $fila['precio_mp']; ?></td>
+      </td>
 
 
 
@@ -164,9 +169,10 @@ if ($validar == null || $validar = '') {
               </td>
             </tr>
 
+            
 
-          <?php
-          }
+            <?php
+  }  
         } else {
 
           ?>
@@ -178,14 +184,12 @@ if ($validar == null || $validar = '') {
         <?php
 
         }
-
-        ?>
+                ?>
 
 
         </body>
     </table>
     <!--<div id="paginador" class=""></div> -->
-
   
 <script src="../js/page.js"></script>
 <script src="../js/buscador.js"></script>

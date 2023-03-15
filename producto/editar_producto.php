@@ -67,6 +67,19 @@ $usuario = mysqli_fetch_assoc($resultado);
 				//Chosen
 			});
 		</script>
+        		<script>
+$(document).ready(function () {
+  //Select2
+  var select2_element = $(".country").select2({
+    maximumSelectionLength: 10,
+  });
+
+  // Establecer valor predefinido en select2
+  select2_element.val('<?php echo $usuario["linea"]; ?>');
+  select2_element.trigger('change');
+  //Chosen
+});		</script>
+
 
 </head>
 

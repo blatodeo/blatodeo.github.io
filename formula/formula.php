@@ -56,6 +56,20 @@ if ($validar == null || $validar = '') {
     </style>
 </head>
 
+<script>
+$(document).ready(function() {
+  $("#sumar_costo").click(function() {
+    var total = 0;
+    $(".table_id tbody tr").each(function() {
+      var costo = $(this).find("td:eq(3)").text().replace("$", "");
+      total += parseFloat(costo);
+    });
+    $("#total_costo").text("$" + total.toFixed(2));
+  });
+});
+</script>
+
+
 <body>
 
         <br>
@@ -85,6 +99,8 @@ if ($validar == null || $validar = '') {
   <a class="btn btn-primary" href="agregar_mp_formula.php"> Agregar Materia Prima 
                 <i class="fa fa-plus" aria-hidden="true"></i></a>
 
+                <button id="sumar_costo" class="btn btn-primary">Sumar Costo/Kg</button>
+
     </div>
 
 
@@ -104,6 +120,7 @@ if ($validar == null || $validar = '') {
     <th>Producto</th>
     <th>Materia Prima</th>
     <th>Coste/Kg</th>
+    <th>Detalles</th> <!-- Nueva columna -->
     <th>Acciones</th>
 
   </tr>
@@ -125,7 +142,13 @@ if ($dato->num_rows > 0) {
         <td><?php echo $fila['id']; ?></td>
         <td><?php echo $fila['codigo_producto']. ' - ' .$fila['descripcion_producto']; ?></td>
         <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
-        <td><?php echo $fila['precio_mp']; ?></td>
+        <td><?php echo '$' . $fila['precio_mp']; ?></td>
+
+<td>
+    <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>">
+        <i class="fa fa-eye"></i> Ver detalles
+    </a>
+</td>
 
 
 

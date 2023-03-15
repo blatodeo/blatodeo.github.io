@@ -42,7 +42,7 @@ if( $validar == null || $validar = ''){
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
   <div class="container">
     <a class="navbar-brand" href="../_sesion/usuarios.php">
-      <img src="../img/alcon-logo.png" alt="..." height="36">
+      <img src="../img/alcon-logo.png" alt="..." height="70">
     </a>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">

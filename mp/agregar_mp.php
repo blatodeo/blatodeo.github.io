@@ -114,7 +114,7 @@ error_reporting(E_ALL);
                             </div>
                             <div class="form-group">
                                   <label for="precio" class="form-label">Precio/Kg *</label>
-                                  <input type="number"  id="precio_mp" name="precio_mp" class="form-control" required>
+                                  <input type="number" step="any"   id="precio_mp" name="precio_mp" class="form-control" required>
 
                                   <!--<select class="country" name="precio_mp" 
 					style="width: 200px;">
