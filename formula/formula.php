@@ -99,7 +99,6 @@ $(document).ready(function() {
   <a class="btn btn-primary" href="agregar_mp_formula.php"> Agregar Materia Prima 
                 <i class="fa fa-plus" aria-hidden="true"></i></a>
 
-                <button id="sumar_costo" class="btn btn-primary">Sumar Costo/Kg</button>
 
     </div>
 
@@ -122,7 +121,7 @@ $(document).ready(function() {
     <th>Coste/Kg</th>
     <th>Detalles</th> <!-- Nueva columna -->
     <th>Acciones</th>
-
+    <th></th>
   </tr>
 </thead>
 <tbody>
@@ -145,10 +144,19 @@ if ($dato->num_rows > 0) {
         <td><?php echo '$' . $fila['precio_mp']; ?></td>
 
 <td>
-    <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>">
+    <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
+>
         <i class="fa fa-eye"></i> Ver detalles
     </a>
 </td>
+
+<td>
+    <a class="btn btn-primary" href="agregar_mp_formula.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
+>
+        <i class="fa fa-plus"></i> Agregar MP
+    </a>
+</td>
+
 
 
 

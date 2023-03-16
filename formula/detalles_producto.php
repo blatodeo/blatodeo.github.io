@@ -58,7 +58,6 @@ if ($validar == null || $validar = '') {
 
 </head>
 
-<h1>Detalles de <?php echo $fila['descripcion_producto']; ?></h1>
 
 
 
@@ -67,6 +66,8 @@ if ($validar == null || $validar = '') {
 <br>
 <br>
 
+<a class="btn btn-warning" href="formula.php"> Regresa a Formulas
+                <i class="fa-solid fa-delete-left"></i></a>
 
 
 
@@ -77,9 +78,13 @@ if ($validar == null || $validar = '') {
 <?php
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
 
-if(isset($_GET['codigo_producto'])) {
-  $codigo_producto = $_GET['codigo_producto'];
-
+if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
+    $codigo_producto = $_GET['codigo_producto'];
+    $descripcion_producto = $_GET['descripcion_producto'];
+    
+    // aquí puedes agregar el resto del código
+  
+  
   $SQL = "SELECT * FROM formula
           LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
           LEFT JOIN producto ON formula.codigo_producto = producto.descripcion_producto
@@ -90,6 +95,8 @@ if(isset($_GET['codigo_producto'])) {
 
   if ($dato->num_rows > 0) {
     ?>
+
+
     <table class="table table-striped table-dark">
       <thead>
         <tr>
@@ -100,12 +107,19 @@ if(isset($_GET['codigo_producto'])) {
         </tr>
       </thead>
       <tbody>
+
+      <h1>Detalles de <?php echo $descripcion_producto;  ?></h1>
+
         <?php
         while ($fila = mysqli_fetch_array($dato)) {
+                      // Imprime la variable $fila para verificar que se esté recibiendo correctamente
+
           ?>
+
+          
           <tr>
             <td><?php echo $fila['id']; ?></td>
-            <td><?php echo $fila['codigo_producto'] . ' - ' .$fila['descripcion']; ?></td>
+            <td><?php echo $fila['codigo_producto'] ?></td>
             <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
             <td><?php echo '$' . $fila['precio_mp']; ?></td>
           </tr>
@@ -113,7 +127,9 @@ if(isset($_GET['codigo_producto'])) {
         }
         ?>
       </tbody>
+      
     </table>
+    
     <?php
   } else {
     echo "No se encontraron detalles para el producto con código $codigo_producto.";

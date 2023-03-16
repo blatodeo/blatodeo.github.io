@@ -82,9 +82,20 @@ error_reporting(E_ALL);
         mysqli_select_db($link, "alcon");
         mysqli_query($link, "SET NAMES 'utf8'");
     }
+      
     ?>
+    <?php
+$conexion = mysqli_connect("localhost", "root", "", "alcon");
 
+if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
+    $codigo_producto = $_GET['codigo_producto'];
+    $descripcion_producto = $_GET['descripcion_producto'];
+    
+    // aquí puedes agregar el resto del código
+  
+}
 
+?>
 <form  action="functions_formula.php" method="POST">
 <div id="login">
         <div class="container">
@@ -94,10 +105,12 @@ error_reporting(E_ALL);
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Selecciona una materia prima para agregarla a la formula</h3>
+                            <h3 class="text-center">Selecciona una materia prima para agregarla al producto: <?php echo $descripcion_producto;  ?></h3>
                             <div class="form-group">
-                            <label for="codigo_producto" class="form-label">Selecciona a que producto va dirigido *</label>
-                            <script>$(document).ready(function() {
+                            <!--<label for="codigo_producto" class="form-label">Producto al que va dirigido *</label> -->           
+                            <input type="hidden" id="codigo_producto" name="codigo_producto" value=<?php echo $codigo_producto;  ?>>
+<br>
+                            <!--<script>$(document).ready(function() {
     $('.js-example-basic-single').select2();
 });</script>
                 <input type="hidden" name="accion" value="agregar_mp_formula">
@@ -105,12 +118,11 @@ error_reporting(E_ALL);
                             <select name="codigo_producto" class="country"
 					style="width: 200px;">
                     <?php
-        $v = mysqli_query($link, "SELECT * FROM producto");
-        while($codigo = mysqli_fetch_row($v)){
+        //$v = mysqli_query($link, "SELECT * FROM producto");
+        //while($codigo = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $codigo[0] ?>"><?php echo $codigo[1] ?></option>
-        <?php   } ?>
-			</select>
+        <?php //  } ?>
+			</select>-->
 
                             <label for="codigo_mp" class="form-label">Selecciona Materia Prima *</label>
                             <script>$(document).ready(function() {
