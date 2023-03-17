@@ -138,6 +138,8 @@ if ($validar == null || $validar = '') {
         <th>Linea</th>
         <th>Descripcion</th>
         <th>Acciones</th>
+        <th>Detalles</th> <!-- Nueva columna -->
+
 
         </tr>
       </thead>
@@ -171,6 +173,13 @@ if ($validar == null || $validar = '') {
 
 
               </td>
+              <td>
+    <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
+>
+        <i class="fa fa-eye"></i> Ver detalles
+    </a>
+</td>
+
             </tr>
 
 

@@ -119,8 +119,9 @@ $(document).ready(function() {
     <th>Producto</th>
     <th>Materia Prima</th>
     <th>Coste/Kg</th>
-    <th>Detalles</th> <!-- Nueva columna -->
     <th>Acciones</th>
+    <th>Detalles</th> <!-- Nueva columna -->
+
     <th></th>
   </tr>
 </thead>

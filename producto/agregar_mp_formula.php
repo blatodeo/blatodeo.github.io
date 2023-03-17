@@ -96,7 +96,17 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
 }
 
 ?>
-<form  action="functions_formula.php" method="POST">
+<!--<form method="POST" action="agregar_mp_formula.php">
+  <label for="codigo_producto">Código del producto:</label>
+  <input type="text" name="codigo_producto"><br>
+
+  <label for="codigo_mp">Código de la materia prima:</label>
+  <input type="text" name="codigo_mp"><br>
+
+  <input type="submit" value="Guardar">
+</form>-->
+
+<form  action="product_functions.php" method="POST">
 <div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -107,8 +117,10 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                             <br>
                             <h3 class="text-center">Selecciona una materia prima para agregarla al producto: <?php echo $descripcion_producto;  ?></h3>
                             <div class="form-group">
-                            <!--<label for="codigo_producto" class="form-label">Producto al que va dirigido *</label> -->           
+                            <!--<label for="codigo_producto" class="form-label">Producto al que va dirigido *</label> -->     
+                            <input type="hidden" name="accion" value="agregar_mp_formula">      
                             <input type="hidden" id="codigo_producto" name="codigo_producto" value=<?php echo $codigo_producto;  ?>>
+
 <br>
                             <!--<script>$(document).ready(function() {
     $('.js-example-basic-single').select2();
@@ -149,7 +161,7 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
                                name="agregar_mp_formula"> 
-                               <a href="formula.php" class="btn btn-danger">Cancelar</a> 
+                               <a href="productos.php" class="btn btn-danger">Cancelar</a> 
 </div>
                             </div>
                             </div>
