@@ -102,7 +102,6 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
   if ($dato->num_rows > 0) {
     ?>
 
-
     <table class="table table-striped table-dark">
       <thead>
         <tr>
@@ -127,7 +126,7 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
             <td><?php echo $fila['id']; ?></td>
             <td><?php echo $fila['codigo_producto'] ?></td>
             <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
-            <td><?php echo '$' . $fila['precio_mp']; ?></td>
+            <!--<td><?php //echo '$' . $fila['precio_mp']; ?></td>-->
           </tr>
           <?php
         }

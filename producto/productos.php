@@ -148,8 +148,9 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT  producto.codigo, linea_producto.linea, producto.descripcion_producto FROM producto LEFT JOIN linea_producto ON producto.linea = linea_producto.id";
-        $dato = mysqli_query($conexion, $SQL);
+        $SQL = "SELECT producto.codigo, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio FROM formula
+        LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  LEFT JOIN producto ON formula.codigo_producto = producto.codigo LEFT JOIN precio_mp ON formula.precio_mp = precio_mp.id "  ;
+                $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
