@@ -113,9 +113,10 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
       </thead>
       <tbody>
 
-      <h1>Detalles de <?php echo $descripcion_producto;  ?></h1>
+      <h1>Formula de <?php echo $descripcion_producto;  ?></h1>
 
         <?php
+        $total = 0;
         while ($fila = mysqli_fetch_array($dato)) {
                       // Imprime la variable $fila para verificar que se esté recibiendo correctamente
 
@@ -126,9 +127,10 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
             <td><?php echo $fila['id']; ?></td>
             <td><?php echo $fila['codigo_producto'] ?></td>
             <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
-            <!--<td><?php //echo '$' . $fila['precio_mp']; ?></td>-->
+            <td><?php echo '$' . $fila['precio_mp']; ?></td>
           </tr>
           <?php
+          $total += $fila['precio_mp'];
         }
         ?>
       </tbody>
@@ -143,6 +145,9 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
   echo "No se especificó ningún código de producto.";
 }
 ?>
+
+<h1>Coste total formula: <?php echo '$' . $total; ?></h1>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>

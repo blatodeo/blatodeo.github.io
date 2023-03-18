@@ -148,9 +148,13 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT producto.codigo, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio FROM formula
-        LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  LEFT JOIN producto ON formula.codigo_producto = producto.codigo LEFT JOIN precio_mp ON formula.precio_mp = precio_mp.id "  ;
-                $dato = mysqli_query($conexion, $SQL);
+        $SQL = "SELECT formula.id, formula.codigo_producto, producto.codigo, producto.linea, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio 
+        FROM formula
+        LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  
+        LEFT JOIN producto ON formula.codigo_producto = producto.codigo 
+        LEFT JOIN precio_mp ON formula.precio_mp = precio_mp.id 
+        GROUP BY producto.codigo"  ;
+        $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
@@ -177,7 +181,7 @@ if ($validar == null || $validar = '') {
               <td>
     <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
 >
-        <i class="fa fa-eye"></i> Ver detalles
+        <i class="fa fa-eye"></i> Ver Formula
     </a>
 </td>
 
