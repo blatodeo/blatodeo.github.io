@@ -20,7 +20,6 @@ if ($validar == null || $validar = '') {
 
 
 
-
 ?>
 
 

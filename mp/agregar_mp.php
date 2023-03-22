@@ -114,16 +114,16 @@ error_reporting(E_ALL);
                             </div>
                             <div class="form-group">
                                   <label for="precio" class="form-label">Precio/Kg *</label>
-                                  <input type="number" step="any"   id="precio_mp" name="precio_mp" class="form-control" required>
+                                  <!--<input type="number" step="any"   id="precio_mp" name="precio_mp" class="form-control" required>-->
 
-                                  <!--<select class="country" name="precio_mp" 
+                                  <select class="country" name="precio_mp" 
 					style="width: 200px;">
             <?php
-        //$v = mysqli_query($link, "SELECT * FROM precio_mp");
-        //while($precio = mysqli_fetch_row($v)){
+        $v = mysqli_query($link, "SELECT * FROM precio_mp");
+        while($precio = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php //echo $precio[0] ?>"><?php //echo $precio[1] ?></option>
-        <?php   //} ?></select>-->
+            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
+        <?php   } ?></select>
                                 
                             </div>
 
