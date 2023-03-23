@@ -17,7 +17,6 @@ if ($validar == null || $validar = '') {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "../navbar/html.php" ?>
 
 <head>
   <meta charset="UTF-8">
@@ -28,10 +27,8 @@ if ($validar == null || $validar = '') {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
-  <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="../css/fontawesome-all.min.css">
   <link rel="stylesheet" href="../css/styles.css">
@@ -72,12 +69,37 @@ if ($validar == null || $validar = '') {
  }
 </style>
 
-
-
-
-  <title>Materia Prima</title>
+  <title>Materia Prima (Lector)</title>
 </head>
 
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top">
+    <img class="alcon-logo" src="../img/alcon-logo.png"></img>
+    <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="my-nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Carrito(0)</a>
+            </li>
+            <li class="nav-item">
+                <div class="alert alert-success">
+                    Pantalla de mensaje...
+                    <a href="#" class="badge badge-success">Ver carrito</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+</header>
 
 
 <div class="container is-fluid">
@@ -87,19 +109,16 @@ if ($validar == null || $validar = '') {
   <br>
   <div class="col-xs-12">
     <h1>Lista de materia prima</h1>
+    <br>
+    <div>
+      <a class="btn btn-warning" href="../_sesion/cerrarSesion.php">Log Out <i class="fa fa-power-off" aria-hidden="true"></i></a>
+      <a class="btn btn-dark" href="../_sesion/lector_usuario.php">Usuarios <i class="fa fa-user" aria-hidden="true"></i> </a>
       <a class="btn btn-success" href="excel.php">Excel
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
        <a class="btn btn-success" href="pdf_mp.php">PDF
        <i class="fa fa-table" aria-hidden="true"></i>
        </a>
-       <a class="btn btn-primary" href="agregar_mp.php"> Nueva Materia Prima 
-        <i class="fa fa-plus" aria-hidden="true"></i>
-      </a>
-      <a class="btn btn-primary" href="../linea/lineas.php"> Ver Lineas
-      <i class="fa-solid fa-grip-lines"></i>
-      </a>
-
 
 
 
@@ -130,25 +149,18 @@ if ($validar == null || $validar = '') {
           <th>Codigo</th>
           <th>Linea</th>
           <th>Descripcion</th>
-          <th>Precio/Kg</th>
-          <th>Acciones</th>
-          <th>Precios</th>
-
+          <th>Coste/Kg</th>
 
         </tr>
       </thead>
       <tbody>
 
         <?php
-        //LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id " ;
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio FROM materia_prima
-        LEFT JOIN linea ON materia_prima.linea = linea.id LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id ";
+        $SQL = "SELECT * FROM materia_prima ";
         $dato = mysqli_query($conexion, $SQL);
 
-
-        
         if ($dato->num_rows > 0) {
           while ($fila = mysqli_fetch_array($dato)) {
 
@@ -157,28 +169,16 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo '$' . $fila['precio']; ?></td>
-
-      </td>
+              <td><?php echo $fila['coste_kg']; ?></td>
 
 
 
-              <td>
-                <a class="btn btn-warning" href="editar_mp.php?codigo=<?php echo $fila['codigo'] ?> ">
-                  <i class="fa fa-edit"></i> </a>
 
-                <a class="btn btn-danger" href="eliminar_mp.php?codigo=<?php echo $fila['codigo'] ?>">
-                  <i class="fa fa-trash"></i></a>
+            </tr>
 
-              </td>
-              <td>
-                <a class="btn btn-primary" href="../precio_mp/precio.php?codigo=<?php echo $fila['codigo'] ; ?>&descripcion=<?php echo $fila['descripcion']; ?> ">
-                <i class="fa-solid fa-dollar-sign"></i>            </tr>
 
-            
-
-            <?php
-  }  
+          <?php
+          }
         } else {
 
           ?>
@@ -190,12 +190,14 @@ if ($validar == null || $validar = '') {
         <?php
 
         }
-                ?>
+
+        ?>
 
 
         </body>
     </table>
     <!--<div id="paginador" class=""></div> -->
+
   
 <script src="../js/page.js"></script>
 <script src="../js/buscador.js"></script>

@@ -42,25 +42,30 @@ if( $validar == null || $validar = ''){
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
   <div class="container">
     <a class="navbar-brand" href="../_sesion/usuarios.php">
-      <img src="../img/alcon-logo.png" alt="..." height="70">
+      <img src="../../img/alcon-logo.png" alt="..." height="70">
     </a>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ">
         <li class="nav-item">
-          <a class="nav-link"  href="../_sesion/usuarios.php">Usuarios</a>
+          <a class="nav-link"  href="../../_sesion/usuarios.php">Usuarios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../mp/mp.php">Materia Prima</a>
+          <a class="nav-link" href="../../mp/mp.php">Materia Prima</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../producto/productos.php">Productos</a>
+          <a class="nav-link" href="../../producto/productos.php">Productos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../formula/formula.php">Formulas</a>
+          <a class="nav-link" href="../../formula/formula.php">Formulas</a>
         </li>
         <li class="nav-item">
             <!-- Button trigger modal -->
+            <li class="nav-item">
+          <a class="nav-link" href="../../precio_mp/precio.php">Precios</a>
+        </li>
+        <li class="nav-item">
+
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
   Cerrar Sesión
 </button>
@@ -80,7 +85,7 @@ if( $validar == null || $validar = ''){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button onclick="location.href='../_sesion/index.php'" type="button" class="btn btn-primary">Aceptar</button>
+        <button onclick="location.href='../../_sesion/index.php'" type="button" class="btn btn-primary">Aceptar</button>
       </div>
     </div>
   </div>
