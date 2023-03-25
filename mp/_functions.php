@@ -13,11 +13,10 @@ error_reporting(E_ALL);
         $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
         $descripcion = trim($_POST['descripcion']);
-        $precio_mp = trim($_POST['precio_mp']);
     
     
-        $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion, precio_mp)
-        VALUES ('$codigo', '$linea','$descripcion','$precio_mp')";
+        $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion)
+        VALUES ('$codigo', '$linea','$descripcion')";
     
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
@@ -90,7 +89,7 @@ function agregar_mp() {
     function editar_mp() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
+		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion'  WHERE codigo = '$codigo' ";
 
 		mysqli_query($conexion, $consulta);
 

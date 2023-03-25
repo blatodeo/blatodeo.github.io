@@ -64,15 +64,6 @@ if ($validar == null || $validar = '') {
 <br>
 <br>
 
-<a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
-                <i class="fa-solid fa-delete-left"></i></a>
-
-                <a class="btn btn-primary" href="agregar_precio.php?codigo=<?php echo $fila['codigo']; ?>&descripcion=<?php echo $fila['descripcion']; ?>">
-        <i class="fa fa-plus"></i> Agregar Precios
-    </a>
-
-    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
-    <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
 
 
 
@@ -91,15 +82,31 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
   
   
     $conexion = mysqli_connect("localhost", "root", "", "alcon");
-    $SQL = "SELECT precio_mp.id, precio_mp.precio, linea_precio.linea, materia_prima.codigo, materia_prima.descripcion
+    $SQL = "SELECT precio_mp.id, precio_mp.precio, linea_precio.linea, materia_prima.codigo, materia_prima.descripcion, precio_mp.fecha
     FROM precio_mp 
     INNER JOIN linea_precio ON precio_mp.linea_precio = linea_precio.id 
-    INNER JOIN materia_prima ON precio_mp.mp = materia_prima.codigo ";
+    INNER JOIN materia_prima ON precio_mp.mp = materia_prima.codigo 
+
+
+    WHERE codigo = '$codigo'";
+
+
     $dato = mysqli_query($conexion, $SQL);
 
 
   if ($dato->num_rows > 0) {
     ?>
+
+<a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
+                <i class="fa-solid fa-delete-left"></i></a>
+
+                <a class="btn btn-primary" href="agregar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
+        <i class="fa fa-plus"></i> Agregar Precio
+    </a>
+
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
+
 
     <table class="table table-striped table-dark">
       <thead>
@@ -108,7 +115,9 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
           <th>Precio</th>
           <th>Linea</th>
           <th>Codigo</th>
+          <th>Fecha</th>
           <th>Acciones</th>
+
 
         </tr>
       </thead>
@@ -117,7 +126,6 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
       <h1>Precios de <?php echo $descripcion;  ?></h1>
 
         <?php
-        $total = 0;
         while ($fila = mysqli_fetch_array($dato)) {
                       // Imprime la variable $fila para verificar que se esté recibiendo correctamente
 
@@ -129,12 +137,15 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
             <td><?php echo '$' . $fila['precio']; ?></td>
             <td><?php echo $fila['linea'] ?></td>
             <td><?php echo $fila['codigo'] ?></td>
+            <td><?php echo $fila['fecha'] ?></td>
+
             <td>
                 <a class="btn btn-warning" href="editar_precio.php?id=<?php echo $fila['id'] ?> ">
                   <i class="fa fa-edit"></i> </a>
 
                 <a class="btn btn-danger" href="eliminar_precio.php?id=<?php echo $fila['id'] ?>">
                   <i class="fa fa-trash"></i></a>
+
 
               </td>
 

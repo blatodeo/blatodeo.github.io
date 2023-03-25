@@ -6,23 +6,24 @@ error_reporting(E_ALL);
 
     $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
-    if(isset($_POST['agregar_mp'])){
+    if(isset($_POST['agregar_precio'])){
 
-        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion'])  >=1){
+        if(strlen($_POST['linea_precio']) >=1 && strlen($_POST['precio'])  >=1 && strlen($_POST['fecha'])  >=1){
     
-        $codigo = trim($_POST['codigo']);
-        $linea = trim($_POST['linea']);
-        $descripcion = trim($_POST['descripcion']);
-        $precio_mp = trim($_POST['precio_mp']);
+        $linea_precio = trim($_POST['linea_precio']);
+        $precio = trim($_POST['precio']);
+        $fecha = trim($_POST['fecha']);
+        $mp = trim($_POST['mp']);
+
     
     
-        $consulta= "INSERT INTO materia_prima (codigo, linea, descripcion, precio_mp)
-        VALUES ('$codigo', '$linea','$descripcion','$precio_mp')";
+        $consulta= "INSERT INTO precio_mp (linea_precio, precio, fecha, mp)
+        VALUES ('$linea_precio', '$precio','$fecha','$mp')";
     
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
     
-        header('Location: ../mp/mp.php');
+        header('Location: ../precio_mp/precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>');
       }
     }
 
@@ -35,15 +36,15 @@ require_once ("../conexion/_db.php");
 if (isset($_POST['accion'])){ 
     switch ($_POST['accion']){
         //casos de registros
-        case 'agregar_mp':
+        case 'agregar_precio':
             agregar_mp();
             break; 
 
-        case 'editar_mp':
+        case 'editar_precio':
             editar_mp();
             break; 
 
-            case 'eliminar_mp';
+            case 'eliminar_precio';
             eliminar_mp();
     
             break;

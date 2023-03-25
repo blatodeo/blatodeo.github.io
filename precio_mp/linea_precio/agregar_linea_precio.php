@@ -65,7 +65,7 @@ error_reporting(E_ALL);
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
                                name="agregar_linea_precio">
-                               <a href="lineaa_precio.php" class="btn btn-danger">Cancelar</a>
+                               <a href="linea_precio.php" class="btn btn-danger">Cancelar</a>
                                
                             </div>
                             </div>

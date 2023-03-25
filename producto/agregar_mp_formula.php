@@ -115,7 +115,7 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Selecciona una materia prima para agregarla al producto: <?php echo $descripcion_producto;  ?></h3>
+                            <h3 class="text-center">Selecciona una materia prima para: <?php echo $descripcion_producto;  ?></h3>
                             <div class="form-group">
                             <!--<label for="codigo_producto" class="form-label">Producto al que va dirigido *</label> -->     
                             <input type="hidden" name="accion" value="agregar_mp_formula">      
@@ -161,7 +161,7 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
                                name="agregar_mp_formula"> 
-                               <a href="productos.php" class="btn btn-danger">Cancelar</a> 
+                               <a href="detalles_producto.php?codigo_producto=<?php echo $codigo_producto ; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>" class="btn btn-danger">Cancelar</a> 
 </div>
                             </div>
                             </div>

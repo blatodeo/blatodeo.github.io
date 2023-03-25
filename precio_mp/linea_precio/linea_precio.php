@@ -64,6 +64,9 @@ if( $validar == null || $validar = ''){
        <a class="btn btn-primary" href="agregar_linea_precio.php"> Nueva Linea 
         <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
+      <a class="btn btn-primary" href="../../precio_mp/precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>"> Regresar a Precios
+      <i class="fa-solid fa-arrow-left"></i>      </a>
+
 
 
     </div>

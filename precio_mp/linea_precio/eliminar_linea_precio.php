@@ -31,7 +31,7 @@ if ($validar == null || $validar = '') {
 <body>
 
 
-    
+
     <div class="container mt-5">
     <div class="row">
     <div class="col-sm-6 offset-sm-3">

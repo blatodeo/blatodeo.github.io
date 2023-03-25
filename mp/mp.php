@@ -157,7 +157,6 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion']; ?></td>
-              <td><?php echo '$' . $fila['precio']; ?></td>
 
       </td>
 

@@ -22,8 +22,6 @@ error_reporting(E_ALL);
 
 
 
-
-
 <!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -77,11 +75,15 @@ error_reporting(E_ALL);
         mysqli_select_db($link, "alcon");
         mysqli_query($link, "SET NAMES 'utf8'");
     }
+    if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
+        $codigo = $_GET['codigo'];
+        $descripcion = $_GET['descripcion'];
+    
     ?>
+    
 
 
-
-<form  action="_functions.php" method="POST">
+<form  action="functions_precio.php" method="POST">
 <div id="login" >
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -90,43 +92,34 @@ error_reporting(E_ALL);
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Registro de nueva materia prima</h3>
+                            <h3 class="text-center">Agrega precio a <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
-                            <label for="codigo" class="form-label">Codigo *</label>
-                            <input type="text"  id="codigo" name="codigo" class="form-control" required>
+
+                            <div class="form-group">
+                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
                             </div>
-                            <div class="form-group">
-                                <label for="linea">Linea:</label><br>
-                                <select class="country" name="linea" 
+
+                                <label for="linea_precio">Linea:</label><br>
+                                <select class="country" name="linea_precio" 
 					style="width: 200px;">
             <?php
-        $v = mysqli_query($link, "SELECT * FROM linea");
-        while($linea = mysqli_fetch_row($v)){
+        $v = mysqli_query($link, "SELECT * FROM linea_precio");
+        while($linea_precio = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
+            <option value="<?php echo $linea_precio[0] ?>"><?php echo $linea_precio[1] ?></option>
         <?php   } ?></select>
+
 
                             </div>
                             <div class="form-group">
-                                  <label for="descripcion" class="form-label">Descripcion *</label>
-                                <input type="text"  id="descripcion" name="descripcion" class="form-control" required>
-                                
+                                <label for="precio" class="form-label">Precio *</label>
+                                <input type="text"  id="precio" name="precio" class="form-control" required>
                             </div>
+
                             <div class="form-group">
-                                  <label for="precio" class="form-label">Precio/Kg *</label>
-                                  <!--<input type="number" step="any"   id="precio_mp" name="precio_mp" class="form-control" required>-->
-
-                                  <select class="country" name="precio_mp" 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option>
-        <?php   } ?></select>
-                                
+                                <label for="fecha" class="form-label">Fecha *</label>
+                                <input type="date"  id="fecha" name="fecha" class="form-control" >
                             </div>
-
                       
                         
                            <br>
@@ -134,14 +127,20 @@ error_reporting(E_ALL);
                                 <div class="mb-3">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_mp">
-                               <a href="mp.php" class="btn btn-danger">Cancelar</a>
+                               name="agregar_precio">
+                               <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
                             </div>
                             </div>
 
                         </form>
+                        <?php
+                    } else {
+  echo "No se especificó ningún código de materia prima.";
+}
+?>
+
                     </div>
                 </div>
             </div>
