@@ -39,22 +39,40 @@ if ($validar == null || $validar = '') {
     <div class="row">
     <div class="col-sm-6 offset-sm-3">
     <div class="alert alert-danger text-center">
-    <p>¿Desea confirmar la eliminacion de esta materia prima?</p>
+    <p>¿Desea confirmar la eliminacion de este precio?</p>
     </div>
 
     <div class="row">
         <div class="col-sm-6">
-            <form action="_functions.php" method="POST">
-                <input type="hidden" name="accion" value="eliminar_mp">
-                <input type="hidden" name="codigo" value="<?php echo $_GET['codigo']; ?>">
+            <?php
+    $link = mysqli_connect("localhost", "root", "");
+    if($link){
+        mysqli_select_db($link, "alcon");
+        mysqli_query($link, "SET NAMES 'utf8'");
+    }
+    if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
+        $codigo = $_GET['codigo'];
+        $descripcion = $_GET['descripcion'];
+
+    }
+    ?>
+
+    
+    ?>
+
+            <form action="functions_precio.php" method="POST">
+                <input type="hidden" name="accion" value="eliminar_precio_mp">
+                <input type="hidden" name="codigo" value="<?php echo $_GET['id']; ?>">
                 <input type="submit" name="" value="Eliminar" class= " btn btn-danger">
-                <a href="mp.php" class="btn btn-success">Cancelar</a>
+                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-success">Cancelar</a>
 
                                
-        </div>
-    </div>
 
-
+</form>
+</div>
+</div>
+</div>
+</div>
 
 </body>
 </html>

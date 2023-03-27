@@ -25,6 +25,8 @@ if( $validar == null || $validar = ''){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../css/page.css">
+    <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
@@ -65,7 +67,7 @@ if( $validar == null || $validar = ''){
         <i class="fa fa-plus" aria-hidden="true"></i>
       </a>
       <a class="btn btn-primary" href="../../precio_mp/precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>"> Regresar a Precios
-      <i class="fa-solid fa-arrow-left"></i>      </a>
+      <i class="fa-solid fa-delete-left"></i>      </a>
 
 
 

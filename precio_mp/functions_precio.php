@@ -23,9 +23,11 @@ error_reporting(E_ALL);
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
     
-        header('Location: ../precio_mp/precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>');
-      }
-    }
+
+
+        header("Location: agregar_precio.php?codigo=$codigo&descripcion=$descripcion");
+        exit;    }      }
+
 
    
 require_once ("../conexion/_db.php");
@@ -88,17 +90,17 @@ function agregar_mp() {
     
 
 
-    function editar_mp() {
+    function editar_precio() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE materia_prima SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
+		$consulta="UPDATE precio_mp SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
 
 		mysqli_query($conexion, $consulta);
 
 		header('Location: ../mp/mp.php');
     }
 
-        function eliminar_mp() {
+        function eliminar_precio() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
             $codigo= $_POST['codigo'];

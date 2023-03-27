@@ -130,7 +130,6 @@ if ($validar == null || $validar = '') {
           <th>Codigo</th>
           <th>Linea</th>
           <th>Descripcion</th>
-          <th>Precio/Kg</th>
           <th>Acciones</th>
           <th>Precios</th>
 
@@ -143,8 +142,8 @@ if ($validar == null || $validar = '') {
         //LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id " ;
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio FROM materia_prima
-        LEFT JOIN linea ON materia_prima.linea = linea.id LEFT JOIN precio_mp ON materia_prima.precio_mp = precio_mp.id ";
+        $SQL = "SELECT materia_prima.codigo, linea.linea, materia_prima.descripcion FROM materia_prima
+        LEFT JOIN linea ON materia_prima.linea = linea.id  ";
         $dato = mysqli_query($conexion, $SQL);
 
 

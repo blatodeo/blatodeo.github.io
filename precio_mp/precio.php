@@ -70,8 +70,6 @@ if ($validar == null || $validar = '') {
 
 
 
-
-
 <?php
 
 if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
@@ -96,8 +94,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
   if ($dato->num_rows > 0) {
     ?>
-
-<a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
+    <a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
                 <i class="fa-solid fa-delete-left"></i></a>
 
                 <a class="btn btn-primary" href="agregar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
@@ -106,6 +103,9 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
     <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
+
+
+
 
 
     <table class="table table-striped table-dark">
@@ -160,12 +160,42 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
     <?php
   } else {
     echo "No se encontraron detalles para la materia prima con código $codigo.";
-  }
-} else {
-  echo "No se especificó ningún código de materia prima.";
+  
+?>
+    <a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
+                <i class="fa-solid fa-delete-left"></i></a>
+
+                <a class="btn btn-primary" href="agregar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
+        <i class="fa fa-plus"></i> Agregar Precio
+    </a>
+
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
+
+<?php
 }
 ?>
 
+<?php
+} else {
+
+
+  echo "No se especificó ningún código de materia prima.";
+?>
+
+<a class="btn btn-warning" href="../mp/mp.php"> Regresa a Materia Prima
+                <i class="fa-solid fa-delete-left"></i></a>
+
+                <a class="btn btn-primary" href="agregar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
+        <i class="fa fa-plus"></i> Agregar Precio
+    </a>
+
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
+
+<?php
+}
+?>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
