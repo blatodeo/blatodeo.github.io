@@ -25,14 +25,13 @@ error_reporting(E_ALL);
     
 
 
-        header("Location: agregar_precio.php?codigo=$codigo&descripcion=$descripcion");
-        exit;    }      }
+        header("Location: {$_SERVER['HTTP_REFERER']}");
+        exit;
 
-
-   
+        }
 require_once ("../conexion/_db.php");
 
-
+        
 
 
 if (isset($_POST['accion'])){ 
@@ -43,11 +42,11 @@ if (isset($_POST['accion'])){
             break; 
 
         case 'editar_precio':
-            editar_mp();
+            editar_precio();
             break; 
 
             case 'eliminar_precio';
-            eliminar_mp();
+            eliminar_precio();
     
             break;
 
@@ -103,8 +102,8 @@ function agregar_mp() {
         function eliminar_precio() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
-            $codigo= $_POST['codigo'];
-            $consulta= "DELETE FROM materia_prima WHERE codigo= $codigo";
+            $id= $_POST['id'];
+            $consulta= "DELETE FROM precio_mp WHERE id= $id";
         
             mysqli_query($conexion, $consulta);
         
@@ -116,3 +115,4 @@ function agregar_mp() {
 
 
 
+    }
