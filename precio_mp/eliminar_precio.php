@@ -44,16 +44,6 @@ if ($validar == null || $validar = '') {
 
     <div class="row">
         <div class="col-sm-6">
-            <?php
-    $link = mysqli_connect("localhost", "root", "");
-    if($link){
-        mysqli_select_db($link, "alcon");
-        mysqli_query($link, "SET NAMES 'utf8'");
-    }
-        $codigo = $_GET['codigo'];
-        $descripcion = $_GET['descripcion'];
-
-?>
 
 
 
@@ -63,8 +53,8 @@ if ($validar == null || $validar = '') {
 <form action="functions_precio.php" method="POST">
                 <input type="hidden" name="accion" value="eliminar_precio">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-                <input type="submit" name="" value="Eliminar" class= "btn btn-danger">
-                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-success">Cancelar</a>
+                <input type="submit" name="" value="Eliminar" class="btn btn-danger" onclick="window.history.back();">
+                <a href="javascript:history.back()" class="btn btn-success">Cancelar</a>
 
         
 

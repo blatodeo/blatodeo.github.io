@@ -81,7 +81,7 @@ if( $validar == null || $validar = ''){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button onclick="location.href='../../_sesion/index.php'" type="button" class="btn btn-primary">Aceptar</button>
+        <button onclick="location.href='../_sesion/index.php'" type="button" class="btn btn-primary">Aceptar</button>
       </div>
     </div>
   </div>

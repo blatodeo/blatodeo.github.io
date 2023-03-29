@@ -25,10 +25,11 @@ error_reporting(E_ALL);
     
 
 
-        header("Location: {$_SERVER['HTTP_REFERER']}");
-        exit;
-
+        //header("Location: {$_SERVER['HTTP_REFERER']}");
+        //exit;
+                
         }
+    }
 require_once ("../conexion/_db.php");
 
         
@@ -99,20 +100,17 @@ function agregar_mp() {
 		header('Location: ../mp/mp.php');
     }
 
-        function eliminar_precio() {
-            $conexion=mysqli_connect("localhost","root","","alcon");
-            extract($_POST);
-            $id= $_POST['id'];
-            $consulta= "DELETE FROM precio_mp WHERE id= $id";
+    function eliminar_precio() {
+        $conexion=mysqli_connect("localhost","root","","alcon");
+        extract($_POST);
+        $id= $_POST['id'];
+        $consulta= "DELETE FROM precio_mp WHERE id= $id"; 
         
-            mysqli_query($conexion, $consulta);
-        
-        
-            header('Location: ../mp/mp.php');
-        
-        }
-        
-
-
-
+        mysqli_query($conexion, $consulta);
+        mysqli_close($conexion);
+    
     }
+    
+
+
+    

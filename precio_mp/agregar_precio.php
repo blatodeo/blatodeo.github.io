@@ -127,7 +127,7 @@ error_reporting(E_ALL);
                                 <div class="mb-3">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_precio">
+                               name="agregar_precio" onclick="window.history.back();"> 
                                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
