@@ -106,72 +106,47 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
   <input type="submit" value="Guardar">
 </form>-->
 
-<form  action="product_functions.php" method="POST">
-<div id="login">
+<form action="product_functions.php" method="POST">
+    <div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                    
-                            <br>
-                            <br>
-                            <h3 class="text-center">Selecciona una materia prima para: <?php echo $descripcion_producto;  ?></h3>
-                            <div class="form-group">
-                            <!--<label for="codigo_producto" class="form-label">Producto al que va dirigido *</label> -->     
-                            <input type="hidden" name="accion" value="agregar_mp_formula">      
-                            <input type="hidden" id="codigo_producto" name="codigo_producto" value=<?php echo $codigo_producto;  ?>>
-
-<br>
-                            <!--<script>$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});</script>
-                <input type="hidden" name="accion" value="agregar_mp_formula">
-
-                            <select name="codigo_producto" class="country"
-					style="width: 200px;">
-                    <?php
-        //$v = mysqli_query($link, "SELECT * FROM producto");
-        //while($codigo = mysqli_fetch_row($v)){
-    ?>
-        <?php //  } ?>
-			</select>-->
-
+                        <br>
+                        <br>
+                        <h3 class="text-center">Selecciona una materia prima para: <?php echo $descripcion_producto; ?></h3>
+                        <div class="form-group">
+                            <input type="hidden" name="accion" value="agregar_mp_formula">
+                            <input type="hidden" name="codigo_producto" value="<?php echo $codigo_producto; ?>">
                             <label for="codigo_mp" class="form-label">Selecciona Materia Prima *</label>
-                            <script>$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});</script>
-                            <select name="codigo_mp" class="country"
-					style="width: 200px;">
-                    <?php
-        $v = mysqli_query($link, "SELECT * FROM materia_prima");
-        while($descripcion = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $descripcion[0] ?>"><?php echo $descripcion[1] ?></option>
-        <?php   } ?>
-			</select>
-
-
-                             
-                            </div>
-
-                        
-                           <br>
-
-                                <div class="mb-3">
-                                    
-                               <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_mp_formula"> 
-                               <a href="detalles_producto.php?codigo_producto=<?php echo $codigo_producto ; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>" class="btn btn-danger">Cancelar</a> 
-</div>
-                            </div>
-                            </div>
-
-                        </form>
+                            <script>
+                                $(document).ready(function() {
+                                    $('.js-example-basic-single').select2();
+                                });
+                            </script>
+                            <select name="codigo_mp" class="country" style="width: 200px;">
+                                <?php
+                                $v = mysqli_query($link, "SELECT * FROM materia_prima");
+                                while ($descripcion = mysqli_fetch_row($v)) {
+                                ?>
+                                    <option value="<?php echo $descripcion[0] ?>"><?php echo $descripcion[1] ?></option>
+                                <?php } ?>
+                            </select>
+                            <br>
+                            <br>
+                            <label for="precio_mp" class="form-label">Precio Materia Prima *</label>
+                            <input type="text" class="form-control" name="precio_mp">
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <input type="submit" value="Guardar" class="btn btn-success" name="agregar_mp_formula">
+                            <a href="detalles_producto.php?codigo_producto=<?php echo $codigo_producto ; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>" class="btn btn-danger">Cancelar</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>s
     </div>
-    </form>
+</form>
 </body>
 </html>

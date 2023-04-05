@@ -57,14 +57,13 @@ if( $validar == null || $validar = ''){
           <a class="nav-link" href="../producto/productos.php">Productos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../formula/formula.php">Formulas</a>
-        </li>
-        <li class="nav-item">
             <!-- Button trigger modal -->
 
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-  Cerrar Sesión
-</button>
+            <li class="nav-item">
+  <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#exampleModal"> 
+    <i class="fa-solid fa-power-off"></i>
+  </a>
+</li>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -80,8 +79,8 @@ if( $validar == null || $validar = ''){
         ¿Seguro que quieres cerrar sesion?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button onclick="location.href='../_sesion/index.php'" type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button onclick="location.href='../_sesion/index.php'" type="button" class="btn btn-primary">Sí</button>
       </div>
     </div>
   </div>

@@ -93,7 +93,7 @@ function agregar_mp() {
     function editar_precio() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE precio_mp SET linea = '$linea', descripcion = '$descripcion' , precio_mp = '$precio_mp' WHERE codigo = '$codigo' ";
+		$consulta="UPDATE precio_mp SET linea_precio = '$linea_precio', precio = '$precio', fecha = '$fecha' WHERE id = '$id' ";
 
 		mysqli_query($conexion, $consulta);
 

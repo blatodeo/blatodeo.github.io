@@ -7,36 +7,36 @@ $validar = $_SESSION['nombre'];
 
 if ($validar == null || $validar = '') {
 
-    header("Location: ../_sesion/index.php");
-    die();
-    
+  header("Location: ../_sesion/index.php");
+  die();
 }
 
 
- 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-
-
-$codigo = $_GET['codigo'];
+$id = $_GET['id'];
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$consulta = "SELECT * FROM materia_prima WHERE codigo = $codigo";
+$consulta = "SELECT * FROM precio_mp WHERE id = $id";
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
+
 
 ?>
 
 
+
+
 <!DOCTYPE html>
 <html lang="es-MX">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Materia Prima</title>
 
-
-    <link rel="stylesheet" href="../css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="../css/es.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
@@ -59,7 +59,7 @@ $usuario = mysqli_fetch_assoc($resultado);
 		<link rel="stylesheet"
 			href=
 "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
-		<script>
+<script>
 $(document).ready(function () {
   //Select2
   var select2_element = $(".country").select2({
@@ -67,7 +67,7 @@ $(document).ready(function () {
   });
 
   // Establecer valor predefinido en select2
-  select2_element.val('<?php echo $usuario["linea"]; ?>');
+  select2_element.val('<?php echo $usuario["linea_precio"]; ?>');
   select2_element.trigger('change');
   //Chosen
 });		</script>
@@ -75,78 +75,91 @@ $(document).ready(function () {
 
 </head>
 
+
+
 <body id="page-top">
+
+<br>
 <?php
+
+
+
+
     $link = mysqli_connect("localhost", "root", "");
     if($link){
         mysqli_select_db($link, "alcon");
         mysqli_query($link, "SET NAMES 'utf8'");
     }
+    if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
+        $codigo = $_GET['codigo'];
+        $descripcion = $_GET['descripcion'];
+    
     ?>
 
 
-    <form action="_functions.php" method="POST">
-        <div id="login">
-            <div class="container">
-                <div id="login-row" class="row justify-content-center align-items-center">
-                    <div id="login-column" class="col-md-6">
-                        <div id="login-box" class="col-md-12">
 
+<form  action="functions_precio.php" method="POST">
+<div id="login" >
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                    
                             <br>
                             <br>
-                            <h3 class="text-center">Editar materia prima</h3>
+                            <h3 class="text-center">Edita precio de <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
-                                <label for="linea" class="form-label">Linea *</label>
-                                <select class="country" name="linea" id="mi_select2" value="<?php echo $usuario['linea']; ?>" required 
+
+                            <div class="form-group">
+                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
+                            </div>
+
+                                <label for="linea_precio">Linea:</label><br>
+                                <select class="country" name="linea_precio" 
 					style="width: 200px;">
             <?php
-        $v = mysqli_query($link, "SELECT * FROM linea");
-        while($linea = mysqli_fetch_row($v)){
+        $v = mysqli_query($link, "SELECT * FROM linea_precio");
+        while($linea_precio = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
+            <option value="<?php echo $linea_precio[0] ?>"><?php echo $linea_precio[1] ?></option>
         <?php   } ?></select>
 
 
                             </div>
                             <div class="form-group">
-                                <label for="descripcion">Descripcion:</label><br>
-                                <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="" value="<?php echo $usuario['descripcion']; ?>">
+                                <label for="precio" class="form-label">Precio *</label>
+                                <input type="text"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
                             </div>
+
                             <div class="form-group">
-                                <input type="hidden" name="accion" value="editar_mp">
-                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                                <label for="precio_mp" class="form-label">Precio/Kg *</label>
-                                  <!--<input type="number"  id="precio_mp" name="precio_mp" class="form-control" value="<?php //echo $usuario['precio_mp']; ?>" required>-->
-                                  <select class="country" name="precio_mp" 
-					style="width: 200px;">
+                                <label for="fecha">Fecha y hora:</label>
+                                <input type="datetime-local" id="fecha-hora" name="fecha" value="<?php echo $usuario['fecha']; ?>">
+                            </div>
+                      
+                        
+                           <br>
 
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM precio_mp");
-        while($precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $precio[0] ?>"><?php echo $precio[1] ?></option> 
-        <?php   } ?></select>
+                                <div class="mb-3">
+                                    
+                               <input type="submit" value="Guardar"class="btn btn-success" 
+                               name="agregar_precio" onclick="window.history.back();"> 
+                               <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
+                               
+                            </div>
+                            </div>
                             </div>
 
+                        </form>
+                        <?php
+                    } else {
+  echo "No se especificó ningún código de materia prima.";
+}
+?>
 
-                            <br>
-
-                            <div class="mb-3">
-
-                                <button type="submit" class="btn btn-success">Editar</button>
-                                <a href="mp.php" class="btn btn-danger">Cancelar</a>
-
-                            </div>
-                        </div>
                     </div>
-
-    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </form>
 </body>
-
 </html>

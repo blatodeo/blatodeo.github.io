@@ -16,6 +16,7 @@ error_reporting(E_ALL);
         $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
         $descripcion_producto = trim($_POST['descripcion_producto']);
+        
     
     
         $consulta= "INSERT INTO producto (codigo, linea, descripcion_producto)
@@ -113,18 +114,12 @@ if (isset($_POST['accion'])){
         }
 
     function agregar_mp_formula(){
-        $conexion=mysqli_connect("localhost","root","","alcon");
-        extract($_POST);
+        $conexion = mysqli_connect("localhost", "root", "", "alcon");
         $codigo_producto = $_POST['codigo_producto'];
         $codigo_mp = $_POST['codigo_mp'];
-
-        // Agregar los datos a la tabla correspondiente usando una consulta SQL
-        $consulta = "INSERT INTO formula SET codigo_producto='$codigo_producto', codigo_mp='$codigo_mp'";
+        $consulta = "INSERT INTO formula (codigo_producto, codigo_mp) VALUES ('$codigo_producto', '$codigo_mp')";
         mysqli_query($conexion, $consulta);
-
-        // Redireccionar al usuario de vuelta a la página detalles_producto.php
-        header('Location: detalles_producto.php?codigo_producto=' . $codigo_producto . '&descripcion_producto=' . $descripcion_producto);
-        
+        header('Location: detalles_producto.php?codigo_producto=' . $codigo_producto . '&descripcion_producto=' . $descripcion_producto);        
 
     }
 

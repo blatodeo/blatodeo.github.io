@@ -41,6 +41,7 @@ if ($validar == null || $validar = '') {
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
 
     <!--  Datatables CSS -->
@@ -67,87 +68,82 @@ if ($validar == null || $validar = '') {
 
 
 
-
-
-
-
-
-
 <?php
-$conexion = mysqli_connect("localhost", "root", "", "alcon");
+$codigo = $_GET['codigo'];
+$descripcion_producto = $_GET['descripcion_producto'];
+?>
 
-if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
-    $codigo_producto = $_GET['codigo_producto'];
-    $descripcion_producto = $_GET['descripcion_producto'];
-    
-    // aquí puedes agregar el resto del código
-  
-  
-  $SQL = "SELECT * FROM formula
-          LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-          LEFT JOIN producto ON formula.codigo_producto = producto.descripcion_producto
 
-          WHERE codigo_producto = '$codigo_producto'";
 
-  $dato = mysqli_query($conexion, $SQL);
-
-  if ($dato->num_rows > 0) {
-    ?>
 
 <a class="btn btn-warning" href="productos.php"> Regresa a Productos
                 <i class="fa-solid fa-delete-left"></i></a>
 
-                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo_producto=<?php echo $codigo_producto; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>"
+                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>"
 >
         <i class="fa fa-plus"></i> Agregar Materia Prima
     </a>
 
+    <h1>Formula de <?php echo $descripcion_producto;  ?></h1>
 
-    <table class="table table-striped table-dark">
+    <table class="table table-striped table-dark table_id" id="table_id">
+
+
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Producto</th>
-          <th>Materia Prima</th>
-          <th>Coste/Kg</th>
+        <th>ID</th>
+        <th>Materia Prima</th>
+        <th>Costo/KG</th>
+
+
         </tr>
       </thead>
       <tbody>
+      <?php
 
-      <h1>Formula de <?php echo $descripcion_producto;  ?></h1>
 
-        <?php
-        $total = 0;
-        while ($fila = mysqli_fetch_array($dato)) {
-                      // Imprime la variable $fila para verificar que se esté recibiendo correctamente
+$conexion = mysqli_connect("localhost", "root", "", "alcon");
+// Obtener datos de las materias primas de la fórmula
+$SQL= "SELECT formula.id, materia_prima.descripcion, 
+        (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
+        FROM formula 
+        INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+        WHERE codigo_producto = $codigo";
 
-          ?>
+        
+                $dato = mysqli_query($conexion, $SQL);
+echo $SQL;
+                if ($dato->num_rows > 0) {
+                  while ($fila = mysqli_fetch_array($dato)) {
 
-          
-          <tr>
-            <td><?php echo $fila['id']; ?></td>
-            <td><?php echo $fila['codigo_producto'] ?></td>
-            <td><?php echo $fila['codigo_mp']. ' - ' .$fila['descripcion']; ?></td>
-            <td><?php echo '$' . $fila['precio_mp']; ?></td>
-          </tr>
-          <?php
-          $total += $fila['precio_mp'];
-        }
-        ?>
-      </tbody>
-      
-    </table>
-    
-    <?php
-  } else {
-    echo "No se encontraron detalles para el producto con código $codigo_producto.";
-  }
-} else {
-  echo "No se especificó ningún código de producto.";
-}
 ?>
 
-<h1>Coste total formula: <?php echo '$' . $total; ?></h1>
+      <tr>
+              <td><?php echo $fila['id']; ?></td>
+              <td><?php echo $fila['descripcion']  ?></td>
+              <td><?php echo  '$' . $fila['precio']; ?></td>
+
+
+              <?php
+          }
+        } else {
+
+          ?>
+          <tr class="text-center">
+            <td colspan="16">No existen registros</td>
+          </tr>
+
+
+        <?php
+
+        }
+
+        ?>
+
+        </tbody>
+    </table>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

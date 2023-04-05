@@ -148,12 +148,9 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT formula.id, formula.codigo_producto, producto.codigo, producto.linea, producto.descripcion_producto, formula.codigo_mp, materia_prima.descripcion, materia_prima.precio_mp, precio_mp.precio 
-        FROM formula
-        LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo  
-        LEFT JOIN producto ON formula.codigo_producto = producto.codigo 
-        LEFT JOIN precio_mp ON formula.precio_mp = precio_mp.id 
-        GROUP BY producto.codigo"  ;
+        $SQL = "SELECT producto.codigo, producto.descripcion_producto, linea_producto.linea
+        FROM producto 
+        INNER JOIN linea_producto ON producto.linea = linea_producto.id"  ;
         $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
@@ -179,9 +176,9 @@ if ($validar == null || $validar = '') {
 
               </td>
               <td>
-    <a class="btn btn-primary" href="detalles_producto.php?codigo_producto=<?php echo $fila['codigo_producto']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
+    <a class="btn btn-primary" href="detalles_producto.php?codigo=<?php echo $fila['codigo']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
 >
-        <i class="fa fa-eye"></i> Ver Formula
+        <i class="fa fa-eye"></i> Ver formula
     </a>
 </td>
 

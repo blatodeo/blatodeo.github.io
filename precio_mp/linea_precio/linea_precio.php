@@ -45,6 +45,17 @@ if( $validar == null || $validar = ''){
 <br>
 <div class="container is-fluid">
 
+<?php
+    $link = mysqli_connect("localhost", "root", "");
+    if($link){
+        mysqli_select_db($link, "alcon");
+        mysqli_query($link, "SET NAMES 'utf8'");
+    }
+        $codigo = $_GET['codigo'];
+        $descripcion = $_GET['descripcion'];
+    
+    ?>
+
 
 <div class="col-xs-12">
       <br>
@@ -113,6 +124,8 @@ if( $validar == null || $validar = ''){
       </form>
   </div>  -->
 
+
+
   <br>
 
 
@@ -164,9 +177,9 @@ if( $validar == null || $validar = ''){
     <td colspan="16">No existen registros</td>
     </tr>
 
-    
+
     <?php
-    
+
 }
 
 ?>

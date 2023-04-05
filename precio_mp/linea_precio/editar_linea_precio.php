@@ -54,7 +54,7 @@ $usuario = mysqli_fetch_assoc($resultado);
                             <h3 class="text-center">Editar linea</h3>
                             <div class="form-group">
                                 <label for="linea" class="form-label">Linea *</label>
-                                <input type="text" id="linea" name="linea" class="form-control" value="<?php echo $usuario['linea']; ?>" required>
+                                <input type="text" id="linea" value="<?php echo $usuario['linea']; ?>" name="linea" class="form-control" required>
                                 <input type="hidden" name="accion" value="editar_linea_precio">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
 
@@ -64,7 +64,7 @@ $usuario = mysqli_fetch_assoc($resultado);
                             <div class="mb-3">
 
                                 <button type="submit" class="btn btn-success">Editar</button>
-                                <a href="linea_precio.php" class="btn btn-danger">Cancelar</a>
+                                <a href="linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
 
                             </div>
                         </div>

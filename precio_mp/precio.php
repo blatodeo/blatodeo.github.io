@@ -101,9 +101,8 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         <i class="fa fa-plus"></i> Agregar Precio
     </a>
 
-    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
-
 
 
 
@@ -131,7 +130,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
           ?>
 
-          
+
           <tr>
             <td><?php echo $fila['id']; ?></td>
             <td><?php echo '$' . $fila['precio']; ?></td>
@@ -140,7 +139,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
             <td><?php echo $fila['fecha'] ?></td>
 
             <td>
-                <a class="btn btn-warning" href="editar_precio.php?id=<?php echo $fila['id'] ?> ">
+                <a class="btn btn-warning" href="editar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion;?>&id=<?php echo $fila['id']; ?> "">
                   <i class="fa fa-edit"></i> </a>
 
                 <a class="btn btn-danger" href="eliminar_precio.php?id=<?php echo $fila['id'] ?>">
@@ -169,9 +168,8 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         <i class="fa fa-plus"></i> Agregar Precio
     </a>
 
-    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
-
 <?php
 }
 ?>
@@ -190,7 +188,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         <i class="fa fa-plus"></i> Agregar Precio
     </a>
 
-    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php">
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
 
 <?php

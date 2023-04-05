@@ -45,9 +45,9 @@ if ($validar == null || $validar = '') {
                 <input type="hidden" name="accion" value="eliminar_linea_precio">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
                 <input type="submit" name="" value="Eliminar" class= " btn btn-danger">
-                <a href="linea_precio.php" class="btn btn-success">Cancelar</a>
+                <a href="linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
 
-                               
+
         </div>
     </div>
 

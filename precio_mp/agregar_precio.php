@@ -80,7 +80,7 @@ error_reporting(E_ALL);
         $descripcion = $_GET['descripcion'];
     
     ?>
-    
+
 
 
 <form  action="functions_precio.php" method="POST">
@@ -117,8 +117,8 @@ error_reporting(E_ALL);
                             </div>
 
                             <div class="form-group">
-                                <label for="fecha" class="form-label">Fecha *</label>
-                                <input type="date"  id="fecha" name="fecha" class="form-control" >
+                                <label for="fecha">Fecha y hora:</label>
+                                <input type="datetime-local" id="fecha-hora" name="fecha">
                             </div>
                       
                         
@@ -146,6 +146,5 @@ error_reporting(E_ALL);
             </div>
         </div>
     </div>
-    </form>
 </body>
 </html>
