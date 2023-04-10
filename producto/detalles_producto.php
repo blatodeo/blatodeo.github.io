@@ -108,7 +108,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
 
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
 // Obtener datos de las materias primas de la fórmula
-$SQL= "SELECT formula.id, materia_prima.descripcion, 
+$SQL= "SELECT formula.id, materia_prima.codigo, materia_prima.descripcion, 
         (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
         FROM formula 
         INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
@@ -123,7 +123,7 @@ $SQL= "SELECT formula.id, materia_prima.descripcion,
 
       <tr>
               <td><?php echo $fila['id']; ?></td>
-              <td><?php echo $fila['descripcion']  ?></td>
+              <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?></td>
               <td><?php echo  '$' . $fila['precio']; ?></td>
               <td>
 

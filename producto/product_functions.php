@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 //Declaracion para la funcion agregar_mp_formula en linea 118
 
 
-
     $conexion= mysqli_connect("localhost", "root", "", "alcon");
 
     if(isset($_POST['agregar_producto'])){
@@ -133,23 +132,22 @@ if (isset($_POST['accion'])){
         }
         
 // Guardar la URL anterior en una variable
-$previous_url = $_SERVER['HTTP_REFERER'];
 
 function eliminar_mp_formula() {
-
-    $codigo_producto = $_GET['codigo_producto'];
-    $descripcion_producto = $_GET['descripcion_producto'];
-    
-
     $conexion=mysqli_connect("localhost","root","","alcon");
     extract($_POST);
-    $id= $_POST['id'];
-    $consulta= "DELETE FROM formula WHERE id= $id";
-
+    $id = $_POST['id'];
+    $consulta = "DELETE FROM formula WHERE id = $id";
     mysqli_query($conexion, $consulta);
 
-    // Redirigir a la URL guardada
-    header("Location: detalles_producto.php?codigo_producto=$codigo_producto&descripcion_producto=$descripcion_producto");
+    // Obtener los valores de $codigo y $descripcion_producto de $_POST
+    $codigo = $_POST['codigo_producto'];
+    $descripcion_producto = $_POST['descripcion_producto'];
+
+    // Verificar que los valores existen antes de redirigir
+    if (isset($codigo) && isset($descripcion_producto)) {
+        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+        header("Location: $url");
+    }
 }
-   
      ?>   

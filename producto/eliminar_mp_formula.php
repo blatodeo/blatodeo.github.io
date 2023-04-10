@@ -34,7 +34,7 @@ if ($validar == null || $validar = '') {
 <body>
 
 <?php
-$codigo = $_GET['codigo'];
+$codigo = $_GET['codigo_producto'];
 $descripcion_producto = $_GET['descripcion_producto'];
 ?>
 
@@ -46,19 +46,22 @@ $descripcion_producto = $_GET['descripcion_producto'];
     <p>¿Desea confirmar la eliminacion de este producto?</p>
     </div>
 
-    <?php
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    // hacer algo con la variable $id
-}
-?>
+
+
+
+<p>Código: <?php echo $codigo; ?></p>
+<p>Descripción del producto: <?php echo $descripcion_producto; ?></p>
+
 
     <div class="row">
         <div class="col-sm-6">
             <form action="product_functions.php" method="POST">
                 <input type="hidden" name="accion" value="eliminar_mp_formula">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-                <a href="detalles_producto.php?codigo=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>" onclick="return confirm('¿Está seguro que desea eliminar este elemento?')">Eliminar</a>
+                <input type="hidden" name="codigo_producto" value="<?php echo $codigo; ?>">
+                <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+                <input type="submit" value='Eliminar' class="btn btn-danger" >
+                
                 <a class="btn btn-success" href="#" onclick="window.history.back();">Cancelar</a>
 
         </div>
