@@ -92,8 +92,8 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
     $descripcion_producto = $_GET['descripcion_producto'];
     
     // aquí puedes agregar el resto del código
-  
 }
+
 
 ?>
 <!--<form method="POST" action="agregar_mp_formula.php">
@@ -134,14 +134,15 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                             </select>
                             <br>
                             <br>
-                            <label for="precio_mp" class="form-label">Precio Materia Prima *</label>
-                            <input type="text" class="form-control" name="precio_mp">
                         </div>
                         <br>
                         <div class="mb-3">
                             <input type="submit" value="Guardar" class="btn btn-success" name="agregar_mp_formula">
-                            <a href="detalles_producto.php?codigo_producto=<?php echo $codigo_producto ; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>" class="btn btn-danger">Cancelar</a>
+                            <a class="btn btn-danger" href="#" onclick="window.history.back();">Cancelar</a>
+
+
                         </div>
+
                     </div>
                 </div>
             </div>

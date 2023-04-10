@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+//Declaracion para la funcion agregar_mp_formula en linea 118
 
 
 
@@ -12,24 +12,23 @@ error_reporting(E_ALL);
     if(isset($_POST['agregar_producto'])){
 
         if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion_producto'])  >=1){
-    
+
         $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
         $descripcion_producto = trim($_POST['descripcion_producto']);
-        
-    
-    
+
+
         $consulta= "INSERT INTO producto (codigo, linea, descripcion_producto)
         VALUES ('$codigo', '$linea','$descripcion_producto')";
-    
+
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
-    
+
         header('Location: ../producto/productos.php');
       }
     }
 
-   
+
 require_once ("../conexion/_db.php");
 
 
@@ -45,7 +44,7 @@ if (isset($_POST['accion'])){
 
             case 'eliminar_producto';
             eliminar_producto();
-    
+
             break;
 
             case 'acceso_user';
@@ -54,6 +53,10 @@ if (isset($_POST['accion'])){
 
             case 'agregar_mp_formula';
             agregar_mp_formula();
+            break;
+
+            case 'eliminar_mp_formula';
+            eliminar_mp_formula();
             break;
 
 
@@ -83,11 +86,9 @@ if (isset($_POST['accion'])){
 
     }
 
-  
+
 }
 
-
-    
 
 
     function editar_producto() {
@@ -105,22 +106,50 @@ if (isset($_POST['accion'])){
             extract($_POST);
             $codigo= $_POST['codigo'];
             $consulta= "DELETE FROM producto WHERE codigo= $codigo";
-        
+
             mysqli_query($conexion, $consulta);
-        
+
         
             header('Location: ../producto/productos.php');
-        
+
         }
 
-    function agregar_mp_formula(){
-        $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $codigo_producto = $_POST['codigo_producto'];
-        $codigo_mp = $_POST['codigo_mp'];
-        $consulta = "INSERT INTO formula (codigo_producto, codigo_mp) VALUES ('$codigo_producto', '$codigo_mp')";
-        mysqli_query($conexion, $consulta);
-        header('Location: detalles_producto.php?codigo_producto=' . $codigo_producto . '&descripcion_producto=' . $descripcion_producto);        
+        function agregar_mp_formula(){
+            $conexion=mysqli_connect("localhost","root","","alcon");
+            extract($_POST);
+            $codigo_producto = $_POST['codigo_producto'];
+            $codigo_mp = $_POST['codigo_mp'];
+        
+            // Agregar los datos a la tabla correspondiente usando una consulta SQL
+            $consulta = "INSERT INTO formula SET codigo_producto='$codigo_producto', codigo_mp='$codigo_mp'";
+            mysqli_query($conexion, $consulta);
+        
+            // Imprimir el mensaje de éxito
+            echo "<script>alert('Guardado con éxito')</script>";
+        
+            // Redireccionar al usuario de vuelta a la página detalles_producto.php
+            header('Location: ' . $_SERVER['HTTP_REFERER']);        
+        
+        }
+        
+// Guardar la URL anterior en una variable
+$previous_url = $_SERVER['HTTP_REFERER'];
 
-    }
+function eliminar_mp_formula() {
 
+    $codigo_producto = $_GET['codigo_producto'];
+    $descripcion_producto = $_GET['descripcion_producto'];
+    
+
+    $conexion=mysqli_connect("localhost","root","","alcon");
+    extract($_POST);
+    $id= $_POST['id'];
+    $consulta= "DELETE FROM formula WHERE id= $id";
+
+    mysqli_query($conexion, $consulta);
+
+    // Redirigir a la URL guardada
+    header("Location: detalles_producto.php?codigo_producto=$codigo_producto&descripcion_producto=$descripcion_producto");
+}
+   
      ?>   

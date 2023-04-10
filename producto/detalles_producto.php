@@ -10,6 +10,8 @@ error_reporting(E_ALL);
 session_start();
 error_reporting(0);
 
+
+
 $validar = $_SESSION['nombre'];
 
 if ($validar == null || $validar = '') {
@@ -94,6 +96,8 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <th>ID</th>
         <th>Materia Prima</th>
         <th>Costo/KG</th>
+        <th>Acciones</th>
+
 
 
         </tr>
@@ -110,9 +114,8 @@ $SQL= "SELECT formula.id, materia_prima.descripcion,
         INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
         WHERE codigo_producto = $codigo";
 
-        
+
                 $dato = mysqli_query($conexion, $SQL);
-echo $SQL;
                 if ($dato->num_rows > 0) {
                   while ($fila = mysqli_fetch_array($dato)) {
 
@@ -122,6 +125,16 @@ echo $SQL;
               <td><?php echo $fila['id']; ?></td>
               <td><?php echo $fila['descripcion']  ?></td>
               <td><?php echo  '$' . $fila['precio']; ?></td>
+              <td>
+
+                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+>
+                  <i class="fa fa-trash"></i></a>
+
+
+
+              </td>
+
 
 
               <?php
