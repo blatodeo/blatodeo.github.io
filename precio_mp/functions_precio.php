@@ -9,37 +9,37 @@ error_reporting(E_ALL);
     if(isset($_POST['agregar_precio'])){
 
         if(strlen($_POST['linea_precio']) >=1 && strlen($_POST['precio'])  >=1 && strlen($_POST['fecha'])  >=1){
-    
+
         $linea_precio = trim($_POST['linea_precio']);
         $precio = trim($_POST['precio']);
         $fecha = trim($_POST['fecha']);
         $mp = trim($_POST['mp']);
 
-    
-    
+
+
         $consulta= "INSERT INTO precio_mp (linea_precio, precio, fecha, mp)
         VALUES ('$linea_precio', '$precio','$fecha','$mp')";
-    
+
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
-    
+
 
 
         //header("Location: {$_SERVER['HTTP_REFERER']}");
         //exit;
-                
+
         }
     }
 require_once ("../conexion/_db.php");
 
-        
+
 
 
 if (isset($_POST['accion'])){ 
     switch ($_POST['accion']){
         //casos de registros
         case 'agregar_precio':
-            agregar_mp();
+            agregar_precio();
             break; 
 
         case 'editar_precio':
@@ -48,7 +48,7 @@ if (isset($_POST['accion'])){
 
             case 'eliminar_precio';
             eliminar_precio();
-    
+
             break;
 
             case 'acceso_user';
@@ -81,13 +81,13 @@ if (isset($_POST['accion'])){
 
     }
 
-  
+
 }
 
-function agregar_mp() {
+function agregar_precio() {
 }
 
-    
+
 
 
     function editar_precio() {
@@ -97,7 +97,15 @@ function agregar_mp() {
 
 		mysqli_query($conexion, $consulta);
 
-		header('Location: ../mp/mp.php');
+        $codigo = $_POST['codigo'];
+        $descripcion = $_POST['descripcion'];
+
+        // Verificar que los valores existen antes de redirigir
+        $url = "precio.php?codigo=" . urlencode($codigo) . "&descripcion=" . urlencode($descripcion);
+        header("Location: $url");
+        exit();
+
+
     }
 
     function eliminar_precio() {
@@ -105,10 +113,11 @@ function agregar_mp() {
         extract($_POST);
         $id= $_POST['id'];
         $consulta= "DELETE FROM precio_mp WHERE id= $id"; 
-        
+
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
-    
+
+
     }
     
 

@@ -93,7 +93,7 @@ $(document).ready(function () {
     if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         $codigo = $_GET['codigo'];
         $descripcion = $_GET['descripcion'];
-    
+
     ?>
 
 
@@ -104,14 +104,13 @@ $(document).ready(function () {
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                    
+
                             <br>
                             <br>
                             <h3 class="text-center">Edita precio de <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
-
                             <div class="form-group">
-                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
+                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">                     
                             </div>
 
                                 <label for="linea_precio">Linea:</label><br>
@@ -128,21 +127,21 @@ $(document).ready(function () {
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="form-label">Precio *</label>
-                                <input type="text"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
+                                <input type="number"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="fecha">Fecha y hora:</label>
                                 <input type="datetime-local" id="fecha-hora" name="fecha" value="<?php echo $usuario['fecha']; ?>">
                             </div>
-                      
-                        
+
+
                            <br>
 
                                 <div class="mb-3">
-                                    
-                               <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_precio" onclick="window.history.back();"> 
+
+                               <input type="submit" value="Editar" class="btn btn-success" 
+                               name="editar_precio" > 
                                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
