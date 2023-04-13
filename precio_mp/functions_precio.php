@@ -25,8 +25,15 @@ error_reporting(E_ALL);
 
 
 
-        //header("Location: {$_SERVER['HTTP_REFERER']}");
-        //exit;
+    // Obtener los valores de $codigo y $descripcion_producto de $_POST
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
+
+    // Verificar que los valores existen antes de redirigir
+    if (isset($codigo) && isset($descripcion)) {
+        $url = "precio.php?codigo=$codigo&descripcion=$descripcion";
+        header("Location: $url");
+    }
 
         }
     }
@@ -38,9 +45,6 @@ require_once ("../conexion/_db.php");
 if (isset($_POST['accion'])){ 
     switch ($_POST['accion']){
         //casos de registros
-        case 'agregar_precio':
-            agregar_precio();
-            break; 
 
         case 'editar_precio':
             editar_precio();
@@ -84,8 +88,6 @@ if (isset($_POST['accion'])){
 
 }
 
-function agregar_precio() {
-}
 
 
 
@@ -97,13 +99,15 @@ function agregar_precio() {
 
 		mysqli_query($conexion, $consulta);
 
-        $codigo = $_POST['codigo'];
-        $descripcion = $_POST['descripcion'];
+    // Obtener los valores de $codigo y $descripcion_producto de $_POST
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
 
-        // Verificar que los valores existen antes de redirigir
-        $url = "precio.php?codigo=" . urlencode($codigo) . "&descripcion=" . urlencode($descripcion);
+    // Verificar que los valores existen antes de redirigir
+    if (isset($codigo) && isset($descripcion)) {
+        $url = "precio.php?codigo=$codigo&descripcion=$descripcion";
         header("Location: $url");
-        exit();
+    }
 
 
     }
@@ -117,6 +121,15 @@ function agregar_precio() {
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);
 
+        $codigo = $_POST['codigo'];
+        $descripcion = $_POST['descripcion'];
+    
+        // Verificar que los valores existen antes de redirigir
+        if (isset($codigo) && isset($descripcion)) {
+            $url = "precio.php?codigo=$codigo&descripcion=$descripcion";
+            header("Location: $url");
+        }
+    
 
     }
     

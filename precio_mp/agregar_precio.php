@@ -99,6 +99,7 @@ error_reporting(E_ALL);
                                 <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
                             </div>
 
+
                                 <label for="linea_precio">Linea:</label><br>
                                 <select class="country" name="linea_precio" 
 					style="width: 200px;">
@@ -118,16 +119,18 @@ error_reporting(E_ALL);
 
                             <div class="form-group">
                                 <label for="fecha">Fecha y hora:</label>
-                                <input type="datetime-local" id="fecha-hora" name="fecha">
+                                <input type="date" id="fecha-hora" name="fecha">
                             </div>
-                      
+                    
                         
                            <br>
 
                                 <div class="mb-3">
+                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                                <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_precio" onclick="window.history.back();"> 
+                               name="agregar_precio" > 
                                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
@@ -138,6 +141,7 @@ error_reporting(E_ALL);
                         <?php
                     } else {
   echo "No se especificó ningún código de materia prima.";
+  echo $codigo;
 }
 ?>
 

@@ -87,12 +87,18 @@ error_reporting(E_ALL);
     <?php
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
 
-if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
-    $codigo_producto = $_GET['codigo_producto'];
-    $descripcion_producto = $_GET['descripcion_producto'];
+//if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
+  //  $codigo_producto = $_GET['codigo_producto'];
+    //$descripcion_producto = $_GET['descripcion_producto'];
+
+
     
     // aquí puedes agregar el resto del código
-}
+
+//}
+
+$codigo = $_GET['codigo'];
+$descripcion_producto = $_GET['descripcion_producto'];
 
 
 ?>
@@ -116,8 +122,15 @@ if(isset($_GET['codigo_producto']) && isset($_GET['descripcion_producto'])) {
                         <br>
                         <h3 class="text-center">Selecciona una materia prima para: <?php echo $descripcion_producto; ?></h3>
                         <div class="form-group">
+
+
                             <input type="hidden" name="accion" value="agregar_mp_formula">
-                            <input type="hidden" name="codigo_producto" value="<?php echo $codigo_producto; ?>">
+                            <input type="hidden" name="codigo_producto" value="<?php echo $codigo_produto; ?>">
+                            <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                            <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+
+
+
                             <label for="codigo_mp" class="form-label">Selecciona Materia Prima *</label>
                             <script>
                                 $(document).ready(function() {

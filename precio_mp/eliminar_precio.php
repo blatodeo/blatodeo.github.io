@@ -12,6 +12,12 @@ if ($validar == null || $validar = '') {
 }
 
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+
 ?>
 
 
@@ -32,6 +38,17 @@ if ($validar == null || $validar = '') {
 
 </head>
 <body>
+<?php
+    $link = mysqli_connect("localhost", "root", "");
+    if($link){
+        mysqli_select_db($link, "alcon");
+        mysqli_query($link, "SET NAMES 'utf8'");
+    }
+    if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
+        $codigo = $_GET['codigo'];
+        $descripcion = $_GET['descripcion'];
+    
+    ?>
 
 
 
@@ -42,6 +59,7 @@ if ($validar == null || $validar = '') {
     <p>¿Desea confirmar la eliminacion de este precio?</p>
     </div>
 
+
     <div class="row">
         <div class="col-sm-6">
 
@@ -51,14 +69,22 @@ if ($validar == null || $validar = '') {
 
 
 <form action="functions_precio.php" method="POST">
+                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
                 <input type="hidden" name="accion" value="eliminar_precio">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-                <input type="submit" name="" value="Eliminar" class="btn btn-danger" onclick="window.history.back();">
+                <input type="submit" name="" value="Eliminar" class="btn btn-danger" >
                 <a href="javascript:history.back()" class="btn btn-success">Cancelar</a>
 
         
 
 </form>
+<?php
+                    } else {
+  echo "No se especificó ningún código de materia prima.";
+  echo $codigo;
+}
+?>
 
 
 

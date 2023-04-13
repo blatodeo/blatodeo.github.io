@@ -113,24 +113,28 @@ if (isset($_POST['accion'])){
 
         }
 
-        function agregar_mp_formula(){
-            $conexion=mysqli_connect("localhost","root","","alcon");
+        function agregar_mp_formula() {
+            $conexion = mysqli_connect("localhost", "root", "", "alcon");
             extract($_POST);
-            $codigo_producto = $_POST['codigo_producto'];
             $codigo_mp = $_POST['codigo_mp'];
-        
+            $codigo_producto = $_POST['codigo_producto'];
+
+
             // Agregar los datos a la tabla correspondiente usando una consulta SQL
-            $consulta = "INSERT INTO formula SET codigo_producto='$codigo_producto', codigo_mp='$codigo_mp'";
+            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo_producto'";
             mysqli_query($conexion, $consulta);
         
-            // Imprimir el mensaje de éxito
-            echo "<script>alert('Guardado con éxito')</script>";
-        
-            // Redireccionar al usuario de vuelta a la página detalles_producto.php
-            header('Location: ' . $_SERVER['HTTP_REFERER']);        
-        
+            $codigo = $_POST['codigo'];
+            $descripcion_producto = $_POST['descripcion_producto'];
+
+            // Verificar que los valores existen antes de redirigir
+            if (isset($codigo) && isset($descripcion_producto)) {
+                $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+                header("Location: $url");
+                exit(); // Asegura que no se envía ninguna otra salida al navegador
+            }
         }
-        
+                        
 // Guardar la URL anterior en una variable
 
 function eliminar_mp_formula() {

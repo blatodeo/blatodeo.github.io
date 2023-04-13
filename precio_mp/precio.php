@@ -107,7 +107,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
 
 
-    <table class="table table-striped table-dark">
+    <table class="table table-striped table-dark table_id" id="table_id"">
       <thead>
         <tr>
           <th>ID</th>
@@ -139,10 +139,10 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
             <td><?php echo $fila['fecha'] ?></td>
 
             <td>
-                <a class="btn btn-warning" href="editar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion;?>&id=<?php echo $fila['id']; ?> "">
+                <a class="btn btn-warning" href="editar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion;?>&id=<?php echo $fila['id']; ?> ">
                   <i class="fa fa-edit"></i> </a>
 
-                <a class="btn btn-danger" href="eliminar_precio.php?id=<?php echo $fila['id'] ?>">
+                <a class="btn btn-danger" href="eliminar_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion;?>&id=<?php echo $fila['id']; ?> ">
                   <i class="fa fa-trash"></i></a>
 
 

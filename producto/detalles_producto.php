@@ -81,7 +81,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
 <a class="btn btn-warning" href="productos.php"> Regresa a Productos
                 <i class="fa-solid fa-delete-left"></i></a>
 
-                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>"
+                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>"
 >
         <i class="fa fa-plus"></i> Agregar Materia Prima
     </a>

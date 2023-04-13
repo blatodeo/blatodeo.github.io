@@ -22,6 +22,7 @@ $consulta = "SELECT * FROM precio_mp WHERE id = $id";
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
 
+//value="<?php echo $codigo;
 
 ?>
 
@@ -34,7 +35,7 @@ $usuario = mysqli_fetch_assoc($resultado);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Materia Prima</title>
+    <title>Agregar Materia Prima</title>
 
 	<link rel="stylesheet" href="../css/es.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -75,16 +76,10 @@ $(document).ready(function () {
 
 </head>
 
-
-
 <body id="page-top">
 
 <br>
 <?php
-
-
-
-
     $link = mysqli_connect("localhost", "root", "");
     if($link){
         mysqli_select_db($link, "alcon");
@@ -93,7 +88,7 @@ $(document).ready(function () {
     if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         $codigo = $_GET['codigo'];
         $descripcion = $_GET['descripcion'];
-
+    
     ?>
 
 
@@ -107,10 +102,11 @@ $(document).ready(function () {
 
                             <br>
                             <br>
-                            <h3 class="text-center">Edita precio de <?php echo $descripcion;  ?> </h3>
+                            <h3 class="text-center">Edita precio a <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
+
                             <div class="form-group">
-                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">                     
+                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
                             </div>
 
                                 <label for="linea_precio">Linea:</label><br>
@@ -132,16 +128,16 @@ $(document).ready(function () {
 
                             <div class="form-group">
                                 <label for="fecha">Fecha y hora:</label>
-                                <input type="datetime-local" id="fecha-hora" name="fecha" value="<?php echo $usuario['fecha']; ?>">
+                                <input type="date" id="fecha-hora" name="fecha" value="<?php echo $usuario['fecha']; ?>">
                             </div>
-
-
+                      
+                        
                            <br>
 
                                 <div class="mb-3">
-
-                               <input type="submit" value="Editar" class="btn btn-success" 
-                               name="editar_precio" > 
+                                    
+                               <input type="submit" value="Editar"class="btn btn-success" 
+                               name="editar_precio"> 
                                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
