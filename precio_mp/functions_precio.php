@@ -103,14 +103,14 @@ if (isset($_POST['accion'])){
     $codigo = $_POST['codigo'];
     $descripcion = $_POST['descripcion'];
 
-    // Verificar que los valores existen antes de redirigir
+     //Verificar que los valores existen antes de redirigir
     if (isset($codigo) && isset($descripcion)) {
         $url = "precio.php?codigo=$codigo&descripcion=$descripcion";
         header("Location: $url");
     }
-
-
     }
+
+    
 
     function eliminar_precio() {
         $conexion=mysqli_connect("localhost","root","","alcon");

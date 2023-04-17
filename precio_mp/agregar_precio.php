@@ -114,7 +114,7 @@ error_reporting(E_ALL);
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="form-label">Precio *</label>
-                                <input type="number"  id="precio" name="precio" class="form-control" required>
+                                <input type="number" step="0.01"  id="precio" name="precio" class="form-control" required>
                             </div>
 
                             <div class="form-group">

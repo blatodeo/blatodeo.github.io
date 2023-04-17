@@ -22,6 +22,8 @@ $consulta = "SELECT * FROM precio_mp WHERE id = $id";
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
 
+
+
 //value="<?php echo $codigo;
 
 ?>
@@ -88,8 +90,10 @@ $(document).ready(function () {
     if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         $codigo = $_GET['codigo'];
         $descripcion = $_GET['descripcion'];
-    
+
     ?>
+
+
 
 
 
@@ -99,20 +103,17 @@ $(document).ready(function () {
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-
                             <br>
                             <br>
                             <h3 class="text-center">Edita precio a <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
-
-                            <div class="form-group">
-                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
-                            </div>
+                            <input type="hidden" name="accion" value="editar_precio">
+                            <input type="hidden" name="id" value="<?php echo $id; ?>">
 
                                 <label for="linea_precio">Linea:</label><br>
                                 <select class="country" name="linea_precio" 
 					style="width: 200px;">
-            <?php
+                    <?php
         $v = mysqli_query($link, "SELECT * FROM linea_precio");
         while($linea_precio = mysqli_fetch_row($v)){
     ?>
@@ -123,23 +124,26 @@ $(document).ready(function () {
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="form-label">Precio *</label>
-                                <input type="number"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
+                                <input type="number" step="0.01"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="fecha">Fecha y hora:</label>
-                                <input type="date" id="fecha-hora" name="fecha" value="<?php echo $usuario['fecha']; ?>">
+                                <label for="fecha">Fecha:</label>
+                                <input type="date" id="fecha" name="fecha" value="<?php echo $usuario['fecha']; ?>">
+                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                                <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
+
+
                             </div>
-                      
+                    
                         
                            <br>
 
                                 <div class="mb-3">
                                     
-                               <input type="submit" value="Editar"class="btn btn-success" 
-                               name="editar_precio"> 
+                               <input type="submit" value="Editar"class="btn btn-success"> 
                                <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
-                               
+
                             </div>
                             </div>
                             </div>
@@ -150,6 +154,8 @@ $(document).ready(function () {
   echo "No se especificó ningún código de materia prima.";
 }
 ?>
+
+
 
                     </div>
                 </div>

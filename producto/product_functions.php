@@ -134,7 +134,7 @@ if (isset($_POST['accion'])){
                 exit(); // Asegura que no se envía ninguna otra salida al navegador
             }
         }
-                        
+
 // Guardar la URL anterior en una variable
 
 function eliminar_mp_formula() {
