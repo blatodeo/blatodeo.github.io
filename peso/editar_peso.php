@@ -16,6 +16,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$id = $_GET['id'];
+$conexion = mysqli_connect("localhost", "root", "", "alcon");
+$consulta = "SELECT * FROM peso WHERE id = $id";
+$resultado = mysqli_query($conexion, $consulta);
+$usuario = mysqli_fetch_assoc($resultado);
+
+
+
+//value="<?php echo $codigo;
 
 ?>
 
@@ -53,15 +62,18 @@ error_reporting(E_ALL);
 		<link rel="stylesheet"
 			href=
 "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
-		<script>
-			$(document).ready(function () {
-				//Select2
-				$(".country").select2({
-					maximumSelectionLength: 2,
-				});
-				//Chosen
-			});
-		</script>
+<script>
+$(document).ready(function () {
+  //Select2
+  var select2_element = $(".country").select2({
+    maximumSelectionLength: 10,
+  });
+
+  // Establecer valor predefinido en select2
+  select2_element.val('<?php echo $usuario["linea_precio"]; ?>');
+  select2_element.trigger('change');
+  //Chosen
+});		</script>
 
 
 </head>
@@ -78,61 +90,51 @@ error_reporting(E_ALL);
     if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
         $codigo = $_GET['codigo'];
         $descripcion = $_GET['descripcion'];
-    
+
     ?>
 
 
 
-<form  action="functions_precio.php" method="POST">
+
+
+<form  action="functions_peso.php" method="POST">
 <div id="login" >
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                    
                             <br>
                             <br>
-                            <h3 class="text-center">Agrega precio a <?php echo $descripcion;  ?> </h3>
+                            <h3 class="text-center">Edita peso a <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
+                            <input type="hidden" name="accion" value="editar_peso">
+                            <input type="hidden" name="id" value="<?php echo $id; ?>">
 
-                            <div class="form-group">
-                                <input type="hidden" name="mp" value="<?php echo $codigo; ?>">                     
-                            </div>
-
-
-                                <label for="linea_precio">Linea:</label><br>
-                                <select class="country" name="linea_precio" 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM linea_precio");
-        while($linea_precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $linea_precio[0] ?>"><?php echo $linea_precio[1] ?></option>
-        <?php   } ?></select>
 
 
                             </div>
                             <div class="form-group">
-                                <label for="precio" class="form-label">Precio *</label>
-                                <input type="number" x  id="precio" name="precio" class="form-control" required>
+                                <label for="peso" class="form-label">Peso *</label>
+                                <input type="number" step="0.01" id="peso" name="peso" value="<?php echo $usuario['peso']; ?>" class="form-control" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="fecha">Fecha y hora:</label>
-                                <input type="date" id="fecha-hora" name="fecha">
+                                <label for="fecha">Fecha:</label>
+                                <input type="date" id="fecha" name="fecha" value="<?php echo $usuario['fecha']; ?>">
+                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                                <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
+
+
                             </div>
                     
                         
                            <br>
 
                                 <div class="mb-3">
-                                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                                <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
                                     
-                               <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_precio" > 
-                               <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
-                               
+                               <input type="submit" value="Editar"class="btn btn-success"> 
+                               <a href="peso.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
+
                             </div>
                             </div>
                             </div>
@@ -141,9 +143,10 @@ error_reporting(E_ALL);
                         <?php
                     } else {
   echo "No se especificó ningún código de materia prima.";
-  echo $codigo;
 }
 ?>
+
+
 
                     </div>
                 </div>

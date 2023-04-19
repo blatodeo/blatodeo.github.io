@@ -103,8 +103,6 @@ if ($validar == null || $validar = '') {
       <a class="btn btn-primary" href="../linea_producto/lineas_producto.php"> Ver Lineas 
         <i class="fa-solid fa-grip-lines" aria-hidden="true"></i>
       </a>
-      <a class="btn btn-primary" href="../formula/formula.php">
-                  Ver Formulas</a>
 
 
 

@@ -28,7 +28,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Materia Prima</title>
+    <title>Agregar Peso</title>
 
 	<link rel="stylesheet" href="../css/es.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -83,8 +83,8 @@ error_reporting(E_ALL);
 
 
 
-<form  action="functions_precio.php" method="POST">
-<div id="login" >
+<form  action="functions_peso.php" method="POST">
+<div id="login">
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
@@ -92,7 +92,7 @@ error_reporting(E_ALL);
                     
                             <br>
                             <br>
-                            <h3 class="text-center">Agrega precio a <?php echo $descripcion;  ?> </h3>
+                            <h3 class="text-center">Agrega peso a <?php echo $descripcion;  ?> </h3>
                             <div class="form-group">
 
                             <div class="form-group">
@@ -100,26 +100,16 @@ error_reporting(E_ALL);
                             </div>
 
 
-                                <label for="linea_precio">Linea:</label><br>
-                                <select class="country" name="linea_precio" 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM linea_precio");
-        while($linea_precio = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $linea_precio[0] ?>"><?php echo $linea_precio[1] ?></option>
-        <?php   } ?></select>
-
 
                             </div>
                             <div class="form-group">
-                                <label for="precio" class="form-label">Precio *</label>
-                                <input type="number" x  id="precio" name="precio" class="form-control" required>
+                                <label for="peso" class="form-label">Peso *</label>
+                                <input type="number" step="0.01" id="peso" name="peso" class="form-control" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="fecha">Fecha y hora:</label>
-                                <input type="date" id="fecha-hora" name="fecha">
+                            <label for="fecha">Fecha:</label>
+<input type="date" id="fecha-hora" name="fecha" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                     
                         
@@ -130,8 +120,8 @@ error_reporting(E_ALL);
                                 <input type="hidden" name="descripcion" value="<?php echo $descripcion; ?>">
                                     
                                <input type="submit" value="Guardar"class="btn btn-success" 
-                               name="agregar_precio" > 
-                               <a href="precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
+                               name="agregar_peso" > 
+                               <a href="peso.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?>" class="btn btn-danger">Cancelar</a>
                                
                             </div>
                             </div>

@@ -132,6 +132,8 @@ if ($validar == null || $validar = '') {
           <th>Descripcion</th>
           <th>Acciones</th>
           <th>Precios</th>
+          <th>Peso</th>
+
 
 
         </tr>
@@ -171,7 +173,14 @@ if ($validar == null || $validar = '') {
               </td>
               <td>
                 <a class="btn btn-primary" href="../precio_mp/precio.php?codigo=<?php echo $fila['codigo'] ; ?>&descripcion=<?php echo $fila['descripcion']; ?> ">
-                <i class="fa-solid fa-dollar-sign"></i>            </tr>
+                <i class="fa-solid fa-dollar-sign"></i>    
+              </td>
+
+              <td>
+                <a class="btn btn-primary" href="../peso/peso.php?codigo=<?php echo $fila['codigo'] ; ?>&descripcion=<?php echo $fila['descripcion']; ?> ">
+                <i class="fa-solid fa-weight-hanging"></i>            
+
+              </tr>
 
             
 

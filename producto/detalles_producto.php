@@ -95,7 +95,8 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <tr>
         <th>ID</th>
         <th>Materia Prima</th>
-        <th>Costo/KG</th>
+        <th>Costo</th>
+        <th>Kg/Batch</th>
         <th>Acciones</th>
 
 
@@ -104,27 +105,30 @@ $descripcion_producto = $_GET['descripcion_producto'];
       </thead>
       <tbody>
       <?php
+      $totalPeso = 0;
+      $conexion = mysqli_connect("localhost", "root", "", "alcon");
+      // Obtener datos de las materias primas de la fórmula
+      $SQL= "SELECT
+      formula.id,
+      materia_prima.codigo,
+      materia_prima.descripcion,
+      (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio,
+      (SELECT peso FROM peso WHERE peso.mp = materia_prima.codigo ORDER BY fecha DESC LIMIT 1) AS peso 
+    FROM formula 
+    INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+    WHERE codigo_producto = $codigo
+    ";
 
-
-$conexion = mysqli_connect("localhost", "root", "", "alcon");
-// Obtener datos de las materias primas de la fórmula
-$SQL= "SELECT formula.id, materia_prima.codigo, materia_prima.descripcion, 
-        (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-        FROM formula 
-        INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-        WHERE codigo_producto = $codigo";
-
-
-                $dato = mysqli_query($conexion, $SQL);
-                if ($dato->num_rows > 0) {
-                  while ($fila = mysqli_fetch_array($dato)) {
-
-?>
-
+      $dato = mysqli_query($conexion, $SQL);
+      if ($dato->num_rows > 0) {
+        while ($fila = mysqli_fetch_array($dato)) {
+          $totalPeso += $fila['peso'];
+    ?>
       <tr>
               <td><?php echo $fila['id']; ?></td>
               <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?></td>
               <td><?php echo  '$' . $fila['precio']; ?></td>
+              <td><?php echo $fila['peso']; ?></td>
               <td>
 
                 <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
@@ -155,6 +159,13 @@ $SQL= "SELECT formula.id, materia_prima.codigo, materia_prima.descripcion,
 
         </tbody>
     </table>
+    <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td><strong><?php echo $totalPeso ?></strong></td>
+  <td></td>
+</tr>
 
 
 
