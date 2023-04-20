@@ -104,6 +104,12 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
     <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
 
+    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
+    <i class="fa-solid fa-grip-lines"> </i> Ir precios   </a>
+
+
+
+
 
 
 
