@@ -37,9 +37,14 @@ if (isset($_POST['accion'])){
     switch ($_POST['accion']){
         //casos de registros
 
-        case 'editar_producto':
+            case 'editar_producto':
             editar_producto();
             break; 
+
+            case 'editar_peso':
+            editar_peso();
+            break; 
+    
 
             case 'eliminar_producto';
             eliminar_producto();
@@ -100,6 +105,17 @@ if (isset($_POST['accion'])){
 		header('Location: ../producto/productos.php');
     }
 
+    function editar_peso() {
+		$conexion=mysqli_connect("localhost","root","","alcon");
+		extract($_POST);
+		$consulta="UPDATE formula SET peso = '$peso'  WHERE id = '$id' ";
+
+		mysqli_query($conexion, $consulta);
+
+		header('Location: ../producto/productos.php');
+    }
+
+
         function eliminar_producto() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
@@ -108,8 +124,17 @@ if (isset($_POST['accion'])){
 
             mysqli_query($conexion, $consulta);
 
-        
-            header('Location: ../producto/productos.php');
+            $codigo = $_POST['codigo'];
+            $descripcion_producto = $_POST['descripcion_producto'];
+
+            // Verificar que los valores existen antes de redirigir
+            if (isset($codigo) && isset($descripcion_producto)) {
+                $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+                header("Location: $url");
+                exit(); // Asegura que no se envía ninguna otra salida al navegador
+
+
+            }
 
         }
 

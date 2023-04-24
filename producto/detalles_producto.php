@@ -134,7 +134,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
               <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?></td>
               <td><?php echo  '$' . $fila['precio']; ?> </td>
               <td><?php echo $fila['peso']; ?> 
-                <a class="btn btn-warning btn-sm" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>">  <i class="fa fa-edit"></i></a>
+                <a class="btn btn-warning btn-sm" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>">  <i class="fa fa-edit"></i></a>
 
               </td>
               <td><?php echo '$' . number_format($fila['precio'] * $fila['peso'], 2); ?></td>
