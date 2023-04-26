@@ -18,10 +18,15 @@ if ($validar == null || $validar = '') {
 
 $id = $_GET['id'];
 $codigo_mp = $_GET['codigo'];
+$codigo = $_GET['codigo_producto'];
+$descripcion_producto = $_GET['descripcion_producto'];
+
 
 
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$consulta = "SELECT * FROM peso WHERE mp = $codigo_mp AND id = $id";
+$consulta = "SELECT mp, materia_prima.codigo
+FROM peso 
+INNER JOIN materia_prima ON peso.mp = materia_prima.codigo"; 
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
 
@@ -109,14 +114,23 @@ $(document).ready(function () {
 
                             <div class="form-group">
                                 <label for="peso" class="form-label">Linea *</label>
-                                <select class="country" name="peso" value="<?php echo $usuario['peso']; ?>" required 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM peso");
-        while($peso = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $peso[0] ?>"><?php echo $peso[1] ?></option>
-        <?php   } ?></select>
+                                <select class="country" name="peso" required style="width: 200px;">
+  <?php
+    $consulta = "SELECT mp, materia_prima.codigo
+                 FROM peso 
+                 INNER JOIN materia_prima ON peso.mp = materia_prima.codigo
+                 WHERE materia_prima.codigo = '$codigo_mp'";
+    $resultados = mysqli_query($conexion, $consulta);
+    while ($row = mysqli_fetch_assoc($resultados)) {
+      $selected = '';
+      if ($row['mp'] == $usuario['mp']) {
+        $selected = 'selected';
+      }
+      echo "<option value='" . $row['mp'] . "' " . $selected . ">" . $row['codigo'] . "</option>";
+    }
+  ?>
+</select>
+
 
                             </div>
                             <div class="form-group">

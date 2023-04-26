@@ -112,8 +112,18 @@ if (isset($_POST['accion'])){
 
 		mysqli_query($conexion, $consulta);
 
-		header('Location: ../producto/productos.php');
-    }
+        $codigo = $_POST['codigo'];
+        $descripcion_producto = $_POST['descripcion_producto'];
+
+        // Verificar que los valores existen antes de redirigir
+        if (isset($codigo) && isset($descripcion_producto)) {
+            $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+            header("Location: $url");
+            exit(); // Asegura que no se envía ninguna otra salida al navegador
+
+
+        }
+}
 
 
         function eliminar_producto() {
