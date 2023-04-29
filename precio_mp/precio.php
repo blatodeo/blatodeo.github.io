@@ -30,7 +30,7 @@ if ($validar == null || $validar = '') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulas</title>
+    <title>Precios</title>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
         integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
         crossorigin="anonymous"></script>
@@ -103,9 +103,6 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
     <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
     <i class="fa-solid fa-grip-lines"> </i> Ir a Lineas   </a>
-
-    <a class="btn btn-primary" href="../precio_mp/linea_precio/linea_precio.php?codigo=<?php echo $codigo ; ?>&descripcion=<?php echo $descripcion; ?> ">
-    <i class="fa-solid fa-grip-lines"> </i> Ir precios   </a>
 
 
 

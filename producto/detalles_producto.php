@@ -98,7 +98,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <th>Costo/Kg</th>
         <th>Kg/Batch</th>
         <th>Costo MP</th>
-        <th>Acciones</th>
+        <th>Eliminar</th>
 
 
 
@@ -110,34 +110,34 @@ $descripcion_producto = $_GET['descripcion_producto'];
       $totalPrecio = 0; // agregar esta variable      
       $conexion = mysqli_connect("localhost", "root", "", "alcon");
       // Obtener datos de las materias primas de la fórmula
-      $SQL= "SELECT
+      $SQL= "SELECT 
       formula.id,
       materia_prima.codigo,
       materia_prima.descripcion,
+      materia_prima.peso,
       (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio,
-      (SELECT peso FROM peso WHERE peso.mp = materia_prima.codigo ORDER BY fecha DESC LIMIT 1) AS peso 
+      formula.peso AS peso 
     FROM formula 
     INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-    WHERE codigo_producto = $codigo
-    ";
+    WHERE codigo_producto = $codigo";
 
-      $dato = mysqli_query($conexion, $SQL);
-      if ($dato->num_rows > 0) {
-        while ($fila = mysqli_fetch_array($dato)) {
-          $totalPeso += $fila['peso'];
-          $totalPrecio += $fila['precio']; // agregar esto    
-          $costoMP = $fila['precio'] * $fila['peso']; // multiplicar precio y peso
-          $totalCostoMP += $costoMP; // agregar el costo de MP al total?>
-          
-      <tr>
-              <td><?php echo $fila['id']; ?></td>
-              <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?></td>
-              <td><?php echo  '$' . $fila['precio']; ?> </td>
-              <td><?php echo $fila['peso']; ?> 
-                <a class="btn btn-warning btn-sm" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>">  <i class="fa fa-edit"></i></a>
+$dato = mysqli_query($conexion, $SQL);
+if ($dato->num_rows > 0) {
+  while ($fila = mysqli_fetch_array($dato)) {
+    $totalPeso += $fila['peso'];
+    $totalPrecio += $fila['precio'];
+    $costoMP = $fila['precio'] * $fila['peso'];
+    $totalCostoMP += $costoMP;
+?>
+  <tr>
+    <td><?php echo $fila['id']; ?></td>
+    <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?> </td>
+    <td><?php echo '$' . $fila['precio']; ?></td>
+    <td><?php echo $fila['peso']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+>
+                  <i class="fas fa-pencil-alt"></i></a>
 
-              </td>
-              <td><?php echo '$' . number_format($fila['precio'] * $fila['peso'], 2); ?></td>
+    <td><?php echo '$' . $costoMP; ?></td>
               <td>
 
                 <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"

@@ -41,8 +41,8 @@ if (isset($_POST['accion'])){
             editar_producto();
             break; 
 
-            case 'editar_peso':
-            editar_peso();
+            case 'cambiar_peso':
+            cambiar_peso();
             break; 
     
 
@@ -105,7 +105,7 @@ if (isset($_POST['accion'])){
 		header('Location: ../producto/productos.php');
     }
 
-    function editar_peso() {
+    function cambiar_peso() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
 		$consulta="UPDATE formula SET peso = '$peso'  WHERE id = '$id' ";

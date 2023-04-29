@@ -24,9 +24,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
 
 
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$consulta = "SELECT mp, materia_prima.codigo
-FROM peso 
-INNER JOIN materia_prima ON peso.mp = materia_prima.codigo"; 
+$consulta = "SELECT * FROM formula WHERE id = $id"; 
 $resultado = mysqli_query($conexion, $consulta);
 $usuario = mysqli_fetch_assoc($resultado);
 
@@ -113,32 +111,21 @@ $(document).ready(function () {
                             <h3 class="text-center">Editar peso</h3>
 
                             <div class="form-group">
-                                <label for="peso" class="form-label">Linea *</label>
-                                <select class="country" name="peso" required style="width: 200px;">
-  <?php
-    $consulta = "SELECT mp, materia_prima.codigo
-                 FROM peso 
-                 INNER JOIN materia_prima ON peso.mp = materia_prima.codigo
-                 WHERE materia_prima.codigo = '$codigo_mp'";
-    $resultados = mysqli_query($conexion, $consulta);
-    while ($row = mysqli_fetch_assoc($resultados)) {
-      $selected = '';
-      if ($row['mp'] == $usuario['mp']) {
-        $selected = 'selected';
-      }
-      echo "<option value='" . $row['mp'] . "' " . $selected . ">" . $row['codigo'] . "</option>";
-    }
-  ?>
-</select>
-
+                                <label for="peso" class="form-label">Peso *</label>
+                                <select class="country" name="peso" value="<?php echo $usuario['peso']; ?>" required 
+					style="width: 200px;">
+            <?php
+        $v = mysqli_query($link, "SELECT * FROM peso");
+        while($peso = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $peso[0] ?>"><?php echo $peso[1] ?></option>
+        <?php   } ?></select>
 
                             </div>
                             <div class="form-group">
-                                <input type="hidden" name="accion" value="editar_peso">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
-
 
                             </div>
 
@@ -147,7 +134,7 @@ $(document).ready(function () {
 
                             <div class="mb-3">
 
-                                <button type="submit" class="btn btn-success">Editar</button>
+                            <button class="btn btn-success" type="submit" name="accion" value="cambiar_peso">Editar</button>
                                 <a class="btn btn-danger" href="#" onclick="window.history.back();">Cancelar</a>
 
                             </div>
