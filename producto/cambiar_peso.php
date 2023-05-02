@@ -17,7 +17,7 @@ if ($validar == null || $validar = '') {
 
 
 $id = $_GET['id'];
-$codigo_mp = $_GET['codigo'];
+$codigo_mp = $_GET['codigo_mp'];
 $codigo = $_GET['codigo_producto'];
 $descripcion_producto = $_GET['descripcion_producto'];
 
@@ -108,18 +108,22 @@ $(document).ready(function () {
 
                             <br>
                             <br>
-                            <h3 class="text-center">Editar peso</h3>
+                            <h3 class="text-center">Editar peso</h3> 
+
 
                             <div class="form-group">
                                 <label for="peso" class="form-label">Peso *</label>
                                 <select class="country" name="peso" value="<?php echo $usuario['peso']; ?>" required 
 					style="width: 200px;">
             <?php
-        $v = mysqli_query($link, "SELECT * FROM peso");
+        $v = mysqli_query($link, "SELECT * FROM peso WHERE mp = $codigo_mp");
         while($peso = mysqli_fetch_row($v)){
     ?>
             <option value="<?php echo $peso[0] ?>"><?php echo $peso[1] ?></option>
         <?php   } ?></select>
+
+
+
 
                             </div>
                             <div class="form-group">
@@ -136,6 +140,8 @@ $(document).ready(function () {
 
                             <button class="btn btn-success" type="submit" name="accion" value="cambiar_peso">Editar</button>
                                 <a class="btn btn-danger" href="#" onclick="window.history.back();">Cancelar</a>
+
+
 
                             </div>
                         </div>
