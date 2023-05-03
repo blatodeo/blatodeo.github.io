@@ -101,19 +101,24 @@ if ($validar == null || $validar = '') {
                             <div class="form-group">
                                   <label for="descripcion_producto" class="form-label">Descripcion *</label>
                                 <input type="text"  id="descripcion_producto" name="descripcion_producto" class="form-control" required>
-                                
+
+
                             </div>
 
-                      
-                        
+
+
+
+
+
+
                            <br>
 
                                 <div class="mb-3">
-                                    
+ 
                                <input type="submit" value="Guardar"class="btn btn-success" 
                                name="agregar_producto">
                                <a href="productos.php" class="btn btn-danger">Cancelar</a>
-                               
+
                             </div>
                             </div>
                             </div>

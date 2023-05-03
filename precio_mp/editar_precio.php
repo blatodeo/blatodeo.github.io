@@ -124,7 +124,7 @@ $(document).ready(function () {
                             </div>
                             <div class="form-group">
                                 <label for="precio" class="form-label">Precio *</label>
-                                <input type="number" step="0.01"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
+                                <input type="number" step="0.001" min="0" max="9999.999"  id="precio" name="precio" value="<?php echo $usuario['precio']; ?>" class="form-control" required>
                             </div>
 
                             <div class="form-group">

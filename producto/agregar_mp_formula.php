@@ -125,9 +125,9 @@ $descripcion_producto = $_GET['descripcion_producto'];
 
 
                             <input type="hidden" name="accion" value="agregar_mp_formula">
-                            <input type="hidden" name="codigo_producto" value="<?php echo $codigo_produto; ?>">
                             <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                             <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+
 
 
 

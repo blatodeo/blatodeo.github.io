@@ -119,7 +119,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
       formula.peso AS peso 
     FROM formula 
     INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-    INNER JOIN peso ON formula.peso = peso.id
+    LEFT JOIN peso ON formula.peso = peso.id
     WHERE codigo_producto = $codigo";
 
 $dato = mysqli_query($conexion, $SQL);
@@ -129,16 +129,20 @@ if ($dato->num_rows > 0) {
     $totalPrecio += $fila['precio'];
     $costoMP = $fila['precio'] * $fila['valor'];
     $totalCostoMP += $costoMP;
-?>
+    // Agregar condición para establecer un valor de 0 en la columna 'Kg/Batch'
+    if (empty($fila['valor']) || $fila['valor'] == 0) {
+      $fila['valor'] = 0;
+    }
+    ?>
   <tr>
     <td><?php echo $fila['id']; ?></td>
     <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?> </td>
-    <td><?php echo '$' . $fila['precio']; ?></td>
+    <td><?php echo '$' . number_format($fila['precio'], 3); ?></td>
     <td><?php echo $fila['valor']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
 
-    <td><?php echo '$' . $costoMP; ?></td>
+                  <td><?php echo '$' . number_format($costoMP, 3); ?></td>
               <td>
 
                 <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
@@ -177,7 +181,7 @@ if ($dato->num_rows > 0) {
   <td></td>
 </tr>
 
-<div><strong>Total Precio: <?php echo '$' . $totalPrecio; ?></strong></div> <!-- agregar esto -->
+<div><strong>Total Precio: <?php echo '$' . number_format($totalPrecio, 3) ; ?></strong></div> <!-- agregar esto -->
 
 
 

@@ -136,7 +136,7 @@ if(isset($_GET['codigo']) && isset($_GET['descripcion'])) {
 
           <tr>
             <td><?php echo $fila['id']; ?></td>
-            <td><?php echo '$' . $fila['precio']; ?></td>
+            <td><?php echo '$' . ($fila['precio']); ?></td>
             <td><?php echo $fila['linea'] ?></td>
             <td><?php echo $fila['codigo'] ?></td>
             <td><?php echo $fila['fecha'] ?></td>

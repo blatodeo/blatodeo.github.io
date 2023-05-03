@@ -151,16 +151,16 @@ if (isset($_POST['accion'])){
         function agregar_mp_formula() {
             $conexion = mysqli_connect("localhost", "root", "", "alcon");
             extract($_POST);
-            $codigo_mp = $_POST['codigo_mp'];
-            $codigo_producto = $_POST['codigo_producto'];
 
 
             // Agregar los datos a la tabla correspondiente usando una consulta SQL
-            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo_producto'";
+            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo'";
             mysqli_query($conexion, $consulta);
         
             $codigo = $_POST['codigo'];
             $descripcion_producto = $_POST['descripcion_producto'];
+            $codigo_mp = $_POST['codigo_mp'];
+
 
             // Verificar que los valores existen antes de redirigir
             if (isset($codigo) && isset($descripcion_producto)) {
