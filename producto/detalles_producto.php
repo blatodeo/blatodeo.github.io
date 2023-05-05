@@ -99,6 +99,9 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <th>Kg/Batch</th>
         <th>Costo MP</th>
         <th>Eliminar</th>
+        <th>Última modificación</th>
+
+
 
 
 
@@ -107,7 +110,9 @@ $descripcion_producto = $_GET['descripcion_producto'];
       <tbody>
       <?php
       $totalPeso = 0;
-      $totalPrecio = 0; // agregar esta variable      
+      $totalPrecio = 0; // agregar esta variable    
+      $fechaHoraActual = date("Y-m-d H:i:s");  
+      $updateSQL = "UPDATE formula SET ultima_modificacion = '$fechaHoraActual' WHERE id = {$fila['id']}";
       $conexion = mysqli_connect("localhost", "root", "", "alcon");
       // Obtener datos de las materias primas de la fórmula
       $SQL= "SELECT 
@@ -137,12 +142,12 @@ if ($dato->num_rows > 0) {
   <tr>
     <td><?php echo $fila['id']; ?></td>
     <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?> </td>
-    <td><?php echo '$' . number_format($fila['precio'], 3); ?></td>
+    <td><?php echo '$' . number_format($fila['precio'], 0); ?></td>
     <td><?php echo $fila['valor']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
 
-                  <td><?php echo '$' . number_format($costoMP, 3); ?></td>
+                  <td><?php echo '$' . number_format($costoMP, 0); ?></td>
               <td>
 
                 <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
@@ -152,6 +157,9 @@ if ($dato->num_rows > 0) {
 
 
               </td>
+
+              <td><?php echo $fila['ultima_modificacion']; ?></td>
+
 
 
 
@@ -177,12 +185,26 @@ if ($dato->num_rows > 0) {
   <td></td>
   <td></td>
   <td></td>
-  <td><strong>Total Peso: <?php echo  $totalPeso . ' Kg'  ?></strong></td>
+  <td><strong>Total Peso: </strong><?php echo  $totalPeso . ' Kg'  ?></td>
   <td></td>
 </tr>
 
-<div><strong>Total Precio: <?php echo '$' . number_format($totalPrecio, 3) ; ?></strong></div> <!-- agregar esto -->
+<br>
 
+<?php
+$maquila = 105000;
+$etiqueta_empaque = 25050;
+$administracion_impuestos = 117298;
+
+$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos) ;
+echo "<strong>Maquila:</strong> " . ($maquila) . "<br>\n";
+echo "<strong>Etiqueta y Empaque:</strong> " . ($etiqueta_empaque) . "<br>\n";
+echo "<strong>Administracion e Impuestos:</strong> " . ($administracion_impuestos) . "<br><br>\n";
+
+echo "<strong>El costo total de materia prima es:</strong> " . number_format($totalCostoMP, 2, '.', ',') . "<br>\n";
+echo "<strong>El costo por tonelada es de:</strong> " . number_format($totalPorTonelada, 2, '.', ',') . "<br>\n";
+
+?>
 
 
 
