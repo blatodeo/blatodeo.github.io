@@ -1,5 +1,8 @@
 <?php
 
+date_default_timezone_set('America/Bogota');
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -111,12 +114,11 @@ $descripcion_producto = $_GET['descripcion_producto'];
       <?php
       $totalPeso = 0;
       $totalPrecio = 0; // agregar esta variable    
-      $fechaHoraActual = date("Y-m-d H:i:s");  
-      $updateSQL = "UPDATE formula SET ultima_modificacion = '$fechaHoraActual' WHERE id = {$fila['id']}";
       $conexion = mysqli_connect("localhost", "root", "", "alcon");
       // Obtener datos de las materias primas de la fórmula
       $SQL= "SELECT 
       formula.id,
+      formula.fecha,
       materia_prima.codigo,
       materia_prima.descripcion,
       peso.peso AS valor,
@@ -158,7 +160,7 @@ if ($dato->num_rows > 0) {
 
               </td>
 
-              <td><?php echo $fila['ultima_modificacion']; ?></td>
+              <td><?php echo $fila['fecha']; ?></td>
 
 
 

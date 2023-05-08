@@ -1,4 +1,5 @@
 <?php
+    date_default_timezone_set('America/Bogota');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -105,24 +106,27 @@ if (isset($_POST['accion'])){
 		header('Location: ../producto/productos.php');
     }
 
-    function cambiar_peso() {
-		$conexion=mysqli_connect("localhost","root","","alcon");
-		extract($_POST);
-		$consulta="UPDATE formula SET peso = '$peso'  WHERE id = '$id' ";
+function cambiar_peso() {
+    $conexion=mysqli_connect("localhost","root","","alcon");
+    extract($_POST);
+    $consulta="UPDATE formula SET peso = '$peso'  WHERE id = '$id' ";
 
-		mysqli_query($conexion, $consulta);
+    mysqli_query($conexion, $consulta);
 
-        $codigo = $_POST['codigo'];
-        $descripcion_producto = $_POST['descripcion_producto'];
+    // Agregar consulta para actualizar la fecha y hora de modificación
+    $fecha = date('Y-m-d H:i:s');
+    $consulta_fecha = "UPDATE formula SET fecha = '$fecha' WHERE id = '$id'";
+    mysqli_query($conexion, $consulta_fecha);
 
-        // Verificar que los valores existen antes de redirigir
-        if (isset($codigo) && isset($descripcion_producto)) {
-            $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
-            header("Location: $url");
-            exit(); // Asegura que no se envía ninguna otra salida al navegador
+    $codigo = $_POST['codigo'];
+    $descripcion_producto = $_POST['descripcion_producto'];
 
-
-        }
+    // Verificar que los valores existen antes de redirigir
+    if (isset($codigo) && isset($descripcion_producto) && mysqli_affected_rows($conexion) > 0 && mysqli_affected_rows($conexion) > 0) {
+        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+        header("Location: $url");
+        exit(); // Asegura que no se envía ninguna otra salida al navegador
+    }
 }
 
 

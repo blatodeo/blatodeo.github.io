@@ -9,8 +9,11 @@ if ($validar == null || $validar = '') {
 
     header("Location: ../_sesion/index.php");
     die();
+
+
 }
 
+date_default_timezone_set('America/Bogota');
 
 
 
@@ -130,6 +133,8 @@ $(document).ready(function () {
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+                                <input type="hidden" name="fecha" value="<?php echo date('Y-m-d H:i:s'); ?>">
+
 
                             </div>
 
