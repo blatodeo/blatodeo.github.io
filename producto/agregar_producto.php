@@ -105,6 +105,57 @@ if ($validar == null || $validar = '') {
 
                             </div>
 
+                            <div class="form-group">
+                                <label for="presentacion">Presentacion:</label><br>
+                                <select class="country" name="presentacion" 
+					style="width: 200px;">
+            <?php
+        $v = mysqli_query($link, "SELECT * FROM presentacion");
+        while($presentacion = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $presentacion[0] ?>"><?php echo $presentacion[1] ?></option>
+        <?php   } ?></select>
+                            </div>
+
+                            
+                            <div class="form-group">
+                                <label for="empaque">Empaque: </label><br>
+                                <select class="country" name="empaque" 
+					style="width: 200px;">
+            <?php
+        $v = mysqli_query($link, "SELECT * FROM empaque");
+        while($empaque = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $empaque[0] ?>"><?php echo $empaque[1] ?></option>
+        <?php   } ?></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dado">Dado: </label><br>
+                                <select class="country" name="dado" 
+					style="width: 200px;">
+            <?php
+        $v = mysqli_query($link, "SELECT * FROM dado");
+        while($dado = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $dado[0] ?>"><?php echo $dado[1] ?></option>
+        <?php   } ?></select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="medicado">Medicado: </label><br>
+                                <select class="country" name="medicado" 
+					style="width: 200px;">
+            <?php
+        $v = mysqli_query($link, "SELECT * FROM medicado");
+        while($medicado = mysqli_fetch_row($v)){
+    ?>
+            <option value="<?php echo $medicado[0] ?>"><?php echo $medicado1[1] ?></option>
+        <?php   } ?></select>
+                            </div>
+
+
 
 
 

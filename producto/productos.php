@@ -135,6 +135,10 @@ if ($validar == null || $validar = '') {
         <th>Codigo</th>
         <th>Linea</th>
         <th>Descripcion</th>
+        <th>Presentacion</th>
+        <th>Empaque</th>
+        <th>Dado</th>
+        <th>Medicado</th>
         <th>Acciones</th>
         <th>Detalles</th> <!-- Nueva columna -->
 
@@ -146,9 +150,22 @@ if ($validar == null || $validar = '') {
         <?php
 
         $conexion = mysqli_connect("localhost", "root", "", "alcon");
-        $SQL = "SELECT producto.codigo, producto.descripcion_producto, linea_producto.linea
-        FROM producto 
-        INNER JOIN linea_producto ON producto.linea = linea_producto.id"  ;
+        $SQL = "SELECT producto.codigo, 
+        producto.descripcion_producto, 
+        linea_producto.linea, 
+        presentacion.presentacion, 
+        empaque.empaque, 
+        dado.dado,
+        medicado.medicado
+        FROM producto
+        LEFT JOIN linea_producto ON producto.linea = linea_producto.id
+        LEFT JOIN presentacion ON producto.presentacion = presentacion.id
+        LEFT JOIN empaque ON producto.empaque = empaque.id
+        LEFT JOIN dado ON producto.dado = dado.id
+        LEFT JOIN medicado ON producto.medicado = medicado.id";
+
+
+
         $dato = mysqli_query($conexion, $SQL);
 
         if ($dato->num_rows > 0) {
@@ -159,6 +176,12 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['codigo']; ?></td>
               <td><?php echo $fila['linea']; ?></td>
               <td><?php echo $fila['descripcion_producto']; ?></td>
+              <td><?php echo $fila['presentacion']; ?></td>
+              <td><?php echo $fila['empaque']; ?></td>
+              <td><?php echo $fila['dado']; ?></td>
+              <td><?php echo $fila['medicado']; ?></td>
+
+
 
 
 

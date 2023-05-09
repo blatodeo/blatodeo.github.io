@@ -11,15 +11,20 @@ error_reporting(E_ALL);
 
     if(isset($_POST['agregar_producto'])){
 
-        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion_producto'])  >=1){
+        if(strlen($_POST['codigo']) >=1 && strlen($_POST['linea'])  >=1 && strlen($_POST['descripcion_producto'])  >=1 && strlen($_POST['presentacion'])  >=1 && strlen($_POST['empaque'])  >=1 && strlen($_POST['dado'])  >=1 && strlen($_POST['medicado'])  >=1){
 
         $codigo = trim($_POST['codigo']);
         $linea = trim($_POST['linea']);
         $descripcion_producto = trim($_POST['descripcion_producto']);
+        $presentacion = trim($_POST['presentacion']);
+        $empaque = trim($_POST['empaque']);
+        $dado = trim($_POST['dado']);
+        $medicado = trim($_POST['medicado']);
 
 
-        $consulta= "INSERT INTO producto (codigo, linea, descripcion_producto)
-        VALUES ('$codigo', '$linea','$descripcion_producto')";
+
+        $consulta= "INSERT INTO producto (codigo, linea, descripcion_producto, presentacion, empaque, dado, medicado)
+        VALUES ('$codigo', '$linea','$descripcion_producto', '$presentacion', ' $empaque', '$dado', '$medicado')";
 
         mysqli_query($conexion, $consulta);
         mysqli_close($conexion);

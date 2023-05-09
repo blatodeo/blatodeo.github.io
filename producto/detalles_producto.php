@@ -89,7 +89,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <i class="fa fa-plus"></i> Agregar Materia Prima
     </a>
 
-    <h1>Formula de <?php echo $descripcion_producto;  ?></h1>
+    <h1>PRODUCTO <?php echo $codigo;  ?></h1>
 
     <table class="table table-striped table-dark table_id" id="table_id">
 
