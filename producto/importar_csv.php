@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Obtener el código del producto y la descripción a través de la URL
 $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
@@ -15,24 +11,38 @@ if (isset($_FILES['archivo_csv'])) {
     // Conectar a la base de datos
     $conexion = mysqli_connect("localhost", "root", "", "alcon");
 
-    // Recorrer el contenido del archivo CSV y agregar los datos a la tabla 'formula'
-    while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-      $codigo_mp = $datos[0];
-      $fecha = date('Y-m-d H:i:s');
+    // Iniciar transacción
+    mysqli_begin_transaction($conexion);
 
-      $sql = "INSERT INTO formula (codigo_producto, codigo_mp, fecha) VALUES ('$codigo', '$codigo_mp',  '$fecha')";
-      mysqli_query($conexion, $sql);
+    try {
+      // Saltar la primera línea (encabezado)
+      fgetcsv($gestor);
+
+      // Recorrer el contenido del archivo CSV y agregar los datos a la tabla 'formula'
+      while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+        $codigo_mp = $datos[0];
+        $fecha = date('Y-m-d H:i:s');
+
+        $sql = "INSERT INTO formula (codigo_producto, codigo_mp, fecha) VALUES ('$codigo', '$codigo_mp',  '$fecha')";
+        mysqli_query($conexion, $sql);
+      }
+
+      // Confirmar la transacción
+      mysqli_commit($conexion);
+
+      // Cerrar la conexión a la base de datos
+      mysqli_close($conexion);
+
+      // Redirigir al usuario a la página "detalles_producto.php"
+      header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
+      exit();
+    } catch (Exception $e) {
+      // Revertir la transacción en caso de error
+      mysqli_rollback($conexion);
+      die("Error al importar datos: " . $e->getMessage());
     }
-
-    // Cerrar la conexión a la base de datos
-    mysqli_close($conexion);
-
-    // Redirigir al usuario a la página "detalles_producto.php"
-    header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
-    exit();
   } else {
-    die("Error al importar datos.");
+    die("No se ha podido abrir el archivo CSV.");
   }
 }
 ?>
-

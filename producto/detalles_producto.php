@@ -128,27 +128,25 @@ $descripcion_producto = $_GET['descripcion_producto'];
       // Obtener datos de las materias primas de la fórmula
       $SQL= "SELECT 
       formula.id,
+      formula.peso,
       formula.fecha,
       materia_prima.codigo,
       materia_prima.descripcion,
-      peso.peso AS valor,
-      (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio,
-      formula.peso AS peso 
+      (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
     FROM formula 
     INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-    LEFT JOIN peso ON formula.peso = peso.id
     WHERE codigo_producto = $codigo";
 
 $dato = mysqli_query($conexion, $SQL);
 if ($dato->num_rows > 0) {
   while ($fila = mysqli_fetch_array($dato)) {
-    $totalPeso += $fila['valor'];
+    $totalPeso += $fila['peso'];
     $totalPrecio += $fila['precio'];
-    $costoMP = $fila['precio'] * $fila['valor'];
+    $costoMP = $fila['precio'] * $fila['peso'];
     $totalCostoMP += $costoMP;
     // Agregar condición para establecer un valor de 0 en la columna 'Kg/Batch'
-    if (empty($fila['valor']) || $fila['valor'] == 0) {
-      $fila['valor'] = 0;
+    if (empty($fila['peso']) || $fila['peso'] == 0) {
+      $fila['peso'] = 0;
     }
     ?>
   <tr>
@@ -156,7 +154,7 @@ if ($dato->num_rows > 0) {
     <td><?php echo $fila['codigo']?> </td>
     <td><?php echo $fila['descripcion']; ?></td>
     <td><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-    <td><?php echo $fila['valor']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+    <td><?php echo $fila['peso']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
 
