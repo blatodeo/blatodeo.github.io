@@ -89,6 +89,15 @@ $descripcion_producto = $_GET['descripcion_producto'];
         <i class="fa fa-plus"></i> Agregar Materia Prima
     </a>
 
+    <br>
+    <br>
+    <form action="importar_csv.php?codigo=<?php echo $codigo ?>&descripcion_producto=<?php echo $descripcion_producto ?>" method="post" enctype="multipart/form-data">
+  <label for="archivo_csv">Seleccionar archivo CSV:</label>
+  <input type="file" name="archivo_csv" id="archivo_csv">
+  <br>
+  <input type="submit" value="Importar">
+</form>
+
     <h1>PRODUCTO <?php echo $codigo;  ?></h1>
 
     <table class="table table-striped table-dark table_id" id="table_id">
@@ -97,6 +106,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
       <thead>
         <tr>
         <th>ID</th>
+        <th>Codigo</th>
         <th>Materia Prima</th>
         <th>Costo/Kg</th>
         <th>Kg/Batch</th>
@@ -143,7 +153,8 @@ if ($dato->num_rows > 0) {
     ?>
   <tr>
     <td><?php echo $fila['id']; ?></td>
-    <td><?php echo $fila['codigo'] . ' - ' . $fila['descripcion'] ?> </td>
+    <td><?php echo $fila['codigo']?> </td>
+    <td><?php echo $fila['descripcion']; ?></td>
     <td><?php echo '$' . number_format($fila['precio'], 0); ?></td>
     <td><?php echo $fila['valor']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
 >
@@ -182,14 +193,18 @@ if ($dato->num_rows > 0) {
         ?>
 
         </tbody>
-    </table>
+        <tfoot>
     <tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td><strong>Total Peso: </strong><?php echo  $totalPeso . ' Kg'  ?></td>
-  <td></td>
-</tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Total: <?php echo number_format($totalPeso, 2); ?></td>
+        <td>Total: <?php echo number_format($totalCostoMP, 2); ?></td>        <td></td>
+    </tr>
+</tfoot>
+
+    </table>
 
 <br>
 
@@ -203,7 +218,6 @@ echo "<strong>Maquila:</strong> " . ($maquila) . "<br>\n";
 echo "<strong>Etiqueta y Empaque:</strong> " . ($etiqueta_empaque) . "<br>\n";
 echo "<strong>Administracion e Impuestos:</strong> " . ($administracion_impuestos) . "<br><br>\n";
 
-echo "<strong>El costo total de materia prima es:</strong> " . number_format($totalCostoMP, 2, '.', ',') . "<br>\n";
 echo "<strong>El costo por tonelada es de:</strong> " . number_format($totalPorTonelada, 2, '.', ',') . "<br>\n";
 
 ?>

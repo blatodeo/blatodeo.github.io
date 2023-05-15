@@ -58,28 +58,38 @@ $usuario = mysqli_fetch_assoc($resultado);
 		<link rel="stylesheet"
 			href=
 "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />
-		<script>
-			$(document).ready(function () {
-				//Select2
-				$(".country").select2({
-					maximumSelectionLength: 2,
-				});
-				//Chosen
-			});
-		</script>
-        		<script>
+<!--<script>
 $(document).ready(function () {
   //Select2
   var select2_element = $(".country").select2({
     maximumSelectionLength: 10,
   });
 
-  // Establecer valor predefinido en select2
-  select2_element.val('<?php echo $usuario["linea"]; ?>');
-  select2_element.trigger('change');
-  //Chosen
-});		</script>
+// Establecer valor predefinido en select2
+var valor_predefinido = '<?php //echo $usuario["empaque"] ?>';
+var valor_presentacion = '<?php //echo $usuario["presentacion"] ?>';
 
+
+  if (valor_predefinido == '') {
+    valor_predefinido = '<?php //echo $usuario["linea"] ?>';
+  }
+  if (valor_presentacion == '') {
+    valor_presentacion = '<?php //echo $usuario["presentacion"] ?>';
+  }
+  if (valor_predefinido == '') {
+    valor_predefinido = '<?php //echo $usuario["dado"] ?>';
+  }
+  if (valor_predefinido == '') {
+    valor_predefinido = '<?php //echo $usuario["medicado"] ?>';
+  }
+
+  select2_element.val(valor_predefinido);
+  select2_element.trigger('change');
+
+  select2_element.val(valor_presentacion);
+  select2_element.trigger('change');
+
+});</script>-->
 
 </head>
 
@@ -105,24 +115,96 @@ $(document).ready(function () {
                             <h3 class="text-center">Editar producto</h3>
 
                             <div class="form-group">
-                                <label for="linea" class="form-label">Linea *</label>
-                                <select class="country" name="linea" value="<?php echo $usuario['linea']; ?>" required 
-					style="width: 200px;">
-            <?php
+    <label for="linea" class="form-label">Linea *</label>
+    <select class="country" name="linea" required style="width: 200px;">
+        <?php
         $v = mysqli_query($link, "SELECT * FROM linea_producto");
         while($linea = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $linea[0] ?>"><?php echo $linea[1] ?></option>
-        <?php   } ?></select>
-
-                            </div>
-                            <div class="form-group">
+            if ($linea[0] == $usuario['linea']) {
+                echo "<option value=\"$linea[0]\" selected>$linea[1]</option>";
+            } else {
+                echo "<option value=\"$linea[0]\">$linea[1]</option>";
+            }
+        } 
+        ?>
+    </select>
+</div>                            <div class="form-group">
                                 <label for="descripcion_producto">Descripcion:</label><br>
                                 <input type="text" name="descripcion_producto" id="descripcion_producto" class="form-control" placeholder="" value="<?php echo $usuario['descripcion_producto']; ?>">
                                 <input type="hidden" name="accion" value="editar_producto">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
 
+
                             </div>
+
+                            <div class="form-group">
+    <label for="presentacion" class="form-label">Presentación *</label>
+    <select class="country" name="presentacion" required style="width: 200px;">
+        <?php
+        $v = mysqli_query($link, "SELECT * FROM presentacion");
+        while($presentacion = mysqli_fetch_row($v)){
+            if ($presentacion[0] == $usuario['presentacion']) {
+                echo "<option value=\"$presentacion[0]\" selected>$presentacion[1]</option>";
+            } else {
+                echo "<option value=\"$presentacion[0]\">$presentacion[1]</option>";
+            }
+        } 
+        ?>
+    </select>
+</div>                            <div class="form-group">
+
+
+<div class="form-group">
+    <label for="empaque" class="form-label">Empaque *</label>
+    <select class="country" name="empaque" required style="width: 200px;">
+        <?php
+        $v = mysqli_query($link, "SELECT * FROM empaque");
+        while($empaque = mysqli_fetch_row($v)){
+            if ($empaque[0] == $usuario['empaque']) {
+                echo "<option value=\"$empaque[0]\" selected>$empaque[1]</option>";
+            } else {
+                echo "<option value=\"$empaque[0]\">$empaque[1]</option>";
+            }
+        } 
+        ?>
+    </select>
+</div>                            <div class="form-group">
+
+
+
+
+<div class="form-group">
+    <label for="dado" class="form-label">Dado *</label>
+    <select class="country" name="dado" required style="width: 200px;">
+        <?php
+        $v = mysqli_query($link, "SELECT * FROM dado");
+        while($dado = mysqli_fetch_row($v)){
+            if ($dado[0] == $usuario['dado']) {
+                echo "<option value=\"$dado[0]\" selected>$dado[1]</option>";
+            } else {
+                echo "<option value=\"$dado[0]\">$dado[1]</option>";
+            }
+        } 
+        ?>
+    </select>
+</div>                            <div class="form-group">
+
+<div class="form-group">
+    <label for="medicado" class="form-label">Medicado *</label>
+    <select class="country" name="medicado" required style="width: 200px;">
+        <?php
+        $v = mysqli_query($link, "SELECT * FROM medicado");
+        while($medicado = mysqli_fetch_row($v)){
+            if ($medicado[0] == $usuario['linea']) {
+                echo "<option value=\"$medicado[0]\" selected>$medicado[1]</option>";
+            } else {
+                echo "<option value=\"$medicado[0]\">$medicado[1]</option>";
+            }
+        } 
+        ?>
+    </select>
+</div>                            <div class="form-group">
+
 
 
                             <br>

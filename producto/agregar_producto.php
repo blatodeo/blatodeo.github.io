@@ -151,8 +151,11 @@ if ($validar == null || $validar = '') {
         $v = mysqli_query($link, "SELECT * FROM medicado");
         while($medicado = mysqli_fetch_row($v)){
     ?>
-            <option value="<?php echo $medicado[0] ?>"><?php echo $medicado1[1] ?></option>
+            <option value="<?php echo $medicado[0] ?>"><?php echo $medicado[1] ?></option>
         <?php   } ?></select>
+
+        <input type="hidden" name="fecha" value="<?php echo date('Y-m-d H:i:s'); ?>">
+
                             </div>
 
 

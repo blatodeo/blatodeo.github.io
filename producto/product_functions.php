@@ -104,9 +104,10 @@ if (isset($_POST['accion'])){
     function editar_producto() {
 		$conexion=mysqli_connect("localhost","root","","alcon");
 		extract($_POST);
-		$consulta="UPDATE producto SET linea = '$linea', descripcion_producto = '$descripcion_producto'  WHERE codigo = '$codigo' ";
+		$consulta="UPDATE producto SET linea = '$linea', descripcion_producto = '$descripcion_producto' , presentacion = '$presentacion', empaque = '$empaque', dado = '$dado', medicado = '$medicado' WHERE codigo = '$codigo' ";
 
 		mysqli_query($conexion, $consulta);
+
 
 		header('Location: ../producto/productos.php');
     }
@@ -143,6 +144,9 @@ function cambiar_peso() {
 
             mysqli_query($conexion, $consulta);
 
+                // Agregar consulta para actualizar la fecha y hora de modificación
+
+
             $codigo = $_POST['codigo'];
             $descripcion_producto = $_POST['descripcion_producto'];
 
@@ -163,8 +167,10 @@ function cambiar_peso() {
 
 
             // Agregar los datos a la tabla correspondiente usando una consulta SQL
-            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo'";
+            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo', fecha='$fecha'";
             mysqli_query($conexion, $consulta);
+                // Agregar consulta para actualizar la fecha y hora de modificación
+
         
             $codigo = $_POST['codigo'];
             $descripcion_producto = $_POST['descripcion_producto'];
@@ -187,6 +193,12 @@ function eliminar_mp_formula() {
     $id = $_POST['id'];
     $consulta = "DELETE FROM formula WHERE id = $id";
     mysqli_query($conexion, $consulta);
+
+        // Agregar consulta para actualizar la fecha y hora de modificación
+        $fecha = date('Y-m-d H:i:s');
+        $consulta_fecha = "UPDATE formula SET fecha = '$fecha' WHERE id = '$id'";
+        mysqli_query($conexion, $consulta_fecha);
+    
 
     // Obtener los valores de $codigo y $descripcion_producto de $_POST
     $codigo = $_POST['codigo_producto'];
