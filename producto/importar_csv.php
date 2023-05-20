@@ -2,6 +2,7 @@
 // Obtener el código del producto y la descripción a través de la URL
 $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
+$fecha = $_GET['fecha'];
 
 // Verificar si se ha enviado un archivo CSV
 if (isset($_FILES['archivo_csv'])) {
@@ -21,9 +22,10 @@ if (isset($_FILES['archivo_csv'])) {
       // Recorrer el contenido del archivo CSV y agregar los datos a la tabla 'formula'
       while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
         $codigo_mp = $datos[0];
-        $fecha = date('Y-m-d H:i:s');
+        $peso = $datos[1];
 
-        $sql = "INSERT INTO formula (codigo_producto, codigo_mp, fecha) VALUES ('$codigo', '$codigo_mp',  '$fecha')";
+
+        $sql = "INSERT INTO formula (codigo_producto, codigo_mp, peso) VALUES ('$codigo', '$codigo_mp' , '$peso')";
         mysqli_query($conexion, $sql);
       }
 
@@ -34,7 +36,7 @@ if (isset($_FILES['archivo_csv'])) {
       mysqli_close($conexion);
 
       // Redirigir al usuario a la página "detalles_producto.php"
-      header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
+      header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
       exit();
     } catch (Exception $e) {
       // Revertir la transacción en caso de error

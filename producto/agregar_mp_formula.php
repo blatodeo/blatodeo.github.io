@@ -99,6 +99,7 @@ $conexion = mysqli_connect("localhost", "root", "", "alcon");
 
 $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
+$fecha = $_GET['fecha'];
 
 
 ?>
@@ -127,7 +128,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
                             <input type="hidden" name="accion" value="agregar_mp_formula">
                             <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                             <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
-                            <input type="hidden" name="fecha" value="<?php echo date('Y-m-d H:i:s'); ?>">
+                            <input type="hidden" name="fecha" value="<?php echo $fecha; ?>">
 
 
 
@@ -141,15 +142,19 @@ $descripcion_producto = $_GET['descripcion_producto'];
                             <select name="codigo_mp" class="country" style="width: 200px;">
                                 <?php
                                 $v = mysqli_query($link, "SELECT * FROM materia_prima");
-                                while ($descripcion = mysqli_fetch_row($v)) {
+                                while ($codigo_mp = mysqli_fetch_row($v)) {
                                 ?>
-                                    <option value="<?php echo $descripcion[0] ?>"><?php echo $descripcion[1] ?></option>
+                                    <option value="<?php echo $codigo_mp[0] ?>"><?php echo $codigo_mp[1] ?></option>
                                 <?php } ?>
                             </select>
                             <br>
                             <br>
                         </div>
                         <br>
+                        <label for="peso" class="form-label">Peso *</label>
+                        <input type="number" step="0.01" id="peso" name="peso" class="form-control" required>
+                        <br>
+
                         <div class="mb-3">
                             <input type="submit" value="Guardar" class="btn btn-success" name="agregar_mp_formula">
                             <a class="btn btn-danger" href="#" onclick="window.history.back();">Cancelar</a>

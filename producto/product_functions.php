@@ -69,6 +69,16 @@ if (isset($_POST['accion'])){
             eliminar_mp_formula();
             break;
 
+            case 'eliminar_datos';
+            eliminar_datos();
+            break;
+
+            case 'registrar_fecha';
+            registrar_fecha();
+            break;
+
+
+
 
 
 		}
@@ -120,9 +130,6 @@ function cambiar_peso() {
     mysqli_query($conexion, $consulta);
 
     // Agregar consulta para actualizar la fecha y hora de modificación
-    $fecha = date('Y-m-d H:i:s');
-    $consulta_fecha = "UPDATE formula SET fecha = '$fecha' WHERE id = '$id'";
-    mysqli_query($conexion, $consulta_fecha);
 
     $codigo = $_POST['codigo'];
     $descripcion_producto = $_POST['descripcion_producto'];
@@ -140,6 +147,7 @@ function cambiar_peso() {
             $conexion=mysqli_connect("localhost","root","","alcon");
             extract($_POST);
             $codigo= $_POST['codigo'];
+
             $consulta= "DELETE FROM producto WHERE codigo= $codigo";
 
             mysqli_query($conexion, $consulta);
@@ -149,10 +157,12 @@ function cambiar_peso() {
 
             $codigo = $_POST['codigo'];
             $descripcion_producto = $_POST['descripcion_producto'];
+            $fecha= $_POST['fecha'];
+
 
             // Verificar que los valores existen antes de redirigir
-            if (isset($codigo) && isset($descripcion_producto)) {
-                $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+            if (isset($codigo) && isset($descripcion_producto) && isset($fecha)) {
+                $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha";
                 header("Location: $url");
                 exit(); // Asegura que no se envía ninguna otra salida al navegador
 
@@ -164,27 +174,30 @@ function cambiar_peso() {
         function agregar_mp_formula() {
             $conexion = mysqli_connect("localhost", "root", "", "alcon");
             extract($_POST);
-
-
-            // Agregar los datos a la tabla correspondiente usando una consulta SQL
-            $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', codigo_producto='$codigo', fecha='$fecha'";
-            mysqli_query($conexion, $consulta);
-                // Agregar consulta para actualizar la fecha y hora de modificación
-
         
-            $codigo = $_POST['codigo'];
             $descripcion_producto = $_POST['descripcion_producto'];
             $codigo_mp = $_POST['codigo_mp'];
-
-
-            // Verificar que los valores existen antes de redirigir
-            if (isset($codigo) && isset($descripcion_producto)) {
-                $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
-                header("Location: $url");
-                exit(); // Asegura que no se envía ninguna otra salida al navegador
+            $peso = $_POST['peso'];
+            $codigo = $_POST['codigo'];
+            $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : null; // Verificar si la variable está definida
+        
+            // Verificar si la variable $fecha está definida antes de usarla en la consulta SQL
+            if (isset($fecha)) {
+                // Agregar los datos a la tabla correspondiente usando una consulta SQL
+                $consulta = "INSERT INTO formula SET codigo_mp='$codigo_mp', peso='$peso', codigo_producto='$codigo', fecha='$fecha' ";
+                mysqli_query($conexion, $consulta);
+        
+                // Agregar consulta para actualizar la fecha y hora de modificación
+        
+                // Verificar que los valores existen antes de redirigir
+                if (isset($codigo) && isset($descripcion_producto)) {
+                    $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha";
+                    header("Location: $url");
+                    exit(); // Asegura que no se envía ninguna otra salida al navegador
+                }
             }
         }
-
+        
 // Guardar la URL anterior en una variable
 
 function eliminar_mp_formula() {
@@ -195,19 +208,88 @@ function eliminar_mp_formula() {
     mysqli_query($conexion, $consulta);
 
         // Agregar consulta para actualizar la fecha y hora de modificación
-        $fecha = date('Y-m-d H:i:s');
-        $consulta_fecha = "UPDATE formula SET fecha = '$fecha' WHERE id = '$id'";
-        mysqli_query($conexion, $consulta_fecha);
     
 
     // Obtener los valores de $codigo y $descripcion_producto de $_POST
     $codigo = $_POST['codigo_producto'];
     $descripcion_producto = $_POST['descripcion_producto'];
+    $fecha = $_POST['fecha']; // Fecha que deseas mantener en la tabla
 
     // Verificar que los valores existen antes de redirigir
-    if (isset($codigo) && isset($descripcion_producto)) {
-        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+    if (isset($codigo) && isset($descripcion_producto)&& isset($fecha)) {
+        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha";
         header("Location: $url");
+    }
+}
+
+function eliminar_datos() {
+    if (isset($_POST['codigo']) && isset($_POST['descripcion_producto'])) {
+        $codigo = $_POST['codigo'];
+        $descripcion_producto = $_POST['descripcion_producto'];
+        $fecha = $_POST['fecha']; // Fecha que deseas mantener en la tabla
+        // Realizar la conexión a la base de datos
+        $conexion = mysqli_connect("localhost", "root", "", "alcon");
+
+        // Verificar si la conexión fue exitosa
+        if ($conexion) {
+            // Construir la consulta para eliminar los datos de la tabla
+            $sql = "DELETE FROM formula WHERE codigo_producto = '$codigo'";
+
+            // Ejecutar la consulta
+            $resultado = mysqli_query($conexion, $sql);
+
+            // Verificar si la consulta se ejecutó correctamente
+            if ($resultado) {
+                // Redirigir de vuelta a la página detalles_producto.php
+                header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
+                exit;
+            } else {
+                echo "Error al ejecutar la consulta: " . mysqli_error($conexion);
+            }
+
+            // Cerrar la conexión a la base de datos
+            mysqli_close($conexion);
+        } else {
+            echo "Error al conectar a la base de datos";
+        }
+    } else {
+        echo "No se recibieron los datos necesarios";
+    }
+}
+
+function registrar_fecha() {
+    if (isset($_POST['codigo']) && isset($_POST['descripcion_producto'])) {
+        $codigo = $_POST['codigo'];
+        $descripcion_producto = $_POST['descripcion_producto'];
+        $fecha = $_POST['fecha'];
+
+        // Realizar la conexión a la base de datos
+        $conexion = mysqli_connect("localhost", "root", "", "alcon");
+
+        // Verificar si la conexión fue exitosa
+        if ($conexion) {
+            // Construir la consulta para eliminar los datos de la tabla
+            $sql = "UPDATE formula SET fecha = '$fecha' WHERE codigo_producto = '$codigo'";
+
+            // Ejecutar la consulta
+            $resultado = mysqli_query($conexion, $sql);
+
+            // Verificar si la consulta se ejecutó correctamente
+            if ($resultado) {
+                // Redirigir de vuelta a la página detalles_producto.php
+                header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
+                exit;
+            } else {
+                echo "Error al ejecutar la consulta: " . mysqli_error($conexion);
+            }
+
+            // Cerrar la conexión a la base de datos
+            mysqli_close($conexion);
+        } else {
+            echo "Error al conectar a la base de datos";
+        }
+    } else {
+        echo "No se recibieron los datos necesarios";
     }
 }
      ?>   

@@ -76,43 +76,60 @@ if ($validar == null || $validar = '') {
 <?php
 $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
+$fecha = $_GET['fecha'];
+
 ?>
 
 
 
 
-<a class="btn btn-warning" href="productos.php"> Regresa a Productos
-                <i class="fa-solid fa-delete-left"></i></a>
+        <a class="btn btn-secondary" href="fechas_formula.php?codigo=<?php echo $_GET['codigo']; ?>&descripcion_producto=<?php echo $_GET['descripcion_producto']; ?>&fecha=<?php echo $_GET['fecha']; ?>">
+          Regresar a Fechas Formula                
+        <i class="fa-solid fa-delete-left"></i></a>
 
-                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>"
+                <a class="btn btn-primary" href="agregar_mp_formula.php?codigo=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>"
 >
         <i class="fa fa-plus"></i> Agregar Materia Prima
     </a>
 
     <br>
     <br>
-    <form action="importar_csv.php?codigo=<?php echo $codigo ?>&descripcion_producto=<?php echo $descripcion_producto ?>" method="post" enctype="multipart/form-data">
+
+    <form action="importar_csv.php?codigo=<?php echo $codigo ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>" method="post" enctype="multipart/form-data">
   <label for="archivo_csv">Seleccionar archivo CSV:</label>
   <input type="file" name="archivo_csv" id="archivo_csv">
-  <br>
   <input type="submit" value="Importar">
+    </form>
+
+<br>
+
+<form action="product_functions.php" method="POST">
+  <input type="hidden" name="accion" value="eliminar_datos">
+  <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+  <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+  <input type="hidden" name="fecha" value="<?php echo $fecha; ?>">
+
+  <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar todos los datos de la tabla?')">Eliminar todos los datos</button>
 </form>
 
-    <h1>PRODUCTO <?php echo $codigo;  ?></h1>
+<div style="display: flex; align-items: center;">
+  <h1 style="margin-right: 20px;">PRODUCTO <?php echo $codigo; ?></h1>
+  <h1 style="margin-left: 600px;">Fecha: <?php echo $fecha; ?></h1>
+</div>
+
 
     <table class="table table-striped table-dark table_id" id="table_id">
 
 
       <thead>
         <tr>
-        <th>ID</th>
-        <th>Codigo</th>
-        <th>Materia Prima</th>
-        <th>Costo/Kg</th>
-        <th>Kg/Batch</th>
-        <th>Costo MP</th>
-        <th>Eliminar</th>
-        <th>Última modificación</th>
+        <th style="text-align: center;">ID</th>
+        <th class="text-center">Codigo</th>
+        <th class="text-center">Materia Prima</th>
+        <th class="text-center">Costo/Kg</th>
+        <th class="text-center">Kg/Batch</th>
+        <th class="text-center">Costo MP</th>
+        <th class="text-center">Eliminar</th>
 
 
 
@@ -126,18 +143,21 @@ $descripcion_producto = $_GET['descripcion_producto'];
       $totalPrecio = 0; // agregar esta variable    
       $conexion = mysqli_connect("localhost", "root", "", "alcon");
       // Obtener datos de las materias primas de la fórmula
-      $SQL= "SELECT 
+      $SQL = "SELECT 
       formula.id,
-      formula.peso,
-      formula.fecha,
       materia_prima.codigo,
       materia_prima.descripcion,
+      formula.peso,
+      formula.fecha,
       (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-    FROM formula 
-    INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-    WHERE codigo_producto = $codigo";
+  FROM formula 
+  INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+  WHERE codigo_producto = $codigo 
+  AND fecha = '$fecha'";
+  $dato = mysqli_query($conexion, $SQL);
 
-$dato = mysqli_query($conexion, $SQL);
+  $fechaAnterior = null; // Variable para almacenar la fecha anterior
+
 if ($dato->num_rows > 0) {
   while ($fila = mysqli_fetch_array($dato)) {
     $totalPeso += $fila['peso'];
@@ -148,31 +168,34 @@ if ($dato->num_rows > 0) {
     if (empty($fila['peso']) || $fila['peso'] == 0) {
       $fila['peso'] = 0;
     }
+
+    // Verificar si la fecha es igual a la fecha anterior
+    if ($fila['fecha'] != $fechaAnterior) {
+      ?>
+      <?php
+      $fechaAnterior = $fila['fecha']; // Actualizar la fecha anterior
+  }
     ?>
+
   <tr>
-    <td><?php echo $fila['id']; ?></td>
-    <td><?php echo $fila['codigo']?> </td>
-    <td><?php echo $fila['descripcion']; ?></td>
-    <td><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-    <td><?php echo $fila['peso']; ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+    <td class="text-center"><?php echo $fila['id']; ?></td>
+    <td class="text-center"><?php echo $fila['codigo']?> </td>
+    <td class="text-center"><?php echo $fila['descripcion']; ?></td>
+    <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
+    <td class="text-center"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
 
-                  <td><?php echo '$' . number_format($costoMP, 0); ?></td>
-              <td>
+                  <td class="text-center"><?php echo '$' . number_format($costoMP, 0); ?></td>
 
-                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+              <td class="text-center">
+
+                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
 >
                   <i class="fa fa-trash"></i></a>
 
 
-
               </td>
-
-              <td><?php echo $fila['fecha']; ?></td>
-
-
-
 
               <?php
           }
@@ -197,8 +220,8 @@ if ($dato->num_rows > 0) {
         <td></td>
         <td></td>
         <td></td>
-        <td>Total: <?php echo number_format($totalPeso, 2); ?></td>
-        <td>Total: <?php echo number_format($totalCostoMP, 2); ?></td>        <td></td>
+        <td class="text-center">Total: <?php echo number_format($totalPeso, 2); ?></td>
+        <td class="text-center">Total: <?php echo number_format($totalCostoMP, 2); ?></td>        <td></td>
     </tr>
 </tfoot>
 
@@ -219,6 +242,39 @@ echo "<strong>Administracion e Impuestos:</strong> " . ($administracion_impuesto
 echo "<strong>El costo por tonelada es de:</strong> " . number_format($totalPorTonelada, 2, '.', ',') . "<br>\n";
 
 ?>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerFormulaModal">
+Registrar Fecha
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="registerFormulaModal" tabindex="-1" role="dialog" aria-labelledby="registerFormulaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerFormulaModalLabel">Registrar Fecha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form action="product_functions.php" method="POST">
+                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+                <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" class="form-control" id="fecha" name="fecha">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary" name="accion" value="registrar_fecha">Registrar</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 

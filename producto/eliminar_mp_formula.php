@@ -36,6 +36,8 @@ if ($validar == null || $validar = '') {
 <?php
 $codigo = $_GET['codigo_producto'];
 $descripcion_producto = $_GET['descripcion_producto'];
+$fecha = $_GET['fecha'];
+
 ?>
 
     
@@ -60,7 +62,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
                 <input type="hidden" name="codigo_producto" value="<?php echo $codigo; ?>">
                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
-                <input type="hidden" name="fecha" value="<?php echo date('Y-m-d H:i:s'); ?>">
+                <input type="hidden" name="fecha" value="<?php echo $fecha; ?>">
                 <input type="submit" value='Eliminar' class="btn btn-danger" >
                 
                 <a class="btn btn-success" href="#" onclick="window.history.back();">Cancelar</a>

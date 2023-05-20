@@ -115,15 +115,8 @@ $(document).ready(function () {
 
 
                             <div class="form-group">
-                                <label for="peso" class="form-label">Peso *</label>
-                                <select class="country" name="peso" value="<?php echo $usuario['peso']; ?>" required 
-					style="width: 200px;">
-            <?php
-        $v = mysqli_query($link, "SELECT * FROM peso WHERE mp = $codigo_mp");
-        while($peso = mysqli_fetch_row($v)){
-    ?>
-            <option value="<?php echo $peso[0] ?>"><?php echo $peso[1] ?></option>
-        <?php   } ?></select>
+                            <label for="peso" class="form-label">Peso *</label>
+                            <input type="number" step="0.01" id="peso" name="peso" value="<?php echo $usuario['peso']; ?>" class="form-control" required>
 
 
 
@@ -133,9 +126,6 @@ $(document).ready(function () {
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
-                                <input type="hidden" name="fecha" value="<?php echo date('Y-m-d H:i:s'); ?>">
-
-
                             </div>
 
 

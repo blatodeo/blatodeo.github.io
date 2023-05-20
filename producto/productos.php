@@ -197,9 +197,9 @@ if ($validar == null || $validar = '') {
 
               </td>
               <td>
-    <a class="btn btn-primary" href="detalles_producto.php?codigo=<?php echo $fila['codigo']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
+    <a class="btn btn-primary" href="fechas_formula.php?codigo=<?php echo $fila['codigo']; ?>&descripcion_producto=<?php echo $fila['descripcion_producto']; ?>"
 >
-        <i class="fa fa-eye"></i> Ver formula
+        <i class="fa fa-eye"></i> Ver formulas
     </a>
 </td>
 
