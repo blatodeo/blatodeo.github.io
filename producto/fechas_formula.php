@@ -76,6 +76,11 @@ $descripcion_producto = $_GET['descripcion_producto'];
           Regresar a Productos               
         <i class="fa-solid fa-delete-left"></i></a>
 
+        <a class="btn btn-primary" href="agregar_fecha.php?codigo=<?php echo $_GET['codigo']; ?>&descripcion_producto=<?php echo $_GET['descripcion_producto']; ?>">
+          Agregar fecha               
+        <i class="fa-solid fa-plus"></i></a>
+
+
     <div class="container">
         <h2 class="title">Seleccione una fecha para <?php echo $codigo; ?></h2> <!-- Modificación para cambiar a un encabezado de nivel 2 (h2) -->
         <div class="date-button">

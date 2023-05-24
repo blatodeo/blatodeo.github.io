@@ -64,10 +64,6 @@ if ($validar == null || $validar = '') {
 </head>
 
 
-
-
-
-
 <br>
 <br>
 
@@ -242,39 +238,6 @@ echo "<strong>Administracion e Impuestos:</strong> " . ($administracion_impuesto
 echo "<strong>El costo por tonelada es de:</strong> " . number_format($totalPorTonelada, 2, '.', ',') . "<br>\n";
 
 ?>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerFormulaModal">
-Registrar Fecha
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="registerFormulaModal" tabindex="-1" role="dialog" aria-labelledby="registerFormulaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registerFormulaModalLabel">Registrar Fecha</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-
-            </div>
-            <div class="modal-body">
-                <form action="product_functions.php" method="POST">
-                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
-
-                    <div class="form-group">
-                        <label for="fecha">Fecha:</label>
-                        <input type="date" class="form-control" id="fecha" name="fecha">
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary" name="accion" value="registrar_fecha">Registrar</button>
-                    </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 
 

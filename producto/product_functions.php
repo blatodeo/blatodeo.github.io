@@ -54,7 +54,6 @@ if (isset($_POST['accion'])){
 
             case 'eliminar_producto';
             eliminar_producto();
-
             break;
 
             case 'acceso_user';
@@ -73,8 +72,8 @@ if (isset($_POST['accion'])){
             eliminar_datos();
             break;
 
-            case 'registrar_fecha';
-            registrar_fecha();
+            case 'agregar_fecha';
+            agregar_fecha();
             break;
 
 
@@ -233,7 +232,7 @@ function eliminar_datos() {
         // Verificar si la conexión fue exitosa
         if ($conexion) {
             // Construir la consulta para eliminar los datos de la tabla
-            $sql = "DELETE FROM formula WHERE codigo_producto = '$codigo'";
+            $sql = "UPDATE formula SET codigo_mp = NULL, peso = NULL WHERE codigo_producto = '$codigo'";
 
             // Ejecutar la consulta
             $resultado = mysqli_query($conexion, $sql);
@@ -257,8 +256,8 @@ function eliminar_datos() {
     }
 }
 
-function registrar_fecha() {
-    if (isset($_POST['codigo']) && isset($_POST['descripcion_producto'])) {
+function agregar_fecha() {
+    if (isset($_POST['codigo']) && isset($_POST['descripcion_producto']) && isset($_POST['fecha'])) {
         $codigo = $_POST['codigo'];
         $descripcion_producto = $_POST['descripcion_producto'];
         $fecha = $_POST['fecha'];
@@ -269,7 +268,9 @@ function registrar_fecha() {
         // Verificar si la conexión fue exitosa
         if ($conexion) {
             // Construir la consulta para eliminar los datos de la tabla
-            $sql = "UPDATE formula SET fecha = '$fecha' WHERE codigo_producto = '$codigo'";
+            $sql = "INSERT INTO formula (codigo_producto, fecha) VALUES ($codigo, '$fecha');
+            ;
+            ";
 
             // Ejecutar la consulta
             $resultado = mysqli_query($conexion, $sql);
@@ -277,7 +278,7 @@ function registrar_fecha() {
             // Verificar si la consulta se ejecutó correctamente
             if ($resultado) {
                 // Redirigir de vuelta a la página detalles_producto.php
-                header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
+                header("Location: fechas_formula.php?codigo=$codigo&descripcion_producto=$descripcion_producto");
                 exit;
             } else {
                 echo "Error al ejecutar la consulta: " . mysqli_error($conexion);
