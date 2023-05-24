@@ -16,6 +16,10 @@ if (isset($_FILES['archivo_csv'])) {
     mysqli_begin_transaction($conexion);
 
     try {
+      // Eliminar los datos existentes en la tabla 'formula' para el producto y fecha específicos
+      $sqlEliminar = "DELETE FROM formula WHERE codigo_producto = '$codigo' AND fecha = '$fecha'";
+      mysqli_query($conexion, $sqlEliminar);
+
       // Saltar la primera línea (encabezado)
       fgetcsv($gestor);
 
@@ -24,9 +28,8 @@ if (isset($_FILES['archivo_csv'])) {
         $codigo_mp = $datos[0];
         $peso = $datos[1];
 
-
-        $sql = "INSERT INTO formula (codigo_producto, codigo_mp, peso) VALUES ('$codigo', '$codigo_mp' , '$peso')";
-        mysqli_query($conexion, $sql);
+        $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
+        mysqli_query($conexion, $sqlInsertar);
       }
 
       // Confirmar la transacción
