@@ -97,6 +97,13 @@ $fecha = $_GET['fecha'];
   <input type="submit" value="Importar">
     </form>
 
+    <form action="importar_excel.php?codigo=<?php echo $codigo ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>" method="post" enctype="multipart/form-data">
+  <label for="archivo_excel">Seleccionar archivo Excel:</label>
+  <input type="file" name="archivo_excel" id="archivo_excel" accept=".xlsx, .xls">
+  <input type="submit" value="Importar">
+</form>
+
+
 <br>
 
 <form action="product_functions.php" method="POST">

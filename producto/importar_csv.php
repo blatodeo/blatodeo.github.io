@@ -1,4 +1,14 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+
+
+session_start();
+error_reporting(0);
+
 // Obtener el código del producto y la descripción a través de la URL
 $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
