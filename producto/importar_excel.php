@@ -1,12 +1,30 @@
 <?php
+
+// Importar la biblioteca PhpSpreadsheet
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
 error_reporting(0);
-require 'vendor/autoload.php';
-use PhpOffice\PhpSpreadsheet\IOFactory;
+
+// Establecer los detalles de la conexión
+$host = 'localhost'; // Cambia esto si tu base de datos está en un servidor remoto
+$username = 'root';
+$password = '';
+$database = 'alcon';
+
+// Crear la conexión
+$conexion = mysqli_connect($host, $username, $password, $database);
+
+// Verificar si la conexión se estableció correctamente
+if (!$conexion) {
+    die("Error al conectar a la base de datos: " . mysqli_connect_error());
+}
+
 
 // Obtener el código del producto y la descripción a través de la URL
 $codigo = $_GET['codigo'];
@@ -20,7 +38,6 @@ if (isset($_FILES['archivo_excel'])) {
 
   // Leer el archivo Excel usando una biblioteca como PhpSpreadsheet
 
-  // Importar la biblioteca PhpSpreadsheet
 
 
   // Cargar el archivo Excel
@@ -30,10 +47,10 @@ if (isset($_FILES['archivo_excel'])) {
   $worksheet = $spreadsheet->getActiveSheet();
 
   // Obtener el valor del código de gestión del producto
-  $codigo_gestion = $worksheet->getCell('C4')->getValue();
+  $codigo_gestion = $worksheet->getCell('B4')->getValue();
 
-  // Verificar si el código de gestión coincide con el código de producto
-  if ($codigo_gestion == $codigo) {
+// Verificar si el código de gestión coincide con el código de producto
+if ($codigo_gestion == $codigo) {
     // Procesar las filas de la composición de la fórmula
     $highestRow = $worksheet->getHighestRow();
     for ($row = 19; $row <= $highestRow; $row++) {
@@ -41,16 +58,15 @@ if (isset($_FILES['archivo_excel'])) {
       $peso = $worksheet->getCell('E' . $row)->getValue();
 
       // Insertar los datos en la tabla 'formula'
-      // Agrega aquí tu código para insertar los datos en la tabla 'formula'
+      $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
+      mysqli_query($conexion, $sqlInsertar);
     }
-
+  
     // Redirigir al usuario a la página "detalles_producto.php"
     header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
     exit();
   } else {
     die("Este código de producto no coincide con la fórmula.");
-  }
-} else {
-  die("No se ha enviado ningún archivo Excel.");
+  }  
 }
-?>
+  ?>
