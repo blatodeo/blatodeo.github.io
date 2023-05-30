@@ -43,7 +43,7 @@ if (isset($_FILES['archivo_excel'])) {
     // Recorrer las filas del archivo Excel y agregar los datos a la tabla 'formula'
     for ($fila = 2; $fila <= $ultimaFila; $fila++) {
       $codigo_mp = $hoja->getCell('A' . $fila)->getValue();
-      $peso = $hoja->getCell('E' . $fila)->getValue();
+      $peso = $hoja->getCell('B' . $fila)->getValue();
 
       $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
       mysqli_query($conexion, $sqlInsertar);
