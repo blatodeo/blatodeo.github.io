@@ -4,6 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
+
+
 session_start();
 error_reporting(0);
 
@@ -33,15 +35,11 @@ if (isset($_FILES['archivo_csv'])) {
 
       // Recorrer el contenido del archivo CSV y agregar los datos a la tabla 'formula'
       while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-        $codigo_producto = $datos[0];
-        $codigo_mp = $datos[1];
-        $peso = $datos[2];
+        $codigo_mp = $datos[0];
+        $peso = $datos[1];
 
-        // Verificar si el código del producto coincide
-        if ($codigo_producto === $codigo) {
-          $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
-          mysqli_query($conexion, $sqlInsertar);
-        }
+        $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
+        mysqli_query($conexion, $sqlInsertar);
       }
 
       // Confirmar la transacción
@@ -63,3 +61,4 @@ if (isset($_FILES['archivo_csv'])) {
   }
 }
 ?>
+
