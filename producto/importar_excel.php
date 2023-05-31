@@ -37,9 +37,6 @@ if (isset($_FILES['archivo_excel'])) {
   $archivo_excel = $_FILES['archivo_excel']['tmp_name'];
 
   // Leer el archivo Excel usando una biblioteca como PhpSpreadsheet
-
-
-
   // Cargar el archivo Excel
   $spreadsheet = IOFactory::load($archivo_excel);
 
@@ -47,13 +44,26 @@ if (isset($_FILES['archivo_excel'])) {
   $worksheet = $spreadsheet->getActiveSheet();
 
   // Obtener el valor del código de gestión del producto
-  $codigo_gestion = $worksheet->getCell('B4')->getValue();
+  $encontrado = false; // Variable para verificar si se encontró algún código de gestión válido
+  $highestRow = $worksheet->getHighestRow();
+  $codigo_gestion = null;
 
-// Verificar si el código de gestión coincide con el código de producto
-if ($codigo_gestion == $codigo) {
+  // Recorrer todas las filas del archivo Excel y buscar coincidencia del código de gestión
+  for ($row = 3; $row <= $highestRow; $row++) {
+    $codigo_gestion = $worksheet->getCell('B' . $row)->getValue();
+    echo $codigo_gestion;
+
+    if ($codigo_gestion == $codigo) {
+      $encontrado = true;
+      echo $codigo;
+
+      break;
+    }
+  }
+
+  if ($encontrado) {
     // Procesar las filas de la composición de la fórmula
-    $highestRow = $worksheet->getHighestRow();
-    for ($row = 19; $row <= $highestRow; $row++) {
+    for ($row = 12; $row <= $highestRow; $row++) {
       $codigo_mp = $worksheet->getCell('A' . $row)->getValue();
       $peso = $worksheet->getCell('E' . $row)->getValue();
 
@@ -61,12 +71,12 @@ if ($codigo_gestion == $codigo) {
       $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
       mysqli_query($conexion, $sqlInsertar);
     }
-  
+
     // Redirigir al usuario a la página "detalles_producto.php"
     header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
     exit();
   } else {
-    die("Este código de producto no coincide con la fórmula.");
-  }  
-}
+    die("No se encontró ningún código de gestión válido para el producto.");
+  }
+}  
   ?>
