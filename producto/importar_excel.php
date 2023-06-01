@@ -31,7 +31,7 @@ $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
 $fecha = $_GET['fecha'];
 
-// Verificar si se ha enviado un archivo CSV
+// Verificar si se ha enviado un archivo EXCEL
 if (isset($_FILES['archivo_excel'])) {
   // Procesar el archivo Excel
   $archivo_excel = $_FILES['archivo_excel']['tmp_name'];
@@ -49,7 +49,7 @@ if (isset($_FILES['archivo_excel'])) {
   $codigo_gestion = null;
 
   // Recorrer todas las filas del archivo Excel y buscar coincidencia del código de gestión
-  for ($row = 3; $row <= $highestRow; $row++) {
+  for ($row = 2; $row <= $highestRow; $row++) {
     $codigo_gestion = $worksheet->getCell('B' . $row)->getValue();
     echo $codigo_gestion;
 
@@ -62,7 +62,7 @@ if (isset($_FILES['archivo_excel'])) {
   }
 
   if ($encontrado) {
-    // Procesar las filas de la composición de la fórmula
+    // Procesar las filas de la segunda tabla
     for ($row = 12; $row <= $highestRow; $row++) {
       $codigo_mp = $worksheet->getCell('A' . $row)->getValue();
       $peso = $worksheet->getCell('E' . $row)->getValue();
@@ -70,10 +70,10 @@ if (isset($_FILES['archivo_excel'])) {
       // Insertar los datos en la tabla 'formula'
       $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
       mysqli_query($conexion, $sqlInsertar);
-    }
 
     // Redirigir al usuario a la página "detalles_producto.php"
     header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
+    }
     exit();
   } else {
     die("No se encontró ningún código de gestión válido para el producto.");
