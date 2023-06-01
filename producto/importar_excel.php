@@ -63,11 +63,13 @@ if (isset($_FILES['archivo_excel'])) {
 
   if ($encontrado) {
     // Procesar las filas de la segunda tabla
-    for ($row = 12; $row <= $highestRow; $row++) {
-      $codigo_mp = $worksheet->getCell('A' . $row)->getValue();
-      $peso = $worksheet->getCell('E' . $row)->getValue();
+    $composicion_start_row = $row + 5; // Fila donde comienza la segunda tabla
+    $composicion_end_row = $composicion_start_row + 19; // Fila donde termina la segunda tabla
 
-      // Insertar los datos en la tabla 'formula'
+        for ($row = $composicion_start_row; $row <= $composicion_end_row; $row++) {
+            $codigo_mp = $worksheet->getCell('A' . $row)->getValue();
+            $peso = $worksheet->getCell('E' . $row)->getValue();      // Insertar los datos en la tabla 'formula'
+
       $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
       mysqli_query($conexion, $sqlInsertar);
 
@@ -75,6 +77,7 @@ if (isset($_FILES['archivo_excel'])) {
     header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
     }
     exit();
+    
   } else {
     die("No se encontró ningún código de gestión válido para el producto.");
   }
