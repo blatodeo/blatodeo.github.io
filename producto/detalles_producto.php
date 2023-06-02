@@ -232,20 +232,113 @@ if ($dato->num_rows > 0) {
 
 <br>
 
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: darkgrey;
+    }
+
+    th[colspan="2"] {
+        background-color: grey;
+    }
+
+    .costo-tonelada {
+        color: green;
+    }
+</style>
+
 <?php
 $maquila = 105000;
 $etiqueta_empaque = 25050;
 $administracion_impuestos = 117298;
 
-$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos) ;
-echo "<strong>Maquila:</strong> " . ($maquila) . "<br>\n";
-echo "<strong>Etiqueta y Empaque:</strong> " . ($etiqueta_empaque) . "<br>\n";
-echo "<strong>Administracion e Impuestos:</strong> " . ($administracion_impuestos) . "<br><br>\n";
+$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos);
 
-echo "<strong>El costo por tonelada es de:</strong> " . number_format($totalPorTonelada, 2, '.', ',') . "<br>\n";
+echo '<table>
+        <tr>
+            <th colspan="2" style="text-align: center;"><strong>COSTEO IVA:</strong></th>
+        </tr>
 
+        <tr>
+            <th>CONCEPTO</th>
+            <th>MONTO</th>
+        </tr>
+        <tr>
+            <td><strong>Maquila:</strong></td>
+            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>Etiqueta y Empaque:</strong></td>
+            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>Administración e Impuestos:</strong></td>
+            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <th colspan="2" style="text-align: center;"><strong>EL COSTO POR TONELADA ES:</strong></th>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;"><span class="costo-tonelada">$' . number_format($totalPorTonelada, 2, '.', ',') . '</span></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="2" style="text-align: center;"><strong>PAGO DE CONTADO SIN IVA:</strong></th>
+        </tr>
+
+        <tr>
+          <th>CONCEPTO</th>
+          <th>MONTO</th>
+        </tr>
+        <tr>
+            <td><strong>Precio sugerido por KG:</strong></td>
+            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>Precio de venta sugerido por KG:</strong></td>
+            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>Utilidad real:</strong></td>
+            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+        </tr>
+    </table>
+    
+    <table>
+        <tr>
+            <th colspan="2" style="text-align: center;"><strong>COSTO FORMULA POR MP:</strong></th>
+        </tr>
+
+        <tr>
+          <th>CONCEPTO</th>
+          <th>MONTO</th>
+        </tr>
+        <tr>
+            <td><strong>Precio de venta por KG:</strong></td>
+            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>AIU Real:</strong></td>
+            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+        </tr>
+        <tr>
+            <td><strong>AIU Real:</strong></td>
+            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+        </tr>
+    </table>';
 ?>
-
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
