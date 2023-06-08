@@ -101,7 +101,7 @@ $fecha = $_GET['fecha'];
   <label for="archivo_excel">Seleccionar archivo Excel:</label>
   <input type="file" name="archivo_excel" id="archivo_excel" accept=".xlsx, .xls">
   <input type="submit" value="Importar">
-</form>
+    </form>
 
 
 <br>
@@ -121,26 +121,44 @@ $fecha = $_GET['fecha'];
 </div>
 
 
-    <table class="table table-striped table-dark table_id" id="table_id">
 
 
-      <thead>
-        <tr>
-        <th style="text-align: center;">ID</th>
-        <th class="text-center">Codigo</th>
-        <th class="text-center">Materia Prima</th>
-        <th class="text-center">Costo/Kg</th>
-        <th class="text-center">Kg/Batch</th>
-        <th class="text-center">Costo MP</th>
-        <th class="text-center">Eliminar</th>
-
-
-
-
-
-        </tr>
-      </thead>
-      <tbody>
+    <table class="table table-striped table-dark table_id table-blue" id="table_id">
+    <thead>
+    <tr>
+      <th class="text-center" rowspan="3"></th>
+      <th class="text-center" rowspan="3"></th>
+      <th class="text-center" rowspan="3"></th>
+      <th class="text-center" rowspan="3"></th>
+      <th class="text-center" colspan="2">Fecha llegada:</th>
+      <th class="text-center" colspan="2">Fecha llegada:</th>
+      <th class="text-center" colspan="2">Fecha llegada:</th>
+      <th class="text-center" rowspan="3"></th>
+    </tr>
+    <tr>
+      <th class="text-center" colspan="2">Fecha costeo:</th>
+      <th class="text-center" colspan="2">Fecha costeo:</th>
+      <th class="text-center" colspan="2">Fecha costeo: <?php echo $fecha; ?></th>
+    </tr>
+    <tr>
+      <th class="text-center" colspan="2">Fecha aprobación:</th>
+      <th class="text-center" colspan="2">Fecha aprobación:</th>
+      <th class="text-center" colspan="2">Fecha aprobación:</th>
+    </tr>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Codigo</th>
+      <th class="text-center">Materia Prima</th>
+      <th class="text-center">Costo/Kg</th>
+      <th class="text-center">Kg/Batch</th>
+      <th class="text-center">Costo MP</th>
+      <th class="text-center">Kg/Batch</th>
+      <th class="text-center">Costo MP</th>
+      <th class="text-center">Kg/Batch</th>
+      <th class="text-center">Costo MP</th>
+      <th class="text-center">Eliminar</th>
+    </tr>
+  </thead>  <tbody>
       <?php
       $totalPeso = 0;
       $totalPrecio = 0; // agregar esta variable    
@@ -185,9 +203,18 @@ if ($dato->num_rows > 0) {
     <td class="text-center"><?php echo $fila['codigo']?> </td>
     <td class="text-center"><?php echo $fila['descripcion']; ?></td>
     <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-    <td class="text-center"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>"
+    <td class="text-center"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
+                  <td class="text-center"><?php echo '$' . number_format($costoMP, 0); ?></td>
+    <td class="text-center"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
+>
+                  <i class="fas fa-pencil-alt"></i></a>
+                  <td class="text-center"><?php echo '$' . number_format($costoMP, 0); ?></td>
+    <td class="text-center"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
+>
+                  <i class="fas fa-pencil-alt"></i></a>
+
 
                   <td class="text-center"><?php echo '$' . number_format($costoMP, 0); ?></td>
 
@@ -223,8 +250,13 @@ if ($dato->num_rows > 0) {
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
+        <td></td>        
+        <td></td>
+        <td></td>
         <td class="text-center">Total: <?php echo number_format($totalPeso, 2); ?></td>
-        <td class="text-center">Total: <?php echo number_format($totalCostoMP, 2); ?></td>        <td></td>
+        <td class="text-center">Total: <?php echo number_format($totalCostoMP, 2); ?></td>
+
     </tr>
 </tfoot>
 
@@ -233,6 +265,10 @@ if ($dato->num_rows > 0) {
 <br>
 
 <style>
+  .tabla {
+        margin-bottom: 20px;
+    }
+
     table {
         border-collapse: collapse;
         width: 100%;
@@ -262,9 +298,13 @@ $maquila = 105000;
 $etiqueta_empaque = 25050;
 $administracion_impuestos = 117298;
 
-$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos);
 
-echo '<table>
+$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos);
+$costo_kg = ($totalPorTonelada/$totalPeso);
+
+
+echo '<div class="tabla">
+      <table>
         <tr>
             <th colspan="2" style="text-align: center;"><strong>COSTEO IVA:</strong></th>
         </tr>
@@ -286,13 +326,21 @@ echo '<table>
             <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
         </tr>
         <tr>
+          <td><strong>Costo por KG:</strong></td>
+          <td>$' . number_format($costo_kg, 2, '.', ',') . '</td>
+        </tr>
+
+        <tr>
             <th colspan="2" style="text-align: center;"><strong>EL COSTO POR TONELADA ES:</strong></th>
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;"><span class="costo-tonelada">$' . number_format($totalPorTonelada, 2, '.', ',') . '</span></td>
         </tr>
+        
     </table>
+    </div>
 
+    <div class="tabla">
     <table>
         <tr>
             <th colspan="2" style="text-align: center;"><strong>PAGO DE CONTADO SIN IVA:</strong></th>
@@ -315,7 +363,9 @@ echo '<table>
             <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
         </tr>
     </table>
+    </div>
     
+    <div class="tabla">
     <table>
         <tr>
             <th colspan="2" style="text-align: center;"><strong>COSTO FORMULA POR MP:</strong></th>
@@ -337,7 +387,8 @@ echo '<table>
             <td><strong>AIU Real:</strong></td>
             <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
         </tr>
-    </table>';
+    </table>
+    </div>';
 ?>
 
 

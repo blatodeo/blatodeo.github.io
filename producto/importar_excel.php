@@ -78,7 +78,7 @@ if (isset($_FILES['archivo_excel'])) {
     header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
     }
     exit();
-    
+
   } else {
     die("No se encontró ningún código de gestión válido para el producto.");
   }

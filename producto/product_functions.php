@@ -132,10 +132,12 @@ function cambiar_peso() {
 
     $codigo = $_POST['codigo'];
     $descripcion_producto = $_POST['descripcion_producto'];
+    $fecha = $_POST['fecha'];
+
 
     // Verificar que los valores existen antes de redirigir
-    if (isset($codigo) && isset($descripcion_producto) && mysqli_affected_rows($conexion) > 0 && mysqli_affected_rows($conexion) > 0) {
-        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto";
+    if (isset($codigo) && isset($descripcion_producto) && isset($fecha) && mysqli_affected_rows($conexion) > 0 && mysqli_affected_rows($conexion) > 0) {
+        $url = "detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha";
         header("Location: $url");
         exit(); // Asegura que no se envía ninguna otra salida al navegador
     }

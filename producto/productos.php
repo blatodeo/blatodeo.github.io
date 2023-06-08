@@ -182,10 +182,6 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['medicado']; ?></td>
 
 
-
-
-
-
               <td>
                 <a class="btn btn-warning" href="editar_producto.php?codigo=<?php echo $fila['codigo'] ?> ">
                   <i class="fa fa-edit"></i> </a>

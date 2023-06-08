@@ -26,7 +26,7 @@ if ($validar == null || $validar = '') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fechas</title>
+    <title>Tipos</title>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
 
@@ -73,16 +73,16 @@ $descripcion_producto = $_GET['descripcion_producto'];
 
 <body>
 <a class="btn btn-secondary" href="productos.php">
-          Regresar a Productos               
+          MAQUILA               
         <i class="fa-solid fa-delete-left"></i></a>
 
         <a class="btn btn-primary" href="agregar_fecha.php?codigo=<?php echo $_GET['codigo']; ?>&descripcion_producto=<?php echo $_GET['descripcion_producto']; ?>">
-          Agregar fecha               
+          COMERCIALES              
         <i class="fa-solid fa-plus"></i></a>
 
 
     <div class="container">
-        <h2 class="title">Seleccione una fecha para <?php echo $codigo; ?></h2> <!-- Modificación para cambiar a un encabezado de nivel 2 (h2) -->
+        <h2 class="title">Seleccione una lista de productos</h2> <!-- Modificación para cambiar a un encabezado de nivel 2 (h2) -->
         <div class="date-button">
         <?php
 $codigo = $_GET['codigo'];

@@ -23,6 +23,8 @@ $id = $_GET['id'];
 $codigo_mp = $_GET['codigo_mp'];
 $codigo = $_GET['codigo_producto'];
 $descripcion_producto = $_GET['descripcion_producto'];
+$fecha = $_GET['fecha'];
+
 
 
 
@@ -126,6 +128,8 @@ $(document).ready(function () {
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
+                                <input type="hidden" name="fecha" value="<?php echo $fecha; ?>">
+
                             </div>
 
 
