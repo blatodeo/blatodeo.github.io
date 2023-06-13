@@ -305,11 +305,31 @@ if ($dato->num_rows > 0) {
     <td class="text-center"><?php echo $fila['codigo']?> </td>
     <td class="text-center" ><?php echo $fila['descripcion']; ?></td>
     <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-    <td class="text-center" style="background-color: #64a377;"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
->
+    <td class="text-center" style="background-color: #64a377;"><?php echo number_format($fila['peso'], 2); ?>
+    <a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
                   <i class="fas fa-pencil-alt"></i></a>
                   <td class="text-center" style="background-color: #64a377;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-    <td class="text-center" style="background-color: #fad2b2;" ><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
+    <td class="text-center" style="background-color: #fad2b2;" ><?php echo number_format($fila['peso'], 2); ?>
+    <?php
+
+// Realizar la consulta SQL para obtener el peso
+$conexion = mysqli_connect("localhost", "root", "", "alcon");
+$SQL = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '2023-06-03'; ";
+$resultado = mysqli_query($conexion, $SQL);
+
+// Procesar el resultado de la consulta
+if ($resultado) {
+    $fila_peso = mysqli_fetch_assoc($resultado);
+    $peso = $fila_peso['peso'];
+    echo number_format($peso, 2);
+} else {
+    echo "Error en la consulta: " . mysqli_error($conexion);
+}
+
+// Cerrar la conexión a la base de datos
+mysqli_close($conexion);
+?>
+<a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
 >
                   <i class="fas fa-pencil-alt"></i></a>
                   <td class="text-center" style="background-color:#fad2b2;" ><?php echo '$' . number_format($costoMP, 0); ?></td>
