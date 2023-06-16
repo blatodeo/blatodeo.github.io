@@ -154,7 +154,7 @@ mysqli_close($conexion);
             <th class="text-center" colspan="2">Fecha llegada:</th>
             <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha llegada:</th>
             <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha llegada:</th>
-            <th class="text-center" rowspan="3">Holi</th>
+            <th class="text-center" rowspan="3"></th>
         </tr>
         <tr>
             <th class="text-center" colspan="2">
@@ -337,7 +337,6 @@ mysqli_close($conexion);
                         </a>
                     </td>
                     <td class="text-center" style="background-color: #84abca;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-                    <td class="text-center" style="background-color: #84abca;"><?php echo number_format($totalPeso, 2); ?></td>
                     <td class="text-center">
                         <a class="btn btn-danger"
                             href="eliminar_mp.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
