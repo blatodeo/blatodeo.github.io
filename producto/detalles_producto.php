@@ -144,245 +144,229 @@ mysqli_close($conexion);
 
 
 
-    <table class="table  table_id table-dark table-blue" id="table_id">
+<table class="table table_id table-dark table-blue" id="table_id">
     <thead>
-    <tr>
-      <th class="text-center" rowspan="3"></th>
-      <th class="text-center" rowspan="3"></th>
-      <th class="text-center" rowspan="3"></th>
-      <th class="text-center" rowspan="3"></th>
-      <th class="text-center" colspan="2">Fecha llegada:</th>
-      <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha llegada:</th>
-      <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha llegada:</th>
-      <th class="text-center" rowspan="3">Holi</th>
-    </tr>
-    <tr>
-        <th class="text-center" colspan="2"><?php
-$codigo = $_GET['codigo'];
-$descripcion_producto = $_GET['descripcion_producto'];
-$fecha = $_GET['fecha'];
+        <tr>
+            <th class="text-center" rowspan="3"></th>
+            <th class="text-center" rowspan="3"></th>
+            <th class="text-center" rowspan="3"></th>
+            <th class="text-center" rowspan="3"></th>
+            <th class="text-center" colspan="2">Fecha llegada:</th>
+            <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha llegada:</th>
+            <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha llegada:</th>
+            <th class="text-center" rowspan="3">Holi</th>
+        </tr>
+        <tr>
+            <th class="text-center" colspan="2">
+                <?php
+                $codigo = $_GET['codigo'];
+                $descripcion_producto = $_GET['descripcion_producto'];
+                $fecha = $_GET['fecha'];
 
-// Obtener la segunda fecha anterior a la de la segunda columna
-$conexion = mysqli_connect("localhost", "root", "", "alcon");
-$SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$fecha' ORDER BY fecha DESC LIMIT 2";
-$resultado = mysqli_query($conexion, $SQL);
+                // Obtener la segunda fecha anterior a la de la segunda columna
+                $conexion = mysqli_connect("localhost", "root", "", "alcon");
+                $SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$fecha' ORDER BY fecha DESC LIMIT 2";
+                $resultado = mysqli_query($conexion, $SQL);
 
-// Procesar el resultado de la consulta
-if ($resultado) {
-    $fechas_anteriores = [];
-    while ($fila = mysqli_fetch_assoc($resultado)) {
-        $fechas_anteriores[] = $fila['fecha'];
-    }
+                // Procesar el resultado de la consulta
+                if ($resultado) {
+                    $fechas_anteriores = [];
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        $fechas_anteriores[] = $fila['fecha'];
+                    }
 
-    if (count($fechas_anteriores) >= 2) {
-        $fecha_anterior = $fechas_anteriores[1];
-        echo "Fecha costeo: $fecha_anterior<br>";
-    }
-} else {
-    echo "Error en la consulta: " . mysqli_error($conexion);
-}
-
-// Cerrar la conexión a la base de datos
-mysqli_close($conexion);
-?>
-
-
-
-        </th>
-        
-
-        <th class="text-center" colspan="2" style="background-color: #fad2b2;"><?php
-$codigo = $_GET['codigo'];
-$descripcion_producto = $_GET['descripcion_producto'];
-$fecha = $_GET['fecha'];
-
-// Imprimir la variable $fecha
-//echo "Fecha actual: $fecha<br>";
-
-// Obtener las dos fechas anteriores
-$conexion = mysqli_connect("localhost", "root", "", "alcon");
-$SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$fecha' ORDER BY fecha DESC LIMIT 1";
-$resultado = mysqli_query($conexion, $SQL);
-
-// Procesar el resultado de la consulta
-if ($resultado) {
-    while ($fila = mysqli_fetch_assoc($resultado)) {
-        $fecha_anterior = $fila['fecha'];
-        echo "Fecha costeo: $fecha_anterior<br>";
-    }
-} else {
-    echo "Error en la consulta: " . mysqli_error($conexion);
-}
-
-// Cerrar la conexión a la base de datos
-mysqli_close($conexion);
-?>
-
-        </th>
-        <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha costeo: <?php echo $fecha; ?>
-        <?php
-            // Obtener las dos fechas anteriores
-            $conexion = mysqli_connect("localhost", "root", "", "alcon");
-            $SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$ultimasFechas[1]' ORDER BY fecha DESC LIMIT 2";
-            $resultado = mysqli_query($conexion, $SQL);
-
-            // Procesar el resultado de la consulta
-            if ($resultado) {
-                while ($fila = mysqli_fetch_assoc($resultado)) {
-                    $fecha_anterior = $fila['fecha'];
-                    echo "Fecha anterior: $fecha_anterior";
+                    if (count($fechas_anteriores) >= 2) {
+                        $fecha_anterior = $fechas_anteriores[1];
+                        echo "Fecha costeo: $fecha_anterior<br>";
+                    }
+                } else {
+                    echo "Error en la consulta: " . mysqli_error($conexion);
                 }
-            } else {
-                echo "Error en la consulta: " . mysqli_error($conexion);
-            }
 
-            // Cerrar la conexión a la base de datos
-            mysqli_close($conexion);
-            ?>
-        </th>
-    </tr>
-    <tr>
-    <th class="text-center" colspan="2">Fecha aprobación:</th>
-      <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha aprobación:</th>
-      <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha aprobación:</th>
-    </tr>
-    <tr>
-      <th class="text-center">ID</th>
-      <th class="text-center">Codigo</th>
-      <th class="text-center">Materia Prima</th>
-      <th class="text-center">Costo/Kg</th>
-      <th class="text-center">Kg/Batch</th>
-      <th class="text-center">Costo MP</th>
-      <th class="text-center">Kg/Batch</th>
-      <th class="text-center">Costo MP</th>
-      <th class="text-center">Kg/Batch</th>
-      <th class="text-center">Costo MP</th>
-      <th class="text-center">Eliminar</th>
-    </tr>
-  </thead>  
-  <tbody>
-      <?php
-      $totalPeso = 0;
-      $totalPrecio = 0; // agregar esta variable    
-      $conexion = mysqli_connect("localhost", "root", "", "alcon");
-      // Obtener datos de las materias primas de la fórmula
-      $SQL = "SELECT 
-      formula.id,
-      materia_prima.codigo,
-      materia_prima.descripcion,
-      formula.peso,
-      formula.fecha,
-      (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-  FROM formula 
-  INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-  WHERE codigo_producto = $codigo 
-  AND fecha = '$fecha'";
-  $dato = mysqli_query($conexion, $SQL);
+                // Cerrar la conexión a la base de datos
+                mysqli_close($conexion);
+                ?>
+            </th>
+            <th class="text-center" colspan="2" style="background-color: #fad2b2;">
+                <?php
+                $codigo = $_GET['codigo'];
+                $descripcion_producto = $_GET['descripcion_producto'];
+                $fecha = $_GET['fecha'];
 
-  $fechaAnterior = null; // Variable para almacenar la fecha anterior
+                // Imprimir la variable $fecha
+                //echo "Fecha actual: $fecha<br>";
 
-if ($dato->num_rows > 0) {
-  while ($fila = mysqli_fetch_array($dato)) {
-    $totalPeso += $fila['peso'];
-    $totalPrecio += $fila['precio'];
-    $costoMP = $fila['precio'] * $fila['peso'];
-    $totalCostoMP += $costoMP;
-    // Agregar condición para establecer un valor de 0 en la columna 'Kg/Batch'
-    if (empty($fila['peso']) || $fila['peso'] == 0) {
-      $fila['peso'] = 0;
-    }
+                // Obtener las dos fechas anteriores
+                $conexion = mysqli_connect("localhost", "root", "", "alcon");
+                $SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$fecha' ORDER BY fecha DESC LIMIT 1";
+                $resultado = mysqli_query($conexion, $SQL);
 
-    // Verificar si la fecha es igual a la fecha anterior
-    if ($fila['fecha'] != $fechaAnterior) {
-      ?>
-      <?php
-      $fechaAnterior = $fila['fecha']; // Actualizar la fecha anterior
-  }
-    ?>
+                // Procesar el resultado de la consulta
+                if ($resultado) {
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        $fecha_anterior = $fila['fecha'];
+                        echo "Fecha costeo: $fecha_anterior<br>";
+                    }
+                } else {
+                    echo "Error en la consulta: " . mysqli_error($conexion);
+                }
 
-  <tr>
-    <td class="text-center" "><?php echo $fila['id']; ?></td>
-    <td class="text-center"><?php echo $fila['codigo']?> </td>
-    <td class="text-center" ><?php echo $fila['descripcion']; ?></td>
-    <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-    <td class="text-center" style="background-color: #64a377;"><?php echo number_format($fila['peso'], 2); ?>
-    <a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
-                  <i class="fas fa-pencil-alt"></i></a>
-                  <td class="text-center" style="background-color: #64a377;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-    <td class="text-center" style="background-color: #fad2b2;" ><?php echo number_format($fila['peso'], 2); ?>
-    <?php
+                // Cerrar la conexión a la base de datos
+                mysqli_close($conexion);
+                ?>
+            </th>
+            <th class="text-center" style="background-color: #84abca;" colspan="2">
+                Fecha costeo: <?php echo $fecha; ?>
+                <?php
+                // Obtener las dos fechas anteriores
+                $conexion = mysqli_connect("localhost", "root", "", "alcon");
+                $SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$ultimasFechas[1]' ORDER BY fecha DESC LIMIT 2";
+                $resultado = mysqli_query($conexion, $SQL);
 
-// Realizar la consulta SQL para obtener el peso
-$conexion = mysqli_connect("localhost", "root", "", "alcon");
-$SQL = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '2023-06-03'; ";
-$resultado = mysqli_query($conexion, $SQL);
+                // Procesar el resultado de la consulta
+                if ($resultado) {
+                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                        $fecha_anterior = $fila['fecha'];
+                        echo "Fecha anterior: $fecha_anterior";
+                    }
+                } else {
+                    echo "Error en la consulta: " . mysqli_error($conexion);
+                }
 
-// Procesar el resultado de la consulta
-if ($resultado) {
-    $fila_peso = mysqli_fetch_assoc($resultado);
-    $peso = $fila_peso['peso'];
-    echo number_format($peso, 2);
-} else {
-    echo "Error en la consulta: " . mysqli_error($conexion);
-}
-
-// Cerrar la conexión a la base de datos
-mysqli_close($conexion);
-?>
-<a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
->
-                  <i class="fas fa-pencil-alt"></i></a>
-                  <td class="text-center" style="background-color:#fad2b2;" ><?php echo '$' . number_format($costoMP, 0); ?></td>
-    <td class="text-center" style="background-color: #84abca;"><?php echo number_format($fila['peso'], 2); ?><a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
->
-                  <i class="fas fa-pencil-alt"></i></a>
-
-
-                  <td class="text-center" style="background-color: #84abca;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-
-              <td class="text-center">
-
-                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $fila['id'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>"
->
-                  <i class="fa fa-trash"></i></a>
-
-
-              </td>
-
-              <?php
-          }
-        } else {
-
-          ?>
-          <tr class="text-center">
-            <td colspan="16">No existen registros</td>
-          </tr>
-
-
+                // Cerrar la conexión a la base de datos
+                mysqli_close($conexion);
+                ?>
+            </th>
+        </tr>
+        <tr>
+            <th class="text-center" colspan="2">Fecha aprobación:</th>
+            <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha aprobación:</th>
+            <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha aprobación:</th>
+        </tr>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Codigo</th>
+            <th class="text-center">Materia Prima</th>
+            <th class="text-center">Costo/Kg</th>
+            <th class="text-center">Kg/Batch</th>
+            <th class="text-center">Costo MP</th>
+            <th class="text-center">Kg/Batch</th>
+            <th class="text-center">Costo MP</th>
+            <th class="text-center">Kg/Batch</th>
+            <th class="text-center">Costo MP</th>
+            <th class="text-center">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
         <?php
+        $totalPeso = 0;
+        $totalPrecio = 0;
+        $conexion = mysqli_connect("localhost", "root", "", "alcon");
 
+        $codigo = '10204'; // Código de producto
+
+        // Consulta SQL principal
+        $SQL = "SELECT 
+            formula.id,
+            materia_prima.codigo,
+            materia_prima.descripcion,
+            formula.peso,
+            formula.fecha,
+            (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
+        FROM formula 
+        INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+        WHERE codigo_producto = '$codigo'  
+        AND fecha = '$fecha'
+        AND peso IS NOT NULL";
+        $dato = mysqli_query($conexion, $SQL);
+
+        if ($dato->num_rows > 0) {
+            while ($fila = mysqli_fetch_array($dato)) {
+                $totalPeso += $fila['peso'];
+                $totalPrecio += $fila['precio'];
+                $costoMP = $fila['precio'] * $fila['peso'];
+                $totalCostoMP += $costoMP;
+
+                // Agregar condición para establecer un valor de 0 en la columna 'Kg/Batch'
+                if (empty($fila['peso']) || $fila['peso'] == 0) {
+                    $fila['peso'] = 0;
+                }
+
+                // Consulta para obtener el peso de la segunda columna
+                $fechaSegundaColumna = $fechas_anteriores[0];
+                $SQLSegundaColumna = "SELECT peso FROM formula WHERE codigo_producto = '$codigo' AND fecha = '$fechaSegundaColumna' AND peso IS NOT NULL";
+                $resultadoSegundaColumna = mysqli_query($conexion, $SQLSegundaColumna);
+                $filaSegundaColumna = mysqli_fetch_array($resultadoSegundaColumna);
+                $valorSegundaColumna = $filaSegundaColumna['peso'];
+
+                // Consulta para obtener el peso de la tercera columna
+                $fechaTerceraColumna = $fechas_anteriores[1];
+                $SQLTerceraColumna = "SELECT peso FROM formula WHERE codigo_producto = '$codigo' AND fecha = '$fechaTerceraColumna' AND peso IS NOT NULL";
+                $resultadoTerceraColumna = mysqli_query($conexion, $SQLTerceraColumna);
+                $filaTerceraColumna = mysqli_fetch_array($resultadoTerceraColumna);
+                $valorTerceraColumna = $filaTerceraColumna['peso'];
+
+                ?>
+
+                <tr>
+                    <td class="text-center"><?php echo $fila['id']; ?></td>
+                    <td class="text-center"><?php echo $fila['codigo'] ?> </td>
+                    <td class="text-center"><?php echo $fila['descripcion']; ?></td>
+                    <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
+                    <td class="text-center" style="background-color: #64a377;">
+                        <?php echo number_format($fila['peso'], 2); ?>
+                        <a class="btn btn-warning"
+                            href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
+                    <td class="text-center" style="background-color: #64a377;"><?php echo '$' . number_format($costoMP, 0); ?></td>
+                    <td class="text-center" style="background-color: #fad2b2;">
+                        <?php echo number_format($valorSegundaColumna, 2); ?>
+                        <a class="btn btn-warning"
+                            href="cambiar_peso.php?id=<?php echo $filaSegundaColumna['id'] ?>&codigo_mp=<?php echo $filaSegundaColumna['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fechaSegundaColumna ?>">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
+                    <td class="text-center" style="background-color: #fad2b2;"><?php echo '$' . number_format($costoMP, 0); ?></td>
+                    <td class="text-center" style="background-color: #84abca;">
+                        <?php echo number_format($valorTerceraColumna, 2); ?>
+                        <a class="btn btn-warning"
+                            href="cambiar_peso.php?id=<?php echo $filaTerceraColumna['id'] ?>&codigo_mp=<?php echo $filaTerceraColumna['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fechaTerceraColumna ?>">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
+                    <td class="text-center" style="background-color: #84abca;"><?php echo '$' . number_format($costoMP, 0); ?></td>
+                    <td class="text-center" style="background-color: #84abca;"><?php echo number_format($totalPeso, 2); ?></td>
+                    <td class="text-center">
+                        <a class="btn btn-danger"
+                            href="eliminar_mp.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='11' class='text-center'>No se encontraron registros</td></tr>";
         }
 
+        // Cerrar la conexión a la base de datos
+        mysqli_close($conexion);
         ?>
-
-        </tbody>
-        <tfoot>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td class="text-center" style="background-color: #47855b;">Total: <?php echo number_format($totalPeso, 2); ?></td>
-        <td class="text-center" style="background-color: #47855b;">Total: <?php echo number_format($totalCostoMP, 2); ?></td>        
-        <td class="text-center" style="background-color: #998062;">Total: <?php echo number_format($totalPeso, 2); ?></td>
-        <td class="text-center" style="background-color: #998062;">Total: <?php echo number_format($totalCostoMP, 2); ?></td>
-        <td class="text-center" style="background-color: #48718d;">Total: <?php echo number_format($totalPeso, 2); ?></td>
-        <td class="text-center" style="background-color: #48718d;">Total: <?php echo number_format($totalCostoMP, 2); ?></td>
-
-    </tr>
-</tfoot>
-
-    </table>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-center font-weight-bold">Totales:</td>
+            <td class="text-center font-weight-bold"><?php echo number_format($totalPeso, 2); ?></td>
+            <td class="text-center font-weight-bold"></td>
+            <td class="text-center font-weight-bold"></td>
+            <td class="text-center font-weight-bold"></td>
+            <td class="text-center font-weight-bold"></td>
+            <td class="text-center font-weight-bold"></td>
+        </tr>
+    </tfoot>
+</table>
 
 <br>
 
