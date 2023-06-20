@@ -151,13 +151,13 @@ mysqli_close($conexion);
             <th class="text-center" rowspan="3"></th>
             <th class="text-center" rowspan="3"></th>
             <th class="text-center" rowspan="3"></th>
-            <th class="text-center" colspan="2">Fecha llegada:</th>
+            <th class="text-center" style="background-color: #64a377;" colspan="2">Fecha llegada:</th>
             <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha llegada:</th>
             <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha llegada:</th>
             <th class="text-center" rowspan="3"></th>
         </tr>
         <tr>
-            <th class="text-center" colspan="2">
+            <th class="text-center" style="background-color: #64a377;" colspan="2">
                 <?php
                 $codigo = $_GET['codigo'];
                 $descripcion_producto = $_GET['descripcion_producto'];
@@ -239,7 +239,7 @@ mysqli_close($conexion);
             </th>
         </tr>
         <tr>
-            <th class="text-center" colspan="2">Fecha aprobación:</th>
+            <th class="text-center" style="background-color: #64a377;" colspan="2">Fecha aprobación:</th>
             <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha aprobación:</th>
             <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha aprobación:</th>
         </tr>
@@ -314,7 +314,7 @@ mysqli_close($conexion);
                     <td class="text-center"><?php echo $fila['descripcion']; ?></td>
                     <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
                     <td class="text-center" style="background-color: #64a377;">
-                        <?php echo number_format($fila['peso'], 2); ?>
+                        <?php echo number_format($valorTerceraColumna, 2); ?>
                         <a class="btn btn-warning"
                             href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
                             <i class="fas fa-pencil-alt"></i>
@@ -330,7 +330,7 @@ mysqli_close($conexion);
                     </td>
                     <td class="text-center" style="background-color: #fad2b2;"><?php echo '$' . number_format($costoMP, 0); ?></td>
                     <td class="text-center" style="background-color: #84abca;">
-                        <?php echo number_format($valorTerceraColumna, 2); ?>
+                        <?php echo number_format($fila['peso'], 2); ?>
                         <a class="btn btn-warning"
                             href="cambiar_peso.php?id=<?php echo $filaTerceraColumna['id'] ?>&codigo_mp=<?php echo $filaTerceraColumna['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fechaTerceraColumna ?>">
                             <i class="fas fa-pencil-alt"></i>
