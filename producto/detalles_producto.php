@@ -24,6 +24,20 @@ if ($validar == null || $validar = '') {
 }
 
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "alcon";
+
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+
 
 
 ?>
@@ -41,6 +55,9 @@ if ($validar == null || $validar = '') {
         integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
         crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/af4606bedd.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -59,11 +76,17 @@ if ($validar == null || $validar = '') {
             background-color: #455a64;
             color: azure;
         }
+        
     </style>
 
 
 </head>
 
+<script>
+$(document).ready(function() {
+    $('#table_id').DataTable();
+});
+</script>
 
 <br>
 <br>
@@ -76,7 +99,6 @@ $descripcion_producto = $_GET['descripcion_producto'];
 $fecha = $_GET['fecha'];
 
 // Imprimir la variable $fecha
-echo "Fecha actual: $fecha<br>";
 
 // Obtener las dos fechas anteriores
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
@@ -87,7 +109,6 @@ $resultado = mysqli_query($conexion, $SQL);
 if ($resultado) {
     while ($fila = mysqli_fetch_assoc($resultado)) {
         $fecha_anterior = $fila['fecha'];
-        echo "Fecha anterior: $fecha_anterior<br>";
     }
 } else {
     echo "Error en la consulta: " . mysqli_error($conexion);
@@ -144,20 +165,81 @@ mysqli_close($conexion);
 
 
 
-<table class="table table_id table-dark table-blue" id="table_id">
-    <thead>
+
+<?php
+
+// Consulta para obtener los datos de ID, Codigo y Materia Prima
+$consulta_info = "SELECT 
+                    formula.id,
+                    materia_prima.codigo,
+                    materia_prima.descripcion,
+                    (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
+                  FROM formula 
+                  INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+                  WHERE codigo_producto = '$codigo'  
+                  AND fecha = '$fecha'";
+
+// Ejecutar consulta para obtener los datos de ID, Codigo y Materia Prima
+$resultado_info = $conn->query($consulta_info);
+
+// Obtener datos de ID, Codigo y Materia Prima
+$datos_info = array();
+if ($resultado_info->num_rows > 0) {
+    while ($fila_info = $resultado_info->fetch_assoc()) {
+        $datos_info[] = $fila_info;
+    }
+}
+
+// Consultas
+$consulta1 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fecha_anterior' AND peso IS NOT NULL";
+$consulta2 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fechas_anteriores[1]' AND peso IS NOT NULL";
+$consulta3 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fecha' AND peso IS NOT NULL";
+
+// Ejecutar consultas
+$resultado1 = $conn->query($consulta1);
+$resultado2 = $conn->query($consulta2);
+$resultado3 = $conn->query($consulta3);
+
+// Obtener datos de los pesos de las consultas
+$datos1 = array();
+if ($resultado1->num_rows > 0) {
+    while ($fila1 = $resultado1->fetch_assoc()) {
+        $datos1[] = $fila1["peso"];
+    }
+} else {
+    $datos1[] = "No hay datos";
+}
+
+$datos2 = array();
+if ($resultado2->num_rows > 0) {
+    while ($fila2 = $resultado2->fetch_assoc()) {
+        $datos2[] = $fila2["peso"];
+    }
+} else {
+    $datos2[] = "No hay datos";
+}
+
+$datos3 = array();
+if ($resultado3->num_rows > 0) {
+    while ($fila3 = $resultado3->fetch_assoc()) {
+        $datos3[] = $fila3["peso"];
+    }
+} else {
+    $datos3[] = "No hay datos";
+}
+?>
+<!-- Crear tabla HTML -->
+
+
+
+    <table class="table table_id table-light table-blue" id="table_id">
+        
         <tr>
-            <th class="text-center" rowspan="3"></th>
-            <th class="text-center" rowspan="3"></th>
-            <th class="text-center" rowspan="3"></th>
-            <th class="text-center" rowspan="3"></th>
-            <th class="text-center" style="background-color: #64a377;" colspan="2">Fecha llegada:</th>
-            <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha llegada:</th>
-            <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha llegada:</th>
-            <th class="text-center" rowspan="3"></th>
-        </tr>
-        <tr>
-            <th class="text-center" style="background-color: #64a377;" colspan="2">
+            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center" style="background-color: #64a377;" colspan="2">
                 <?php
                 $codigo = $_GET['codigo'];
                 $descripcion_producto = $_GET['descripcion_producto'];
@@ -187,7 +269,7 @@ mysqli_close($conexion);
                 mysqli_close($conexion);
                 ?>
             </th>
-            <th class="text-center" colspan="2" style="background-color: #fad2b2;">
+            <th style="border: 1px solid black; text-align: center;" class="text-center" colspan="2" style="background-color: #fad2b2;">
                 <?php
                 $codigo = $_GET['codigo'];
                 $descripcion_producto = $_GET['descripcion_producto'];
@@ -215,157 +297,170 @@ mysqli_close($conexion);
                 mysqli_close($conexion);
                 ?>
             </th>
-            <th class="text-center" style="background-color: #84abca;" colspan="2">
-                Fecha costeo: <?php echo $fecha; ?>
-                <?php
-                // Obtener las dos fechas anteriores
-                $conexion = mysqli_connect("localhost", "root", "", "alcon");
-                $SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha < '$ultimasFechas[1]' ORDER BY fecha DESC LIMIT 2";
-                $resultado = mysqli_query($conexion, $SQL);
-
-                // Procesar el resultado de la consulta
-                if ($resultado) {
-                    while ($fila = mysqli_fetch_assoc($resultado)) {
-                        $fecha_anterior = $fila['fecha'];
-                        echo "Fecha anterior: $fecha_anterior";
-                    }
-                } else {
-                    echo "Error en la consulta: " . mysqli_error($conexion);
-                }
-
-                // Cerrar la conexión a la base de datos
-                mysqli_close($conexion);
-                ?>
-            </th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center" style="background-color: #84abca;" colspan="2">Fecha costeo: <?php echo $fecha; ?></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center"></th>
         </tr>
+    <tr>
+        <th style="border: 1px solid black; text-align: center;">ID</th>
+        <th style="border: 1px solid black; text-align: center;">Codigo</th>
+        <th style="border: 1px solid black; text-align: center;">Materia Prima</th>
+        <th style="border: 1px solid black; text-align: center;">Precio</th>
+        <th style="border: 1px solid black; text-align: center;">Kg/Batch</th>
+        <th style="border: 1px solid black; text-align: center;">Costo MP</th>
+        <th style="border: 1px solid black; text-align: center;">Kg/Batch</th>
+        <th style="border: 1px solid black; text-align: center;">Costo MP</th>
+        <th style="border: 1px solid black; text-align: center;">Kg/Batch</th>
+        <th style="border: 1px solid black; text-align: center;">Costo MP</th>
+        <th style="border: 1px solid black; text-align: center;">Eliminar</th>
+
+    </tr>
+
+            
+
+    <?php 
+    // Consulta para obtener los datos de ID, Codigo y Materia Prima
+$consulta_info = "SELECT 
+formula.id,
+materia_prima.codigo,
+materia_prima.descripcion,
+(SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
+FROM formula 
+INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+WHERE codigo_producto = '$codigo'  
+AND fecha = '$fecha'";
+
+// Ejecutar consulta para obtener los datos de ID, Codigo y Materia Prima
+$resultado_info = $conn->query($consulta_info);
+
+// Obtener datos de ID, Codigo y Materia Prima
+$datos_info = array();
+if ($resultado_info->num_rows > 0) {
+while ($fila_info = $resultado_info->fetch_assoc()) {
+$datos_info[] = $fila_info;
+}
+}
+
+// Consultas
+$consulta1 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[1]' AND formula.peso IS NOT NULL; ";
+$consulta2 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[0]' AND formula.peso IS NOT NULL; ";
+$consulta3 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fecha' AND formula.peso IS NOT NULL;";
+
+
+// Ejecutar consultas
+$resultado1 = $conn->query($consulta1);
+$resultado2 = $conn->query($consulta2);
+$resultado3 = $conn->query($consulta3);
+$resultado4 = $conn->query($consulta1);
+
+
+// Obtener datos de los pesos de las consultas
+$datos1 = array();
+if ($resultado1->num_rows > 0) {
+while ($fila1 = $resultado1->fetch_assoc()) {
+    $datos1[] = $fila1["codigo"];
+    $datos1[] = $fila1["descripcion"];
+    $datos1[] = $fila1["peso"];
+}
+} else {
+$datos1[] = "No hay datos";
+}
+
+$datos2 = array();
+if ($resultado2->num_rows > 0) {
+while ($fila2 = $resultado2->fetch_assoc()) {
+    $datos2[] = $fila2["peso"];
+}
+} else {
+$datos2[] = "No hay datos";
+}
+
+$datos3 = array();
+if ($resultado3->num_rows > 0) {
+while ($fila3 = $resultado3->fetch_assoc()) {
+    $datos3[] = $fila3["peso"];
+}
+} else {
+$datos3[] = "No hay datos";
+}
+
+$datos4 = array();
+if ($resultado4->num_rows > 0) {
+while ($fila4 = $resultado4->fetch_assoc()) {
+    $datos4[] = $fila4["peso"];
+}
+} else {
+$datos4[] = "No hay datos";
+}
+
+
+$totalPeso1 = 0;
+$totalPeso2 = 0;
+$totalPeso3 = 0;
+
+$totalCosto1 = 0;
+$totalCosto2 = 0;
+$totalCosto3 = 0;
+
+
+
+
+    $maxFilas = count($datos_info);
+    for ($i = 0; $i < $maxFilas; $i++): 
+    $totalPeso1 += isset($datos4[$i]) ? $datos4[$i] : 0;
+    $totalPeso2 += isset($datos2[$i]) ? $datos2[$i] : 0;
+    $totalPeso3 += isset($datos3[$i]) ? $datos3[$i] : 0;
+    
+    $totalCosto1 += isset($datos4[$i]) && isset($datos_info[$i]['precio']) ? $datos4[$i] * $datos_info[$i]['precio'] : 0;
+    $totalCosto2 += isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? $datos2[$i] * $datos_info[$i]['precio'] : 0;
+    $totalCosto3 += isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? $datos3[$i] * $datos_info[$i]['precio'] : 0;?>
         <tr>
-            <th class="text-center" style="background-color: #64a377;" colspan="2">Fecha aprobación:</th>
-            <th class="text-center" style="background-color:#fad2b2;" colspan="2">Fecha aprobación:</th>
-            <th class="text-center" style="background-color: #84abca;" colspan="2">Fecha aprobación:</th>
-        </tr>
-        <tr>
-            <th class="text-center">ID</th>
-            <th class="text-center">Codigo</th>
-            <th class="text-center">Materia Prima</th>
-            <th class="text-center">Costo/Kg</th>
-            <th class="text-center">Kg/Batch</th>
-            <th class="text-center">Costo MP</th>
-            <th class="text-center">Kg/Batch</th>
-            <th class="text-center">Costo MP</th>
-            <th class="text-center">Kg/Batch</th>
-            <th class="text-center">Costo MP</th>
-            <th class="text-center">Eliminar</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $totalPeso = 0;
-        $totalPrecio = 0;
-        $conexion = mysqli_connect("localhost", "root", "", "alcon");
+            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['id']) ? $datos_info[$i]['id'] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['codigo']) ? $datos_info[$i]['codigo'] : ""; ?>    </td>
+            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['descripcion']) ? $datos_info[$i]['descripcion'] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['precio']) ? intval(number_format($datos_info[$i]['precio'], 2, '.', '')) : ""; ?></td>
+            <!-- Columnas peso y costo MP -->
 
-        $codigo = '10204'; // Código de producto
+            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) ? $datos4[$i] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos4[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
-        // Consulta SQL principal
-        $SQL = "SELECT 
-            formula.id,
-            materia_prima.codigo,
-            materia_prima.descripcion,
-            formula.peso,
-            formula.fecha,
-            (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-        FROM formula 
-        INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-        WHERE codigo_producto = '$codigo'  
-        AND fecha = '$fecha'
-        AND peso IS NOT NULL";
-        $dato = mysqli_query($conexion, $SQL);
+            <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) ? $datos2[$i] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos2[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
-        if ($dato->num_rows > 0) {
-            while ($fila = mysqli_fetch_array($dato)) {
-                $totalPeso += $fila['peso'];
-                $totalPrecio += $fila['precio'];
-                $costoMP = $fila['precio'] * $fila['peso'];
-                $totalCostoMP += $costoMP;
+            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) ? $datos3[$i] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos3[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
-                // Agregar condición para establecer un valor de 0 en la columna 'Kg/Batch'
-                if (empty($fila['peso']) || $fila['peso'] == 0) {
-                    $fila['peso'] = 0;
-                }
 
-                // Consulta para obtener el peso de la segunda columna
-                $fechaSegundaColumna = $fechas_anteriores[0];
-                $SQLSegundaColumna = "SELECT peso FROM formula WHERE codigo_producto = '$codigo' AND fecha = '$fechaSegundaColumna' AND peso IS NOT NULL";
-                $resultadoSegundaColumna = mysqli_query($conexion, $SQLSegundaColumna);
-                $filaSegundaColumna = mysqli_fetch_array($resultadoSegundaColumna);
-                $valorSegundaColumna = $filaSegundaColumna['peso'];
-
-                // Consulta para obtener el peso de la tercera columna
-                $fechaTerceraColumna = $fechas_anteriores[1];
-                $SQLTerceraColumna = "SELECT peso FROM formula WHERE codigo_producto = '$codigo' AND fecha = '$fechaTerceraColumna' AND peso IS NOT NULL";
-                $resultadoTerceraColumna = mysqli_query($conexion, $SQLTerceraColumna);
-                $filaTerceraColumna = mysqli_fetch_array($resultadoTerceraColumna);
-                $valorTerceraColumna = $filaTerceraColumna['peso'];
-
-                ?>
-
-                <tr>
-                    <td class="text-center"><?php echo $fila['id']; ?></td>
-                    <td class="text-center"><?php echo $fila['codigo'] ?> </td>
-                    <td class="text-center"><?php echo $fila['descripcion']; ?></td>
-                    <td class="text-center"><?php echo '$' . number_format($fila['precio'], 0); ?></td>
-                    <td class="text-center" style="background-color: #64a377;">
-                        <?php echo number_format($valorTerceraColumna, 2); ?>
-                        <a class="btn btn-warning"
-                            href="cambiar_peso.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-                    </td>
-                    <td class="text-center" style="background-color: #64a377;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-                    <td class="text-center" style="background-color: #fad2b2;">
-                        <?php echo number_format($valorSegundaColumna, 2); ?>
-                        <a class="btn btn-warning"
-                            href="cambiar_peso.php?id=<?php echo $filaSegundaColumna['id'] ?>&codigo_mp=<?php echo $filaSegundaColumna['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fechaSegundaColumna ?>">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-                    </td>
-                    <td class="text-center" style="background-color: #fad2b2;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-                    <td class="text-center" style="background-color: #84abca;">
-                        <?php echo number_format($fila['peso'], 2); ?>
-                        <a class="btn btn-warning"
-                            href="cambiar_peso.php?id=<?php echo $filaTerceraColumna['id'] ?>&codigo_mp=<?php echo $filaTerceraColumna['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fechaTerceraColumna ?>">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-                    </td>
-                    <td class="text-center" style="background-color: #84abca;"><?php echo '$' . number_format($costoMP, 0); ?></td>
-                    <td class="text-center">
+            <td style="border: 1px solid black; text-align: center;" class="text-center">
                         <a class="btn btn-danger"
-                            href="eliminar_mp.php?id=<?php echo $fila['id'] ?>&codigo_mp=<?php echo $fila['codigo'] ?>&codigo_producto=<?php echo $codigo; ?>&descripcion_producto=<?php echo $descripcion_producto ?>&fecha=<?php echo $fecha ?>">
+                            href="eliminar_mp_formula.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
-                </tr>
-        <?php
-            }
-        } else {
-            echo "<tr><td colspan='11' class='text-center'>No se encontraron registros</td></tr>";
-        }
-
-        // Cerrar la conexión a la base de datos
-        mysqli_close($conexion);
-        ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4" class="text-center font-weight-bold">Totales:</td>
-            <td class="text-center font-weight-bold"><?php echo number_format($totalPeso, 2); ?></td>
-            <td class="text-center font-weight-bold"></td>
-            <td class="text-center font-weight-bold"></td>
-            <td class="text-center font-weight-bold"></td>
-            <td class="text-center font-weight-bold"></td>
-            <td class="text-center font-weight-bold"></td>
         </tr>
-    </tfoot>
+
+    <?php endfor; ?>
+
+    <tr>
+    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+
+        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;">Total Peso:<?php echo $totalPeso1; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;">Total Costo:<?php echo number_format($totalCosto1, 0, ',', '.'); ?></td>
+
+        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;">Total Peso:<?php echo $totalPeso2; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;">Total Costo:<?php echo number_format($totalCosto2, 0, ',', '.'); ?></td>
+
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;">Total Peso:<?php echo $totalPeso3; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca color: black;">Total Costo:<?php echo number_format($totalCosto3, 0, ',', '.'); ?></td>
+
+
+        <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+    </tr>
+
 </table>
+
 
 <br>
 
@@ -498,16 +593,26 @@ echo '<div class="tabla">
     </table>
     </div>';
 ?>
+<?php
+// Cerrar conexión
+$conn->close();
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-
+?>
 
 
 <script src="../js/page.js"></script>
 <script src="../js/buscador.js"></script>
 <script src="../js/user.js"></script>
+<script src="../js/acciones.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>  </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 
 </body>
 

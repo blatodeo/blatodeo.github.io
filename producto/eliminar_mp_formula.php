@@ -25,7 +25,7 @@ if ($validar == null || $validar = '') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Producto</title>
+    <title>Eliminar Materia Prima</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
@@ -35,6 +35,7 @@ if ($validar == null || $validar = '') {
 
 <?php
 $codigo = $_GET['codigo_producto'];
+$codigo_mp = $_GET['codigo_mp'];
 $descripcion_producto = $_GET['descripcion_producto'];
 $fecha = $_GET['fecha'];
 
@@ -45,14 +46,14 @@ $fecha = $_GET['fecha'];
     <div class="row">
     <div class="col-sm-6 offset-sm-3">
     <div class="alert alert-danger text-center">
-    <p>¿Desea confirmar la eliminacion de este producto?</p>
+    <p>¿Desea confirmar la eliminacion de esta materia prima?</p>
     </div>
 
 
 
 
-<p>Código: <?php echo $codigo; ?></p>
-<p>Descripción del producto: <?php echo $descripcion_producto; ?></p>
+<p>Código: <?php echo $codigo_mp; ?></p>
+<p>Descripción de la materia prima: <?php echo $descripcion_producto; ?></p>
 
 
     <div class="row">
