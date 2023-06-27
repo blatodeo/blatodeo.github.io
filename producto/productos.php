@@ -139,6 +139,7 @@ if ($validar == null || $validar = '') {
         <th>Empaque</th>
         <th>Dado</th>
         <th>Medicado</th>
+        <th>Tipo</th>
         <th>Acciones</th>
         <th>Detalles</th> <!-- Nueva columna -->
 
@@ -180,6 +181,9 @@ if ($validar == null || $validar = '') {
               <td><?php echo $fila['empaque']; ?></td>
               <td><?php echo $fila['dado']; ?></td>
               <td><?php echo $fila['medicado']; ?></td>
+              <td><?php echo $fila['medicado']; ?></td>
+
+
 
 
               <td>

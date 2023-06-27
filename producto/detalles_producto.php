@@ -312,10 +312,9 @@ if ($resultado3->num_rows > 0) {
         <th style="border: 1px solid black; text-align: center;">Kg/Batch</th>
         <th style="border: 1px solid black; text-align: center;">Costo MP</th>
         <th style="border: 1px solid black; text-align: center;">Eliminar</th>
-
     </tr>
 
-            
+
 
     <?php 
     // Consulta para obtener los datos de ID, Codigo y Materia Prima
@@ -414,28 +413,32 @@ $totalCosto3 = 0;
     $totalCosto2 += isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? $datos2[$i] * $datos_info[$i]['precio'] : 0;
     $totalCosto3 += isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? $datos3[$i] * $datos_info[$i]['precio'] : 0;?>
         <tr>
-            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['id']) ? $datos_info[$i]['id'] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['id']) ? $datos_info[$i]['id'] : ""; ?></td>
             <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['codigo']) ? $datos_info[$i]['codigo'] : ""; ?>    </td>
-            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['descripcion']) ? $datos_info[$i]['descripcion'] : ""; ?></td>
-            <td style="border: 1px solid black; text-align: center;" style="color: black;"><?php echo isset($datos_info[$i]['precio']) ? intval(number_format($datos_info[$i]['precio'], 2, '.', '')) : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['descripcion']) ? $datos_info[$i]['descripcion'] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['precio']) ? intval(number_format($datos_info[$i]['precio'], 2, '.', '')) : ""; ?></td>
             <!-- Columnas peso y costo MP -->
 
-            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) ? $datos4[$i] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) ? $datos4[$i] : ""; ?></td> 
             <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos4[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
             <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) ? $datos2[$i] : ""; ?></td>
             <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos2[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
-            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) ? $datos3[$i] : ""; ?></td>
+            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) ? $datos3[$i] : ""; ?>
+                <a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+            </td>
+            
             <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos3[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
 
 
             <td style="border: 1px solid black; text-align: center;" class="text-center">
-                        <a class="btn btn-danger"
-                            href="eliminar_mp_formula.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
-                    </td>
+                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
+                    <i class="far fa-trash-alt"></i>
+                </a>
+            </td>
         </tr>
 
     <?php endfor; ?>
@@ -453,7 +456,7 @@ $totalCosto3 = 0;
         <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;">Total Costo:<?php echo number_format($totalCosto2, 0, ',', '.'); ?></td>
 
         <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;">Total Peso:<?php echo $totalPeso3; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #84abca color: black;">Total Costo:<?php echo number_format($totalCosto3, 0, ',', '.'); ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;">Total Costo:<?php echo number_format($totalCosto3, 0, ',', '.'); ?></td>
 
 
         <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->

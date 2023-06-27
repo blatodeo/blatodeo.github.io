@@ -212,7 +212,7 @@ function eliminar_mp_formula() {
     
 
     // Obtener los valores de $codigo y $descripcion_producto de $_POST
-    $codigo = $_POST['codigo_producto'];
+    $codigo = $_POST['codigo'];
     $descripcion_producto = $_POST['descripcion_producto'];
     $fecha = $_POST['fecha']; // Fecha que deseas mantener en la tabla
 

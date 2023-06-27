@@ -103,7 +103,7 @@ $descripcion_producto = $_GET['descripcion_producto'];
 
                                 <div class="mb-3">
  
-                            <button class="btn btn-success" type="submit" name="accion" value="agregar_fecha">Editar</button>
+                            <button class="btn btn-success" type="submit" name="accion" value="agregar_fecha">Agregar</button>
                             <a href="fechas_formula.php?codigo=<?php echo $_GET['codigo']; ?>&descripcion_producto=<?php echo $_GET['descripcion_producto']; ?>" class="btn btn-danger">Cancelar</a>
 
                             </div>

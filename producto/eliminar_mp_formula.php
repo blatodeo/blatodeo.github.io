@@ -34,7 +34,7 @@ if ($validar == null || $validar = '') {
 <body>
 
 <?php
-$codigo = $_GET['codigo_producto'];
+$codigo = $_GET['codigo'];
 $codigo_mp = $_GET['codigo_mp'];
 $descripcion_producto = $_GET['descripcion_producto'];
 $fecha = $_GET['fecha'];
@@ -61,7 +61,7 @@ $fecha = $_GET['fecha'];
             <form action="product_functions.php" method="POST">
                 <input type="hidden" name="accion" value="eliminar_mp_formula">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
-                <input type="hidden" name="codigo_producto" value="<?php echo $codigo; ?>">
+                <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
                 <input type="hidden" name="descripcion_producto" value="<?php echo $descripcion_producto; ?>">
                 <input type="hidden" name="fecha" value="<?php echo $fecha; ?>">
                 <input type="submit" value='Eliminar' class="btn btn-danger" >

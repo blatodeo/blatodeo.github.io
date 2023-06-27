@@ -21,7 +21,7 @@ date_default_timezone_set('America/Bogota');
 
 $id = $_GET['id'];
 $codigo_mp = $_GET['codigo_mp'];
-$codigo = $_GET['codigo_producto'];
+$codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
 $fecha = $_GET['fecha'];
 
