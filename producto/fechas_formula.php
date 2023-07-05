@@ -89,7 +89,7 @@ $codigo = $_GET['codigo'];
 $descripcion_producto = $_GET['descripcion_producto'];
 
 $conexion = mysqli_connect("localhost", "root", "", "alcon");
-$SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha IS NOT NULL";
+$SQL = "SELECT DISTINCT fecha FROM formula WHERE codigo_producto = $codigo AND fecha IS NOT NULL ORDER BY fecha ASC";
 $dato = mysqli_query($conexion, $SQL);
 
 if ($dato->num_rows > 0) {

@@ -65,7 +65,7 @@ if (isset($_FILES['archivo_excel'])) {
   if ($encontrado) {
     // Procesar las filas de la segunda tabla
     $composicion_start_row = $row + 9; // Fila donde comienza la segunda tabla
-    $composicion_end_row = $composicion_start_row + 30; // Fila donde termina la segunda tabla
+    $composicion_end_row = $composicion_start_row + 21; // Fila donde termina la segunda tabla
 
         for ($row = $composicion_start_row; $row <= $composicion_end_row; $row++) {
             $codigo_mp = $worksheet->getCell('A' . $row)->getValue();

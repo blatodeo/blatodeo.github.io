@@ -169,64 +169,7 @@ mysqli_close($conexion);
 <?php
 
 // Consulta para obtener los datos de ID, Codigo y Materia Prima
-$consulta_info = "SELECT 
-                    formula.id,
-                    materia_prima.codigo,
-                    materia_prima.descripcion,
-                    (SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-                  FROM formula 
-                  INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-                  WHERE codigo_producto = '$codigo'  
-                  AND fecha = '$fecha'";
 
-// Ejecutar consulta para obtener los datos de ID, Codigo y Materia Prima
-$resultado_info = $conn->query($consulta_info);
-
-// Obtener datos de ID, Codigo y Materia Prima
-$datos_info = array();
-if ($resultado_info->num_rows > 0) {
-    while ($fila_info = $resultado_info->fetch_assoc()) {
-        $datos_info[] = $fila_info;
-    }
-}
-
-// Consultas
-$consulta1 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fecha_anterior' AND peso IS NOT NULL";
-$consulta2 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fechas_anteriores[1]' AND peso IS NOT NULL";
-$consulta3 = "SELECT peso FROM formula WHERE codigo_producto = '10204' AND fecha = '$fecha' AND peso IS NOT NULL";
-
-// Ejecutar consultas
-$resultado1 = $conn->query($consulta1);
-$resultado2 = $conn->query($consulta2);
-$resultado3 = $conn->query($consulta3);
-
-// Obtener datos de los pesos de las consultas
-$datos1 = array();
-if ($resultado1->num_rows > 0) {
-    while ($fila1 = $resultado1->fetch_assoc()) {
-        $datos1[] = $fila1["peso"];
-    }
-} else {
-    $datos1[] = "No hay datos";
-}
-
-$datos2 = array();
-if ($resultado2->num_rows > 0) {
-    while ($fila2 = $resultado2->fetch_assoc()) {
-        $datos2[] = $fila2["peso"];
-    }
-} else {
-    $datos2[] = "No hay datos";
-}
-
-$datos3 = array();
-if ($resultado3->num_rows > 0) {
-    while ($fila3 = $resultado3->fetch_assoc()) {
-        $datos3[] = $fila3["peso"];
-    }
-} else {
-    $datos3[] = "No hay datos";
-}
 ?>
 <!-- Crear tabla HTML -->
 
@@ -235,10 +178,7 @@ if ($resultado3->num_rows > 0) {
     <table class="table table_id table-light table-blue" id="table_id">
         
         <tr>
-            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
-            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
-            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
-            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="1"></th>
+            <th style="border: 1px solid black; text-align: center;" class="text-center"  colspan="4">INVENTARIO</th>
             <th style="border: 1px solid black; text-align: center;" class="text-center" style="background-color: #64a377;" colspan="2">
                 <?php
                 $codigo = $_GET['codigo'];
@@ -317,80 +257,59 @@ if ($resultado3->num_rows > 0) {
 
 
     <?php 
-    // Consulta para obtener los datos de ID, Codigo y Materia Prima
-$consulta_info = "SELECT 
-formula.id,
-materia_prima.codigo,
-materia_prima.descripcion,
-(SELECT precio FROM precio_mp WHERE precio_mp.mp = materia_prima.codigo AND linea_precio = 6) AS precio
-FROM formula 
-INNER JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
-WHERE codigo_producto = '$codigo'  
-AND fecha = '$fecha'";
-
-// Ejecutar consulta para obtener los datos de ID, Codigo y Materia Prima
-$resultado_info = $conn->query($consulta_info);
-
-// Obtener datos de ID, Codigo y Materia Prima
-$datos_info = array();
-if ($resultado_info->num_rows > 0) {
-while ($fila_info = $resultado_info->fetch_assoc()) {
-$datos_info[] = $fila_info;
-}
-}
-
-// Consultas
-$consulta1 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[1]' AND formula.peso IS NOT NULL; ";
-$consulta2 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[0]' AND formula.peso IS NOT NULL; ";
-$consulta3 = "SELECT formula.peso, materia_prima.codigo, materia_prima.descripcion FROM formula LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fecha' AND formula.peso IS NOT NULL;";
-
-
-// Ejecutar consultas
-$resultado1 = $conn->query($consulta1);
-$resultado2 = $conn->query($consulta2);
-$resultado3 = $conn->query($consulta3);
-$resultado4 = $conn->query($consulta1);
-
-
-// Obtener datos de los pesos de las consultas
-$datos1 = array();
-if ($resultado1->num_rows > 0) {
-while ($fila1 = $resultado1->fetch_assoc()) {
-    $datos1[] = $fila1["codigo"];
-    $datos1[] = $fila1["descripcion"];
-    $datos1[] = $fila1["peso"];
-}
+if (empty($fecha)) {
+    $datos1 = array();
 } else {
-$datos1[] = "No hay datos";
+    $consulta1 = "SELECT formula.id, formula.peso, formula.codigo_mp, materia_prima.descripcion, formula.fecha, precio_mp.precio
+              FROM formula
+              LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+              LEFT JOIN precio_mp ON precio_mp.mp = formula.codigo_mp AND precio_mp.linea_precio = 6
+              WHERE codigo_producto = '$codigo' AND formula.fecha = '$fecha' AND formula.peso IS NOT NULL";
+
+    $resultado1 = $conn->query($consulta1);
+
+    if ($resultado1->num_rows > 0) {
+        $datos1 = $resultado1->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $datos1 = array();
+    }
 }
 
-$datos2 = array();
-if ($resultado2->num_rows > 0) {
-while ($fila2 = $resultado2->fetch_assoc()) {
-    $datos2[] = $fila2["peso"];
-}
+if (empty($fechas_anteriores[1])) {
+    $datos2 = array();
 } else {
-$datos2[] = "No hay datos";
+    $consulta2 = "SELECT formula.id, formula.peso, materia_prima.codigo, materia_prima.descripcion
+              FROM formula
+              LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+              WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[1]' AND formula.peso IS NOT NULL";
+
+    $resultado2 = $conn->query($consulta2);
+
+    if ($resultado2->num_rows > 0) {
+        $datos2 = $resultado2->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $datos2 = array();
+    }
 }
 
-$datos3 = array();
-if ($resultado3->num_rows > 0) {
-while ($fila3 = $resultado3->fetch_assoc()) {
-    $datos3[] = $fila3["peso"];
-}
+if (empty($fechas_anteriores[0])) {
+    $datos3 = array();
 } else {
-$datos3[] = "No hay datos";
+    $consulta3 = "SELECT formula.id, formula.peso, materia_prima.codigo, materia_prima.descripcion
+              FROM formula
+              LEFT JOIN materia_prima ON formula.codigo_mp = materia_prima.codigo
+              WHERE formula.codigo_producto = '$codigo' AND formula.fecha = '$fechas_anteriores[0]' AND formula.peso IS NOT NULL";
+
+    $resultado3 = $conn->query($consulta3);
+
+    if ($resultado3->num_rows > 0) {
+        $datos3 = $resultado3->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $datos3 = array();
+    }
 }
 
-$datos4 = array();
-if ($resultado4->num_rows > 0) {
-while ($fila4 = $resultado4->fetch_assoc()) {
-    $datos4[] = $fila4["peso"];
-}
-} else {
-$datos4[] = "No hay datos";
-}
-
+// Resto del código...
 
 $totalPeso1 = 0;
 $totalPeso2 = 0;
@@ -400,67 +319,56 @@ $totalCosto1 = 0;
 $totalCosto2 = 0;
 $totalCosto3 = 0;
 
+$maxFilas = max(count($datos1), count($datos2), count($datos3));
+for ($i = 0; $i < $maxFilas; $i++):
+    $dato1 = isset($datos1[$i]) ? $datos1[$i] : array();
+    $dato2 = isset($datos2[$i]) ? $datos2[$i] : array();
+    $dato3 = isset($datos3[$i]) ? $datos3[$i] : array();
 
+    $totalPeso1 += isset($dato1["peso"]) ? $dato1["peso"] : 0;
+    $totalPeso2 += isset($dato2["peso"]) ? $dato2["peso"] : 0;
+    $totalPeso3 += isset($dato3["peso"]) ? $dato3["peso"] : 0;
 
-
-    $maxFilas = count($datos_info);
-    for ($i = 0; $i < $maxFilas; $i++): 
-    $totalPeso1 += isset($datos4[$i]) ? $datos4[$i] : 0;
-    $totalPeso2 += isset($datos2[$i]) ? $datos2[$i] : 0;
-    $totalPeso3 += isset($datos3[$i]) ? $datos3[$i] : 0;
-    
-    $totalCosto1 += isset($datos4[$i]) && isset($datos_info[$i]['precio']) ? $datos4[$i] * $datos_info[$i]['precio'] : 0;
-    $totalCosto2 += isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? $datos2[$i] * $datos_info[$i]['precio'] : 0;
-    $totalCosto3 += isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? $datos3[$i] * $datos_info[$i]['precio'] : 0;?>
-        <tr>
-            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['id']) ? $datos_info[$i]['id'] : ""; ?></td>
-            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['codigo']) ? $datos_info[$i]['codigo'] : ""; ?>    </td>
-            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['descripcion']) ? $datos_info[$i]['descripcion'] : ""; ?></td>
-            <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($datos_info[$i]['precio']) ? intval(number_format($datos_info[$i]['precio'], 2, '.', '')) : ""; ?></td>
-            <!-- Columnas peso y costo MP -->
-
-            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) ? $datos4[$i] : ""; ?></td> 
-            <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($datos4[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos4[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
-
-            <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) ? $datos2[$i] : ""; ?></td>
-            <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($datos2[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos2[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
-
-            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) ? $datos3[$i] : ""; ?>
-                <a class="btn btn-warning" href="cambiar_peso.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
-                    <i class="fas fa-pencil-alt"></i>
-                </a>
-            </td>
-            
-            <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($datos3[$i]) && isset($datos_info[$i]['precio']) ? number_format($datos3[$i] * $datos_info[$i]['precio'], 0, ',', '.') : ""; ?></td>
-
-
-            <td style="border: 1px solid black; text-align: center;" class="text-center">
-                <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $datos_info[$i]['id'] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo ($datos_info[$i]['codigo']) ?>&descripcion_producto=<?php echo ($datos_info[$i]['descripcion']) ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
-                    <i class="far fa-trash-alt"></i>
-                </a>
-            </td>
-        </tr>
-
-    <?php endfor; ?>
-
+    $totalCosto1 += isset($dato1["precio"]) ? ($dato1["peso"] * $dato1["precio"]) : 0;
+    $totalCosto2 += isset($dato1["precio"]) ? ($dato2["peso"] * $dato1["precio"]) : 0;
+    $totalCosto3 += isset($dato1["precio"]) ? ($dato3["peso"] * $dato1["precio"]) : 0;
+?>
     <tr>
-    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
-    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
-    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
-    <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
-
-        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;">Total Peso:<?php echo $totalPeso1; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;">Total Costo:<?php echo number_format($totalCosto1, 0, ',', '.'); ?></td>
-
-        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;">Total Peso:<?php echo $totalPeso2; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;">Total Costo:<?php echo number_format($totalCosto2, 0, ',', '.'); ?></td>
-
-        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;">Total Peso:<?php echo $totalPeso3; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;">Total Costo:<?php echo number_format($totalCosto3, 0, ',', '.'); ?></td>
-
-
-        <td style="border: 1px solid black; text-align: center;"></td> <!-- Columnas vacías para alinear la celda del total de peso -->
+        <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["id"]) ? $dato1["id"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["codigo_mp"]) ? $dato1["codigo_mp"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["descripcion"]) ? $dato1["descripcion"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["precio"]) ? $dato1["precio"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($dato2["peso"]) ? $dato2["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($dato2["peso"]) && isset($dato1["precio"]) ? ($dato1["precio"]) * $dato2["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($dato3["peso"]) ? $dato3["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($dato3["peso"]) && isset($dato1["precio"]) ? ($dato1["precio"]) * $dato3["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($dato1["peso"]) ? $dato1["peso"] : ""; ?>
+            <a class="btn btn-sm btn-warning" href="cambiar_peso.php?id=<?php echo $dato1["id"] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo $dato1["codigo_mp"] ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
+                <i class="fa fa-edit"></i>
+            </a>
+        </td>
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($dato1["peso"]) && isset($dato1["precio"]) ? ($dato1["precio"]) * $dato1["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center;" class="text-center">
+            <a class="btn btn-danger" href="eliminar_mp_formula.php?id=<?php echo $dato1["id"] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo $dato1["codigo_mp"]?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
     </tr>
+<?php endfor; ?>
+
+<tr>
+    <td colspan="4" style="border: 1px solid black; text-align: center; color: black;"><strong>Totales:</strong></td>
+
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso1; ?></td>
+
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto1; ?></td>
+
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso2; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto2; ?></td>
+
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso3; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto3; ?></td>
+</tr>
 
 </table>
 
@@ -619,4 +527,4 @@ $conn->close();
 
 </body>
 
-</html>
+</html>`
