@@ -83,7 +83,7 @@ if (isset($_POST['accion'])){
 function agregar_mp() {
 }
 
-    
+
 
 
     function editar_mp() {

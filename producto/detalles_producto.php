@@ -359,15 +359,15 @@ for ($i = 0; $i < $maxFilas; $i++):
 <tr>
     <td colspan="4" style="border: 1px solid black; text-align: center; color: black;"><strong>Totales:</strong></td>
 
-    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso1; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso3; ?></td>
 
-    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto1; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto3; ?></td>
 
     <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso2; ?></td>
     <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto2; ?></td>
 
-    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso3; ?></td>
-    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto3; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso1; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto1; ?></td>
 </tr>
 
 </table>
