@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 // Importar la biblioteca PhpSpreadsheet
 // Importar la biblioteca PhpSpreadsheet
-require 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 
@@ -75,10 +75,11 @@ if (isset($_FILES['archivo_excel'])) {
 
             $sqlInsertar = "INSERT INTO formula (codigo_producto, codigo_mp, peso, fecha) VALUES ('$codigo', '$codigo_mp', '$peso', '$fecha')";
             mysqli_query($conexion, $sqlInsertar);
-        }
 
         // Redirigir al usuario a la página "detalles_producto.php"
         header("Location: detalles_producto.php?codigo=$codigo&descripcion_producto=$descripcion_producto&fecha=$fecha");
+      }
+
         exit();
     } else {
         die("No se encontró ningún código de gestión válido para el producto.");

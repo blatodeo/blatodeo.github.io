@@ -234,7 +234,7 @@ function eliminar_datos() {
         // Verificar si la conexión fue exitosa
         if ($conexion) {
             // Construir la consulta para eliminar los datos de la tabla
-            $sql = "UPDATE formula SET codigo_mp = NULL, peso = NULL WHERE codigo_producto = '$codigo'";
+            $sql = "UPDATE formula SET codigo_mp = NULL, peso = NULL WHERE codigo_producto = '$codigo' AND fecha = '$fecha' ";
 
             // Ejecutar la consulta
             $resultado = mysqli_query($conexion, $sql);
