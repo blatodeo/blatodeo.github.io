@@ -338,11 +338,11 @@ for ($i = 0; $i < $maxFilas; $i++):
         <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["codigo_mp"]) ? $dato1["codigo_mp"] : ""; ?></td>
         <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["descripcion"]) ? $dato1["descripcion"] : ""; ?></td>
         <td style="border: 1px solid black; text-align: center; color: black;"><?php echo isset($dato1["precio"]) ? $dato1["precio"] : ""; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($dato2["peso"]) ? $dato2["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($dato2["peso"]) ? number_format($dato2["peso"], 2) : ""; ?></td>
         <td style="border: 1px solid black; text-align: center; background-color: #64a377; color: black;"><?php echo isset($dato2["peso"]) && isset($dato1["precio"]) ? ($dato1["precio"]) * $dato2["peso"] : ""; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($dato3["peso"]) ? $dato3["peso"] : ""; ?></td>
+        <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($dato3["peso"]) ? number_format($dato3["peso"], 2) : ""; ?></td>
         <td style="border: 1px solid black; text-align: center; background-color: #fad2b2; color: black;"><?php echo isset($dato3["peso"]) && isset($dato1["precio"]) ? ($dato1["precio"]) * $dato3["peso"] : ""; ?></td>
-        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($dato1["peso"]) ? $dato1["peso"] : ""; ?>
+        <td style="border: 1px solid black; text-align: center; background-color: #84abca; color: black;"><?php echo isset($dato1["peso"]) ? number_format($dato1["peso"], 2) : ""; ?>
             <a class="btn btn-sm btn-warning" href="cambiar_peso.php?id=<?php echo $dato1["id"] ?>&codigo=<?php echo $codigo; ?>&codigo_mp=<?php echo $dato1["codigo_mp"] ?>&descripcion_producto=<?php echo $descripcion_producto; ?>&fecha=<?php echo $fecha; ?>">
                 <i class="fa fa-edit"></i>
             </a>
@@ -366,15 +366,15 @@ for ($i = 0; $i < $maxFilas; $i++):
     <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso2; ?></td>
     <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto2; ?></td>
 
-    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalPeso1; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"><?php echo number_format($totalPeso1 , 0); ?></td>
     <td style="border: 1px solid black; text-align: center; color: black;"><?php echo $totalCosto1; ?></td>
+    <td style="border: 1px solid black; text-align: center; color: black;"></td>
 </tr>
 
 </table>
 
 
 <br>
-
 <style>
   .tabla {
         margin-bottom: 20px;
@@ -407,109 +407,108 @@ for ($i = 0; $i < $maxFilas; $i++):
     }
 </style>
 
+
+
 <?php
 $maquila = 105000;
 $etiqueta_empaque = 25050;
 $administracion_impuestos = 117298;
 
-
-$totalPorTonelada = ($totalCostoMP + $maquila + $etiqueta_empaque + $administracion_impuestos);
-$costo_kg = ($totalPorTonelada/$totalPeso);
-
+$totalPorTonelada = ($totalCosto1 + $maquila + $etiqueta_empaque + $administracion_impuestos);
+$costo_kg = ($totalPorTonelada/$totalPeso1);
 
 echo '<div class="tabla">
-      <table>
-        <tr>
-            <th colspan="2" style="text-align: center;"><strong>COSTEO IVA:</strong></th>
-        </tr>
+<table>
+  <tr>
+      <th colspan="2" style="text-align: center;"><strong>COSTEO IVA:</strong></th>
+  </tr>
 
-        <tr>
-            <th>CONCEPTO</th>
-            <th>MONTO</th>
-        </tr>
-        <tr>
-            <td><strong>Maquila:</strong></td>
-            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>Etiqueta y Empaque:</strong></td>
-            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>Administración e Impuestos:</strong></td>
-            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-          <td><strong>Costo por KG:</strong></td>
-          <td>$' . number_format($costo_kg, 2, '.', ',') . '</td>
-        </tr>
+  <tr>
+      <th>CONCEPTO</th>
+      <th>MONTO</th>
+  </tr>
+  <tr>
+      <td><strong>Maquila:</strong></td>
+      <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>Etiqueta y Empaque:</strong></td>
+      <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>Administración e Impuestos:</strong></td>
+      <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+    <td><strong>Costo por KG:</strong></td>
+    <td>$' . number_format($costo_kg, 2, '.', ',') . '</td>
+  </tr>
 
-        <tr>
-            <th colspan="2" style="text-align: center;"><strong>EL COSTO POR TONELADA ES:</strong></th>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;"><span class="costo-tonelada">$' . number_format($totalPorTonelada, 2, '.', ',') . '</span></td>
-        </tr>
-        
-    </table>
-    </div>
+  <tr>
+      <th colspan="2" style="text-align: center;"><strong>EL COSTO POR TONELADA ES:</strong></th>
+  </tr>
+  <tr>
+      <td colspan="2" style="text-align: center;"><span class="costo-tonelada">$' . number_format($totalPorTonelada, 2, '.', ',') . '</span></td>
+  </tr>
+  
+</table>
+</div>
 
-    <div class="tabla">
-    <table>
-        <tr>
-            <th colspan="2" style="text-align: center;"><strong>PAGO DE CONTADO SIN IVA:</strong></th>
-        </tr>
+<div class="tabla">
+<table>
+  <tr>
+      <th colspan="2" style="text-align: center;"><strong>PAGO DE CONTADO SIN IVA:</strong></th>
+  </tr>
 
-        <tr>
-          <th>CONCEPTO</th>
-          <th>MONTO</th>
-        </tr>
-        <tr>
-            <td><strong>Precio sugerido por KG:</strong></td>
-            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>Precio de venta sugerido por KG:</strong></td>
-            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>Utilidad real:</strong></td>
-            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
-        </tr>
-    </table>
-    </div>
-    
-    <div class="tabla">
-    <table>
-        <tr>
-            <th colspan="2" style="text-align: center;"><strong>COSTO FORMULA POR MP:</strong></th>
-        </tr>
+  <tr>
+    <th>CONCEPTO</th>
+    <th>MONTO</th>
+  </tr>
+  <tr>
+      <td><strong>Precio sugerido por KG:</strong></td>
+      <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>Precio de venta sugerido por KG:</strong></td>
+      <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>Utilidad real:</strong></td>
+      <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+  </tr>
+</table>
+</div>
 
-        <tr>
-          <th>CONCEPTO</th>
-          <th>MONTO</th>
-        </tr>
-        <tr>
-            <td><strong>Precio de venta por KG:</strong></td>
-            <td>$' . number_format($maquila, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>AIU Real:</strong></td>
-            <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
-        </tr>
-        <tr>
-            <td><strong>AIU Real:</strong></td>
-            <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
-        </tr>
-    </table>
-    </div>';
-?>
-<?php
+<div class="tabla">
+<table>
+  <tr>
+      <th colspan="2" style="text-align: center;"><strong>COSTO FORMULA POR MP:</strong></th>
+  </tr>
+
+  <tr>
+    <th>CONCEPTO</th>
+    <th>MONTO</th>
+  </tr>
+  <tr>
+      <td><strong>Precio de venta por KG:</strong></td>
+      <td>$' . number_format($maquila, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>AIU Real:</strong></td>
+      <td>$' . number_format($etiqueta_empaque, 2, '.', ',') . '</td>
+  </tr>
+  <tr>
+      <td><strong>AIU Real:</strong></td>
+      <td>$' . number_format($administracion_impuestos, 2, '.', ',') . '</td>
+  </tr>
+</table>
+</div>';
+
 // Cerrar conexión
 $conn->close();
 
-
 ?>
+
 
 
 <script src="../js/page.js"></script>
